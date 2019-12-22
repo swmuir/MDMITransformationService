@@ -1,0 +1,3226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 http://xreg2.nist.gov:8080/hitspValidation/schema/cdar2c32/infrastructure/cda/C32_CDA.xsd">
+  <realmCode code="US"/>
+  <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+  <templateId root="2.16.840.1.113883.10.20.22.1.1" extension="2015-08-01"/>
+  <templateId root="2.16.840.1.113883.10.20.22.1.2" extension="2015-08-01"/> 
+  <id root="2.16.840.1.113883.19.5" extension="59fa309e8b25af79322f0c13" assigningAuthorityName="Cypress Project"/>
+  <code code="34133-9" displayName="Summarization of episode note" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+  <title>Cypress C-CDA R2.1 Patient Test Record: Filiberto134 Kunde313</title>
+  <effectiveTime value="20171101203750"/>
+  <confidentialityCode code="N"/>
+  <languageCode code="en-US"/>
+  <recordTarget>
+    <patientRole>
+      <id root="Cypress" extension="59fa309e8b25af79322f0c13"/>
+      <addr use="HP">
+        <streetAddressLine>202 Burlington Rd.</streetAddressLine>
+        <city>Bedford</city>
+        <state>MA</state>
+        <postalCode>01730</postalCode>
+      </addr>
+      <telecom value="tel:+1-781-271-3000"/>
+      <patient>
+        <name>
+          <given>Filiberto134</given>
+          <family>Kunde313</family>
+        </name>
+        <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1" codeSystemName="HL7 AdministrativeGender"/>
+        <birthTime value="19381202030813"/>
+          <raceCode code="2106-3" displayName="White" codeSystemName="CDC Race and Ethnicity" codeSystem="2.16.840.1.113883.6.238"/>
+          <ethnicGroupCode code="2135-2" displayName="Hispanic" codeSystemName="CDC Race and Ethnicity" codeSystem="2.16.840.1.113883.6.238"/>
+          <languageCommunication>
+            <languageCode code="spa"/>
+          </languageCommunication>
+      </patient>
+    </patientRole>
+  </recordTarget>
+  <author>
+    <time value="20171101203750"/>
+    <assignedAuthor>
+      <id nullFlavor="NA"/>
+      <addr>
+        <streetAddressLine>202 Burlington Rd.</streetAddressLine>
+        <city>Bedford</city>
+        <state>MA</state>
+        <postalCode>01730</postalCode>
+      </addr>
+      <telecom value="tel:+1-781-271-3000"/>
+      <assignedPerson>
+        <name>Auto Generated</name>
+      </assignedPerson>
+    </assignedAuthor>
+  </author>
+  <custodian>
+    <assignedCustodian>
+      <representedCustodianOrganization>
+        <id nullFlavor="NA"/>
+        <name>Cypress</name>
+        <telecom value="tel:+1-781-271-3000"/>
+        <addr>
+          <streetAddressLine>202 Burlington Rd.</streetAddressLine>
+          <city>Bedford</city>
+          <state>MA</state>
+          <postalCode>01730</postalCode>
+        </addr>
+      </representedCustodianOrganization>
+    </assignedCustodian>
+  </custodian>
+  <documentationOf>
+    <serviceEvent classCode="PCPR">
+      <effectiveTime>
+        <low value="19381202030813"/>
+        <high value="20171101203750"/>
+      </effectiveTime>
+    </serviceEvent>
+  </documentationOf>
+  <component>
+    <structuredBody>
+        <component>
+  <!-- Allergies: patient has no allergies -->
+  <section nullFlavor="NI">
+    <templateId root="2.16.840.1.113883.10.20.22.2.6.1" extension="2015-08-01"/>
+    <code code="48765-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Allergy List"/>
+    <title>Allergies</title>                
+    <text>There are no current allergies at the time of this document's creation.</text>
+  </section>
+</component>
+        <component>
+  <!--Medications-->
+  <section>
+	<templateId root="2.16.840.1.113883.10.20.22.2.1.1" extension="2014-06-09"/>
+    <code code="10160-0" displayName="History of medication use" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+    <title>Medications</title>
+    <text>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Codes</th>
+        <th>Time</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td ID="medications-desc-0">Penicillin V Potassium 250 MG</td>
+          <td ID="medications-code-0">RxNorm: 834060<br/></td>
+          <td>December 10th, 1939 12:49 - UNK</td>
+           
+        </tr>
+        <tr>
+          <td ID="medications-desc-1">Naproxen sodium 220 MG Oral Tablet</td>
+          <td ID="medications-code-1">RxNorm: 849574<br/></td>
+          <td>May 28th, 2010 23:39 - September 3rd, 2010 02:11</td>
+           
+        </tr>
+        <tr>
+          <td ID="medications-desc-2">Naproxen sodium 220 MG Oral Tablet</td>
+          <td ID="medications-code-2">RxNorm: 849574<br/></td>
+          <td>November 6th, 2016 10:04 - December 31st, 2016 08:06</td>
+           
+        </tr>
+    </tbody>
+  </table>
+</text>
+    <entry>
+      <!--CCD Medication activity - Required-->
+      <substanceAdministration classCode="SBADM" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.16" extension="2014-06-09"/>
+        <id root="73dbe530-a172-0135-6cb6-60f81dc2d82a"/>
+        <statusCode code="completed"/>
+        <effectiveTime xsi:type="IVL_TS">
+          <low value='19391210124913'/>
+          <high nullFlavor="UNK"/>
+        </effectiveTime>
+          <doseQuantity value="1"/>
+        <consumable>
+          <!--CCD Product - Required-->
+          <manufacturedProduct classCode="MANU">
+			    <templateId root="2.16.840.1.113883.10.20.22.4.23" extension="2014-06-09"/>
+            <manufacturedMaterial>
+              <code code="834060" codeSystem="2.16.840.1.113883.6.88" displayName="Penicillin V Potassium 250 MG">
+  <originalText><reference value="#medications-desc-0"/></originalText>
+</code>
+
+              <name>Penicillin V Potassium 250 MG</name>
+            </manufacturedMaterial>
+          </manufacturedProduct>
+        </consumable>
+      </substanceAdministration>
+    </entry>
+    <entry>
+      <!--CCD Medication activity - Required-->
+      <substanceAdministration classCode="SBADM" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.16" extension="2014-06-09"/>
+        <id root="73dc01f0-a172-0135-6cb6-60f81dc2d82a"/>
+        <statusCode code="completed"/>
+        <effectiveTime xsi:type="IVL_TS">
+          <low value='20100528233913'/>
+          <high nullFlavor="UNK"/>
+        </effectiveTime>
+          <doseQuantity value="1"/>
+        <consumable>
+          <!--CCD Product - Required-->
+          <manufacturedProduct classCode="MANU">
+			    <templateId root="2.16.840.1.113883.10.20.22.4.23" extension="2014-06-09"/>
+            <manufacturedMaterial>
+              <code code="849574" codeSystem="2.16.840.1.113883.6.88" displayName="Naproxen sodium 220 MG Oral Tablet">
+  <originalText><reference value="#medications-desc-1"/></originalText>
+</code>
+
+              <name>Naproxen sodium 220 MG Oral Tablet</name>
+            </manufacturedMaterial>
+          </manufacturedProduct>
+        </consumable>
+      </substanceAdministration>
+    </entry>
+    <entry>
+      <!--CCD Medication activity - Required-->
+      <substanceAdministration classCode="SBADM" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.16" extension="2014-06-09"/>
+        <id root="73dc13d0-a172-0135-6cb6-60f81dc2d82a"/>
+        <statusCode code="completed"/>
+        <effectiveTime xsi:type="IVL_TS">
+          <low value='20161106100425'/>
+          <high nullFlavor="UNK"/>
+        </effectiveTime>
+          <doseQuantity value="1"/>
+        <consumable>
+          <!--CCD Product - Required-->
+          <manufacturedProduct classCode="MANU">
+			    <templateId root="2.16.840.1.113883.10.20.22.4.23" extension="2014-06-09"/>
+            <manufacturedMaterial>
+              <code code="849574" codeSystem="2.16.840.1.113883.6.88" displayName="Naproxen sodium 220 MG Oral Tablet">
+  <originalText><reference value="#medications-desc-2"/></originalText>
+</code>
+
+              <name>Naproxen sodium 220 MG Oral Tablet</name>
+            </manufacturedMaterial>
+          </manufacturedProduct>
+        </consumable>
+      </substanceAdministration>
+    </entry>
+  </section>
+</component>
+        <component>
+  <!-- Diagnostic Results: patient has no results -->
+  <section nullFlavor="NI">
+    <templateId root="2.16.840.1.113883.10.20.22.2.3.1" extension="2015-08-01"/>
+    <code code="30954-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Results"/>
+    <title>Diagnostic Results</title>
+    <text>There are no current results at the time of this document's creation.</text>
+  </section>
+</component>
+        <component>
+  <!--Problems-->
+  <section>
+    <templateId root="2.16.840.1.113883.10.20.22.2.5.1" extension="2015-08-01"/>
+    <!--Problems section template-->
+    <code code="11450-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Problem list"/>
+    <title>Problems</title>
+    <text>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Codes</th>
+        <th>Time</th>
+          <th>Status</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td ID="conditions-desc-0">Hypertension</td>
+          <td ID="conditions-code-0">SNOMED-CT: 38341003<br/></td>
+          <td>October 19th, 1957 20:41 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-1">Cardiac Arrest</td>
+          <td ID="conditions-code-1">SNOMED-CT: 410429000<br/></td>
+          <td>December 3rd, 1982 03:08 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-2">History of cardiac arrest (situation)</td>
+          <td ID="conditions-code-2">SNOMED-CT: 429007001<br/></td>
+          <td>December 3rd, 1982 03:08 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-3">Chronic sinusitis (disorder)</td>
+          <td ID="conditions-code-3">SNOMED-CT: 40055000<br/></td>
+          <td>November 30th, 1985 06:37 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-4">Appendicitis</td>
+          <td ID="conditions-code-4">SNOMED-CT: 74400008<br/></td>
+          <td>April 28th, 2001 13:31 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-5">History of appendectomy</td>
+          <td ID="conditions-code-5">SNOMED-CT: 428251008<br/></td>
+          <td>April 28th, 2001 13:31 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-6">Fracture of ankle</td>
+          <td ID="conditions-code-6">SNOMED-CT: 16114001<br/></td>
+          <td>May 28th, 2010 23:16 - September 3rd, 2010 02:11</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-7">Acute viral pharyngitis (disorder)</td>
+          <td ID="conditions-code-7">SNOMED-CT: 195662009<br/></td>
+          <td>August 2nd, 2010 02:54 - August 16th, 2010 15:02</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-8">Closed fracture of hip</td>
+          <td ID="conditions-code-8">SNOMED-CT: 359817006<br/></td>
+          <td>November 6th, 2016 08:25 - December 31st, 2016 08:06</td>
+            <td></td>
+           
+        </tr>
+    </tbody>
+  </table>
+</text>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="73dc6b40-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19571019204131'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="73dc6d30-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-0"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19571019204131'/>
+            </effectiveTime>
+            <value code="38341003" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Hypertension</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="73dc7210-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19821203030813'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="73dc7370-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-1"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19821203030813'/>
+            </effectiveTime>
+            <value code="410429000" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Cardiac Arrest</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="73dc76f0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19821203030813'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="73dc7830-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-2"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19821203030813'/>
+            </effectiveTime>
+            <value code="429007001" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>History of cardiac arrest (situation)</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="73dc7ba0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19851130063706'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="73dc7cb0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-3"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19851130063706'/>
+            </effectiveTime>
+            <value code="40055000" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Chronic sinusitis (disorder)</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="73dc7fd0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='20010428133148'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="73dc80e0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-4"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='20010428133148'/>
+            </effectiveTime>
+            <value code="74400008" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Appendicitis</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="73dc84a0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='20010428133148'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="73dc85d0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-5"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='20010428133148'/>
+            </effectiveTime>
+            <value code="428251008" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>History of appendectomy</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="73dc8d00-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='20100528231631'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="73dc8f70-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-6"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='20100528231631'/>
+            </effectiveTime>
+            <value code="16114001" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Fracture of ankle</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="73dc93b0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='20100802025410'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="73dc9530-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-7"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='20100802025410'/>
+            </effectiveTime>
+            <value code="195662009" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Acute viral pharyngitis (disorder)</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="73dc9850-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='20161106082500'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="73dc9940-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-8"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='20161106082500'/>
+            </effectiveTime>
+            <value code="359817006" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Closed fracture of hip</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+  </section>
+</component>
+
+        <component>
+  <!--Surgeries-->
+  <section>
+    <templateId root="2.16.840.1.113883.10.20.22.2.7.1" extension="2014-06-09"/>
+    <!--Surgeries section template-->
+    <code code="47519-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="List of surgeries"/>
+    <title>Surgeries</title>
+    <text>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Codes</th>
+        <th>Time</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td ID="procedures-desc-0">Documentation of current medications</td>
+          <td ID="procedures-code-0">SNOMED-CT: 428191000124101<br/></td>
+          <td>September 24th, 2008 03:10 - September 24th, 2008 03:25</td>
+           
+        </tr>
+        <tr>
+          <td ID="procedures-desc-1">Colonoscopy</td>
+          <td ID="procedures-code-1">SNOMED-CT: 73761001<br/></td>
+          <td>December 2nd, 2008 05:26 - December 2nd, 2008 06:01</td>
+           
+        </tr>
+        <tr>
+          <td ID="procedures-desc-2">Bone immobilization</td>
+          <td ID="procedures-code-2">SNOMED-CT: 274474001<br/></td>
+          <td>May 28th, 2010 23:16 - May 28th, 2010 23:49</td>
+           
+        </tr>
+        <tr>
+          <td ID="procedures-desc-3">Bone density scan (procedure)</td>
+          <td ID="procedures-code-3">SNOMED-CT: 312681000<br/></td>
+          <td>May 28th, 2010 23:39 - May 28th, 2010 23:54</td>
+           
+        </tr>
+        <tr>
+          <td ID="procedures-desc-4">Documentation of current medications</td>
+          <td ID="procedures-code-4">SNOMED-CT: 428191000124101<br/></td>
+          <td>July 11th, 2010 09:48 - July 11th, 2010 10:03</td>
+           
+        </tr>
+        <tr>
+          <td ID="procedures-desc-5">Documentation of current medications</td>
+          <td ID="procedures-code-5">SNOMED-CT: 428191000124101<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 08:42</td>
+           
+        </tr>
+        <tr>
+          <td ID="procedures-desc-6">Documentation of current medications</td>
+          <td ID="procedures-code-6">SNOMED-CT: 428191000124101<br/></td>
+          <td>June 26th, 2012 05:54 - June 26th, 2012 06:09</td>
+           
+        </tr>
+        <tr>
+          <td ID="procedures-desc-7">Colonoscopy</td>
+          <td ID="procedures-code-7">SNOMED-CT: 73761001<br/></td>
+          <td>December 2nd, 2013 06:08 - December 2nd, 2013 06:35</td>
+           
+        </tr>
+        <tr>
+          <td ID="procedures-desc-8">Admission to orthopedic department</td>
+          <td ID="procedures-code-8">SNOMED-CT: 305428000<br/></td>
+          <td>November 6th, 2016 08:25 - November 6th, 2016 09:46</td>
+           
+        </tr>
+        <tr>
+          <td ID="procedures-desc-9">Bone density scan (procedure)</td>
+          <td ID="procedures-code-9">SNOMED-CT: 312681000<br/></td>
+          <td>November 6th, 2016 10:04 - November 6th, 2016 10:19</td>
+           
+        </tr>
+    </tbody>
+  </table>
+</text>
+    <entry typeCode="DRIV">
+      <procedure classCode="PROC" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.14"/>
+        <!-- Procedure activity template -->
+        <id root="73dcd8e0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code code="428191000124101" codeSystem="2.16.840.1.113883.6.96" displayName="Documentation of current medications">
+  <originalText><reference value="#procedures-desc-0"/></originalText>
+</code>
+
+        <text>
+          <reference value="#procedures-desc-0"/>
+        </text>
+        <statusCode code="completed"/>
+        <effectiveTime value='20080924031049'/>
+      </procedure>
+    </entry>
+    <entry typeCode="DRIV">
+      <procedure classCode="PROC" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.14"/>
+        <!-- Procedure activity template -->
+        <id root="73dce640-a172-0135-6cb6-60f81dc2d82a"/>
+        <code code="73761001" codeSystem="2.16.840.1.113883.6.96" displayName="Colonoscopy">
+  <originalText><reference value="#procedures-desc-1"/></originalText>
+</code>
+
+        <text>
+          <reference value="#procedures-desc-1"/>
+        </text>
+        <statusCode code="completed"/>
+        <effectiveTime value='20081202052614'/>
+      </procedure>
+    </entry>
+    <entry typeCode="DRIV">
+      <procedure classCode="PROC" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.14"/>
+        <!-- Procedure activity template -->
+        <id root="73dcf520-a172-0135-6cb6-60f81dc2d82a"/>
+        <code code="274474001" codeSystem="2.16.840.1.113883.6.96" displayName="Bone immobilization">
+  <originalText><reference value="#procedures-desc-2"/></originalText>
+</code>
+
+        <text>
+          <reference value="#procedures-desc-2"/>
+        </text>
+        <statusCode code="completed"/>
+        <effectiveTime value='20100528231631'/>
+      </procedure>
+    </entry>
+    <entry typeCode="DRIV">
+      <procedure classCode="PROC" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.14"/>
+        <!-- Procedure activity template -->
+        <id root="73dd02b0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code code="312681000" codeSystem="2.16.840.1.113883.6.96" displayName="Bone density scan (procedure)">
+  <originalText><reference value="#procedures-desc-3"/></originalText>
+</code>
+
+        <text>
+          <reference value="#procedures-desc-3"/>
+        </text>
+        <statusCode code="completed"/>
+        <effectiveTime value='20100528233913'/>
+      </procedure>
+    </entry>
+    <entry typeCode="DRIV">
+      <procedure classCode="PROC" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.14"/>
+        <!-- Procedure activity template -->
+        <id root="73dd0e80-a172-0135-6cb6-60f81dc2d82a"/>
+        <code code="428191000124101" codeSystem="2.16.840.1.113883.6.96" displayName="Documentation of current medications">
+  <originalText><reference value="#procedures-desc-4"/></originalText>
+</code>
+
+        <text>
+          <reference value="#procedures-desc-4"/>
+        </text>
+        <statusCode code="completed"/>
+        <effectiveTime value='20100711094806'/>
+      </procedure>
+    </entry>
+    <entry typeCode="DRIV">
+      <procedure classCode="PROC" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.14"/>
+        <!-- Procedure activity template -->
+        <id root="73dd1970-a172-0135-6cb6-60f81dc2d82a"/>
+        <code code="428191000124101" codeSystem="2.16.840.1.113883.6.96" displayName="Documentation of current medications">
+  <originalText><reference value="#procedures-desc-5"/></originalText>
+</code>
+
+        <text>
+          <reference value="#procedures-desc-5"/>
+        </text>
+        <statusCode code="completed"/>
+        <effectiveTime value='20110611082713'/>
+      </procedure>
+    </entry>
+    <entry typeCode="DRIV">
+      <procedure classCode="PROC" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.14"/>
+        <!-- Procedure activity template -->
+        <id root="73dd28c0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code code="428191000124101" codeSystem="2.16.840.1.113883.6.96" displayName="Documentation of current medications">
+  <originalText><reference value="#procedures-desc-6"/></originalText>
+</code>
+
+        <text>
+          <reference value="#procedures-desc-6"/>
+        </text>
+        <statusCode code="completed"/>
+        <effectiveTime value='20120626055447'/>
+      </procedure>
+    </entry>
+    <entry typeCode="DRIV">
+      <procedure classCode="PROC" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.14"/>
+        <!-- Procedure activity template -->
+        <id root="73dd3850-a172-0135-6cb6-60f81dc2d82a"/>
+        <code code="73761001" codeSystem="2.16.840.1.113883.6.96" displayName="Colonoscopy">
+  <originalText><reference value="#procedures-desc-7"/></originalText>
+</code>
+
+        <text>
+          <reference value="#procedures-desc-7"/>
+        </text>
+        <statusCode code="completed"/>
+        <effectiveTime value='20131202060830'/>
+      </procedure>
+    </entry>
+    <entry typeCode="DRIV">
+      <procedure classCode="PROC" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.14"/>
+        <!-- Procedure activity template -->
+        <id root="73dd43e0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code code="305428000" codeSystem="2.16.840.1.113883.6.96" displayName="Admission to orthopedic department">
+  <originalText><reference value="#procedures-desc-8"/></originalText>
+</code>
+
+        <text>
+          <reference value="#procedures-desc-8"/>
+        </text>
+        <statusCode code="completed"/>
+        <effectiveTime value='20161106082500'/>
+      </procedure>
+    </entry>
+    <entry typeCode="DRIV">
+      <procedure classCode="PROC" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.14"/>
+        <!-- Procedure activity template -->
+        <id root="73dd50f0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code code="312681000" codeSystem="2.16.840.1.113883.6.96" displayName="Bone density scan (procedure)">
+  <originalText><reference value="#procedures-desc-9"/></originalText>
+</code>
+
+        <text>
+          <reference value="#procedures-desc-9"/>
+        </text>
+        <statusCode code="completed"/>
+        <effectiveTime value='20161106100425'/>
+      </procedure>
+    </entry>
+  </section>
+</component>
+        <component>
+  <!--Encounters-->
+  <section>
+    <templateId root="2.16.840.1.113883.10.20.22.2.22" extension="2015-08-01"/> <!-- CCDA Template id -->
+    <!--Encounters section template-->
+    <code code="46240-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of encounters"/>
+    <title>Encounters</title>
+    <text>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Codes</th>
+        <th>Time</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td ID="encounters-desc-0">Outpatient Encounter</td>
+          <td ID="encounters-code-0">ICD-9-CM: V70.0 ICD-10-CM: Z00.00 SNOMED-CT: 185349003<br/></td>
+          <td>September 24th, 2008 03:10 - September 24th, 2008 04:10</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-1">Encounter for 'check-up'</td>
+          <td ID="encounters-code-1">SNOMED-CT: 185349003<br/></td>
+          <td>December 2nd, 2008 05:26 - December 2nd, 2008 06:08</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-2">Outpatient Encounter</td>
+          <td ID="encounters-code-2">ICD-9-CM: V70.0 ICD-10-CM: Z00.00 SNOMED-CT: 185349003<br/></td>
+          <td>September 7th, 2009 18:27 - September 7th, 2009 19:27</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-3">Emergency room admission</td>
+          <td ID="encounters-code-3">SNOMED-CT: 50849002<br/></td>
+          <td>May 28th, 2010 23:16 - May 28th, 2010 23:39</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-4">Outpatient Encounter</td>
+          <td ID="encounters-code-4">ICD-9-CM: V70.0 ICD-10-CM: Z00.00 SNOMED-CT: 185349003<br/></td>
+          <td>July 11th, 2010 09:48 - July 11th, 2010 10:48</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-5">Encounter for symptom</td>
+          <td ID="encounters-code-5">SNOMED-CT: 185345009<br/></td>
+          <td>August 3rd, 2010 07:11 - August 3rd, 2010 07:11</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-6">Encounter for 'check-up'</td>
+          <td ID="encounters-code-6">SNOMED-CT: 185349003<br/></td>
+          <td>September 3rd, 2010 02:11 - September 3rd, 2010 02:11</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-7">Outpatient Encounter</td>
+          <td ID="encounters-code-7">ICD-9-CM: V70.0 ICD-10-CM: Z00.00 SNOMED-CT: 185349003<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 09:27</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-8">Outpatient Encounter</td>
+          <td ID="encounters-code-8">ICD-9-CM: V70.0 ICD-10-CM: Z00.00 SNOMED-CT: 185349003<br/></td>
+          <td>June 26th, 2012 05:54 - June 26th, 2012 06:54</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-9">Outpatient Encounter</td>
+          <td ID="encounters-code-9">ICD-9-CM: V70.0 ICD-10-CM: Z00.00 SNOMED-CT: 185349003<br/></td>
+          <td>July 21st, 2013 07:07 - July 21st, 2013 08:07</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-10">Encounter for 'check-up'</td>
+          <td ID="encounters-code-10">SNOMED-CT: 185349003<br/></td>
+          <td>December 2nd, 2013 06:08 - December 2nd, 2013 06:49</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-11">Outpatient Encounter</td>
+          <td ID="encounters-code-11">ICD-9-CM: V70.0 ICD-10-CM: Z00.00 SNOMED-CT: 185349003<br/></td>
+          <td>July 30th, 2014 18:02 - July 30th, 2014 19:02</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-12">Outpatient Encounter</td>
+          <td ID="encounters-code-12">ICD-9-CM: V70.0 ICD-10-CM: Z00.00 SNOMED-CT: 185349003<br/></td>
+          <td>August 31st, 2015 23:45 - September 1st, 2015 00:45</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-13">Outpatient Encounter</td>
+          <td ID="encounters-code-13">ICD-9-CM: V70.0 ICD-10-CM: Z00.00 SNOMED-CT: 185349003<br/></td>
+          <td>September 9th, 2016 06:22 - September 9th, 2016 07:22</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-14">Emergency room admission</td>
+          <td ID="encounters-code-14">SNOMED-CT: 50849002<br/></td>
+          <td>November 6th, 2016 08:25 - November 6th, 2016 10:04</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-15">Encounter for 'check-up'</td>
+          <td ID="encounters-code-15">SNOMED-CT: 185349003<br/></td>
+          <td>December 31st, 2016 08:06 - December 31st, 2016 08:06</td>
+           
+        </tr>
+        <tr>
+          <td ID="encounters-desc-16">Death Certification</td>
+          <td ID="encounters-code-16">SNOMED-CT: 308646001<br/></td>
+          <td>June 23rd, 2017 02:08 - June 23rd, 2017 02:23</td>
+           
+        </tr>
+    </tbody>
+  </table>
+</text>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73ddae20-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-0"/></originalText>
+  <translation code="V70.0" codeSystem="2.16.840.1.113883.6.103" />
+  <translation code="Z00.00" codeSystem="2.16.840.1.113883.6.90" />
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-0"/>
+        </text>
+        <effectiveTime value='20080924031049'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73ddbb50-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-1"/></originalText>
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-1"/>
+        </text>
+        <effectiveTime value='20081202052614'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73ddc480-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-2"/></originalText>
+  <translation code="V70.0" codeSystem="2.16.840.1.113883.6.103" />
+  <translation code="Z00.00" codeSystem="2.16.840.1.113883.6.90" />
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-2"/>
+        </text>
+        <effectiveTime value='20090907182755'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73ddce00-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-3"/></originalText>
+  <translation code="50849002" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-3"/>
+        </text>
+        <effectiveTime value='20100528231631'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73ddd740-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-4"/></originalText>
+  <translation code="V70.0" codeSystem="2.16.840.1.113883.6.103" />
+  <translation code="Z00.00" codeSystem="2.16.840.1.113883.6.90" />
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-4"/>
+        </text>
+        <effectiveTime value='20100711094806'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73dde0a0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-5"/></originalText>
+  <translation code="185345009" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-5"/>
+        </text>
+        <effectiveTime value='20100803071112'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73dde940-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-6"/></originalText>
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-6"/>
+        </text>
+        <effectiveTime value='20100903021131'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73ddf1d0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-7"/></originalText>
+  <translation code="V70.0" codeSystem="2.16.840.1.113883.6.103" />
+  <translation code="Z00.00" codeSystem="2.16.840.1.113883.6.90" />
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-7"/>
+        </text>
+        <effectiveTime value='20110611082713'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73ddfb60-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-8"/></originalText>
+  <translation code="V70.0" codeSystem="2.16.840.1.113883.6.103" />
+  <translation code="Z00.00" codeSystem="2.16.840.1.113883.6.90" />
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-8"/>
+        </text>
+        <effectiveTime value='20120626055447'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73de04c0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-9"/></originalText>
+  <translation code="V70.0" codeSystem="2.16.840.1.113883.6.103" />
+  <translation code="Z00.00" codeSystem="2.16.840.1.113883.6.90" />
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-9"/>
+        </text>
+        <effectiveTime value='20130721070727'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73de0f80-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-10"/></originalText>
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-10"/>
+        </text>
+        <effectiveTime value='20131202060830'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73de1960-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-11"/></originalText>
+  <translation code="V70.0" codeSystem="2.16.840.1.113883.6.103" />
+  <translation code="Z00.00" codeSystem="2.16.840.1.113883.6.90" />
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-11"/>
+        </text>
+        <effectiveTime value='20140730180208'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73de2390-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-12"/></originalText>
+  <translation code="V70.0" codeSystem="2.16.840.1.113883.6.103" />
+  <translation code="Z00.00" codeSystem="2.16.840.1.113883.6.90" />
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-12"/>
+        </text>
+        <effectiveTime value='20150831234512'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73de2de0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-13"/></originalText>
+  <translation code="V70.0" codeSystem="2.16.840.1.113883.6.103" />
+  <translation code="Z00.00" codeSystem="2.16.840.1.113883.6.90" />
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-13"/>
+        </text>
+        <effectiveTime value='20160909062246'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73de37f0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-14"/></originalText>
+  <translation code="50849002" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-14"/>
+        </text>
+        <effectiveTime value='20161106082500'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73de4020-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-15"/></originalText>
+  <translation code="185349003" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-15"/>
+        </text>
+        <effectiveTime value='20161231080629'/>
+      </encounter>
+    </entry>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="73de48d0-a172-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-16"/></originalText>
+  <translation code="308646001" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-16"/>
+        </text>
+        <effectiveTime value='20170623020813'/>
+      </encounter>
+    </entry>
+  </section>
+</component>
+        <component>
+  <!--Vital Signs-->
+  <section>
+    <templateId root="2.16.840.1.113883.10.20.22.2.4.1" extension="2015-08-01"/>
+    <!--Vital Signs section template-->
+    <code code="8716-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Vital signs"/>
+    <title>Vital Signs</title>
+    <text>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Codes</th>
+        <th>Time</th>
+        
+          <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td ID="vitals-desc-0">Body Height</td>
+          <td ID="vitals-code-0">LOINC: 8302-2<br/></td>
+          <td>September 24th, 2008 03:10 - September 24th, 2008 03:10</td>
+           
+              <td>
+	                175.63545009687206<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-1">Body Weight</td>
+          <td ID="vitals-code-1">LOINC: 29463-7<br/></td>
+          <td>September 24th, 2008 03:10 - September 24th, 2008 03:10</td>
+           
+              <td>
+	                104.70907476182643<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-2">Body Mass Index</td>
+          <td ID="vitals-code-2">LOINC: 39156-5<br/></td>
+          <td>September 24th, 2008 03:10 - September 24th, 2008 03:10</td>
+           
+              <td>
+	                33.94376140310298<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-3">Systolic Blood Pressure</td>
+          <td ID="vitals-code-3">LOINC: 8480-6<br/></td>
+          <td>September 24th, 2008 03:10 - September 24th, 2008 03:10</td>
+           
+              <td>
+	                165<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-4">Diastolic Blood Pressure</td>
+          <td ID="vitals-code-4">LOINC: 8462-4<br/></td>
+          <td>September 24th, 2008 03:10 - September 24th, 2008 03:10</td>
+           
+              <td>
+	                91<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-5">Estimated Glomerular Filtration Rate</td>
+          <td ID="vitals-code-5">LOINC: 33914-3<br/></td>
+          <td>September 24th, 2008 03:10 - September 24th, 2008 03:10</td>
+           
+              <td>
+	                60<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-6">Body Height</td>
+          <td ID="vitals-code-6">LOINC: 8302-2<br/></td>
+          <td>September 7th, 2009 18:27 - September 7th, 2009 18:27</td>
+           
+              <td>
+	                175.63545009687206<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-7">Body Weight</td>
+          <td ID="vitals-code-7">LOINC: 29463-7<br/></td>
+          <td>September 7th, 2009 18:27 - September 7th, 2009 18:27</td>
+           
+              <td>
+	                103.03754135437686<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-8">Body Mass Index</td>
+          <td ID="vitals-code-8">LOINC: 39156-5<br/></td>
+          <td>September 7th, 2009 18:27 - September 7th, 2009 18:27</td>
+           
+              <td>
+	                33.40189689624107<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-9">Systolic Blood Pressure</td>
+          <td ID="vitals-code-9">LOINC: 8480-6<br/></td>
+          <td>September 7th, 2009 18:27 - September 7th, 2009 18:27</td>
+           
+              <td>
+	                140<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-10">Diastolic Blood Pressure</td>
+          <td ID="vitals-code-10">LOINC: 8462-4<br/></td>
+          <td>September 7th, 2009 18:27 - September 7th, 2009 18:27</td>
+           
+              <td>
+	                114<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-11">Estimated Glomerular Filtration Rate</td>
+          <td ID="vitals-code-11">LOINC: 33914-3<br/></td>
+          <td>September 7th, 2009 18:27 - September 7th, 2009 18:27</td>
+           
+              <td>
+	                60<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-12">DXA [T-score] Bone density</td>
+          <td ID="vitals-code-12">LOINC: 38265-5<br/></td>
+          <td>May 28th, 2010 23:39 - May 28th, 2010 23:39</td>
+           
+              <td>
+	                -0.09895097929003394<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-13">Body Height</td>
+          <td ID="vitals-code-13">LOINC: 8302-2<br/></td>
+          <td>July 11th, 2010 09:48 - July 11th, 2010 09:48</td>
+           
+              <td>
+	                175.63545009687206<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-14">Body Weight</td>
+          <td ID="vitals-code-14">LOINC: 29463-7<br/></td>
+          <td>July 11th, 2010 09:48 - July 11th, 2010 09:48</td>
+           
+              <td>
+	                101.32346610036322<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-15">Body Mass Index</td>
+          <td ID="vitals-code-15">LOINC: 39156-5<br/></td>
+          <td>July 11th, 2010 09:48 - July 11th, 2010 09:48</td>
+           
+              <td>
+	                32.8462415093365<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-16">Systolic Blood Pressure</td>
+          <td ID="vitals-code-16">LOINC: 8480-6<br/></td>
+          <td>July 11th, 2010 09:48 - July 11th, 2010 09:48</td>
+           
+              <td>
+	                151<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-17">Diastolic Blood Pressure</td>
+          <td ID="vitals-code-17">LOINC: 8462-4<br/></td>
+          <td>July 11th, 2010 09:48 - July 11th, 2010 09:48</td>
+           
+              <td>
+	                102<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-18">Estimated Glomerular Filtration Rate</td>
+          <td ID="vitals-code-18">LOINC: 33914-3<br/></td>
+          <td>July 11th, 2010 09:48 - July 11th, 2010 09:48</td>
+           
+              <td>
+	                60<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-19">Oral temperature</td>
+          <td ID="vitals-code-19">LOINC: 8331-1<br/></td>
+          <td>August 3rd, 2010 07:11 - August 3rd, 2010 07:11</td>
+           
+              <td>
+	                38<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-20">Body Height</td>
+          <td ID="vitals-code-20">LOINC: 8302-2<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 08:27</td>
+           
+              <td>
+	                175.63545009687206<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-21">Body Weight</td>
+          <td ID="vitals-code-21">LOINC: 29463-7<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 08:27</td>
+           
+              <td>
+	                99.47147695441134<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-22">Body Mass Index</td>
+          <td ID="vitals-code-22">LOINC: 39156-5<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 08:27</td>
+           
+              <td>
+	                32.245878285477275<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-23">Systolic Blood Pressure</td>
+          <td ID="vitals-code-23">LOINC: 8480-6<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 08:27</td>
+           
+              <td>
+	                167<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-24">Diastolic Blood Pressure</td>
+          <td ID="vitals-code-24">LOINC: 8462-4<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 08:27</td>
+           
+              <td>
+	                110<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-25">Total Cholesterol</td>
+          <td ID="vitals-code-25">LOINC: 2093-3<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 08:27</td>
+           
+              <td>
+	                168<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-26">Triglycerides</td>
+          <td ID="vitals-code-26">LOINC: 2571-8<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 08:27</td>
+           
+              <td>
+	                149<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-27">Low Density Lipoprotein Cholesterol</td>
+          <td ID="vitals-code-27">LOINC: 18262-6<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 08:27</td>
+           
+              <td>
+	                68<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-28">High Density Lipoprotein Cholesterol</td>
+          <td ID="vitals-code-28">LOINC: 2085-9<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 08:27</td>
+           
+              <td>
+	                70<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-29">Estimated Glomerular Filtration Rate</td>
+          <td ID="vitals-code-29">LOINC: 33914-3<br/></td>
+          <td>June 11th, 2011 08:27 - June 11th, 2011 08:27</td>
+           
+              <td>
+	                60<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-30">Body Height</td>
+          <td ID="vitals-code-30">LOINC: 8302-2<br/></td>
+          <td>June 26th, 2012 05:54 - June 26th, 2012 05:54</td>
+           
+              <td>
+	                175.63545009687206<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-31">Body Weight</td>
+          <td ID="vitals-code-31">LOINC: 29463-7<br/></td>
+          <td>June 26th, 2012 05:54 - June 26th, 2012 05:54</td>
+           
+              <td>
+	                97.90369260354204<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-32">Body Mass Index</td>
+          <td ID="vitals-code-32">LOINC: 39156-5<br/></td>
+          <td>June 26th, 2012 05:54 - June 26th, 2012 05:54</td>
+           
+              <td>
+	                31.73764632890165<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-33">Systolic Blood Pressure</td>
+          <td ID="vitals-code-33">LOINC: 8480-6<br/></td>
+          <td>June 26th, 2012 05:54 - June 26th, 2012 05:54</td>
+           
+              <td>
+	                155<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-34">Diastolic Blood Pressure</td>
+          <td ID="vitals-code-34">LOINC: 8462-4<br/></td>
+          <td>June 26th, 2012 05:54 - June 26th, 2012 05:54</td>
+           
+              <td>
+	                94<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-35">Estimated Glomerular Filtration Rate</td>
+          <td ID="vitals-code-35">LOINC: 33914-3<br/></td>
+          <td>June 26th, 2012 05:54 - June 26th, 2012 05:54</td>
+           
+              <td>
+	                60<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-36">Body Height</td>
+          <td ID="vitals-code-36">LOINC: 8302-2<br/></td>
+          <td>July 21st, 2013 07:07 - July 21st, 2013 07:07</td>
+           
+              <td>
+	                175.63545009687206<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-37">Body Weight</td>
+          <td ID="vitals-code-37">LOINC: 29463-7<br/></td>
+          <td>July 21st, 2013 07:07 - July 21st, 2013 07:07</td>
+           
+              <td>
+	                96.86724493100442<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-38">Body Mass Index</td>
+          <td ID="vitals-code-38">LOINC: 39156-5<br/></td>
+          <td>July 21st, 2013 07:07 - July 21st, 2013 07:07</td>
+           
+              <td>
+	                31.401658902946053<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-39">Systolic Blood Pressure</td>
+          <td ID="vitals-code-39">LOINC: 8480-6<br/></td>
+          <td>July 21st, 2013 07:07 - July 21st, 2013 07:07</td>
+           
+              <td>
+	                177<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-40">Diastolic Blood Pressure</td>
+          <td ID="vitals-code-40">LOINC: 8462-4<br/></td>
+          <td>July 21st, 2013 07:07 - July 21st, 2013 07:07</td>
+           
+              <td>
+	                101<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-41">Estimated Glomerular Filtration Rate</td>
+          <td ID="vitals-code-41">LOINC: 33914-3<br/></td>
+          <td>July 21st, 2013 07:07 - July 21st, 2013 07:07</td>
+           
+              <td>
+	                60<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-42">Body Height</td>
+          <td ID="vitals-code-42">LOINC: 8302-2<br/></td>
+          <td>July 30th, 2014 18:02 - July 30th, 2014 18:02</td>
+           
+              <td>
+	                175.63545009687206<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-43">Body Weight</td>
+          <td ID="vitals-code-43">LOINC: 29463-7<br/></td>
+          <td>July 30th, 2014 18:02 - July 30th, 2014 18:02</td>
+           
+              <td>
+	                94.92058699356133<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-44">Body Mass Index</td>
+          <td ID="vitals-code-44">LOINC: 39156-5<br/></td>
+          <td>July 30th, 2014 18:02 - July 30th, 2014 18:02</td>
+           
+              <td>
+	                30.770606697467922<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-45">Systolic Blood Pressure</td>
+          <td ID="vitals-code-45">LOINC: 8480-6<br/></td>
+          <td>July 30th, 2014 18:02 - July 30th, 2014 18:02</td>
+           
+              <td>
+	                161<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-46">Diastolic Blood Pressure</td>
+          <td ID="vitals-code-46">LOINC: 8462-4<br/></td>
+          <td>July 30th, 2014 18:02 - July 30th, 2014 18:02</td>
+           
+              <td>
+	                113<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-47">Total Cholesterol</td>
+          <td ID="vitals-code-47">LOINC: 2093-3<br/></td>
+          <td>July 30th, 2014 18:02 - July 30th, 2014 18:02</td>
+           
+              <td>
+	                165<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-48">Triglycerides</td>
+          <td ID="vitals-code-48">LOINC: 2571-8<br/></td>
+          <td>July 30th, 2014 18:02 - July 30th, 2014 18:02</td>
+           
+              <td>
+	                129<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-49">Low Density Lipoprotein Cholesterol</td>
+          <td ID="vitals-code-49">LOINC: 18262-6<br/></td>
+          <td>July 30th, 2014 18:02 - July 30th, 2014 18:02</td>
+           
+              <td>
+	                61<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-50">High Density Lipoprotein Cholesterol</td>
+          <td ID="vitals-code-50">LOINC: 2085-9<br/></td>
+          <td>July 30th, 2014 18:02 - July 30th, 2014 18:02</td>
+           
+              <td>
+	                78<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-51">Estimated Glomerular Filtration Rate</td>
+          <td ID="vitals-code-51">LOINC: 33914-3<br/></td>
+          <td>July 30th, 2014 18:02 - July 30th, 2014 18:02</td>
+           
+              <td>
+	                60<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-52">Body Height</td>
+          <td ID="vitals-code-52">LOINC: 8302-2<br/></td>
+          <td>August 31st, 2015 23:45 - August 31st, 2015 23:45</td>
+           
+              <td>
+	                175.63545009687206<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-53">Body Weight</td>
+          <td ID="vitals-code-53">LOINC: 29463-7<br/></td>
+          <td>August 31st, 2015 23:45 - August 31st, 2015 23:45</td>
+           
+              <td>
+	                93.07972002944452<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-54">Body Mass Index</td>
+          <td ID="vitals-code-54">LOINC: 39156-5<br/></td>
+          <td>August 31st, 2015 23:45 - August 31st, 2015 23:45</td>
+           
+              <td>
+	                30.173848974730255<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-55">Systolic Blood Pressure</td>
+          <td ID="vitals-code-55">LOINC: 8480-6<br/></td>
+          <td>August 31st, 2015 23:45 - August 31st, 2015 23:45</td>
+           
+              <td>
+	                176<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-56">Diastolic Blood Pressure</td>
+          <td ID="vitals-code-56">LOINC: 8462-4<br/></td>
+          <td>August 31st, 2015 23:45 - August 31st, 2015 23:45</td>
+           
+              <td>
+	                105<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-57">Estimated Glomerular Filtration Rate</td>
+          <td ID="vitals-code-57">LOINC: 33914-3<br/></td>
+          <td>August 31st, 2015 23:45 - August 31st, 2015 23:45</td>
+           
+              <td>
+	                60<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-58">Body Height</td>
+          <td ID="vitals-code-58">LOINC: 8302-2<br/></td>
+          <td>September 9th, 2016 06:22 - September 9th, 2016 06:22</td>
+           
+              <td>
+	                175.63545009687206<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-59">Body Weight</td>
+          <td ID="vitals-code-59">LOINC: 29463-7<br/></td>
+          <td>September 9th, 2016 06:22 - September 9th, 2016 06:22</td>
+           
+              <td>
+	                91.77702356859436<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-60">Body Mass Index</td>
+          <td ID="vitals-code-60">LOINC: 39156-5<br/></td>
+          <td>September 9th, 2016 06:22 - September 9th, 2016 06:22</td>
+           
+              <td>
+	                29.751551118041668<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-61">Systolic Blood Pressure</td>
+          <td ID="vitals-code-61">LOINC: 8480-6<br/></td>
+          <td>September 9th, 2016 06:22 - September 9th, 2016 06:22</td>
+           
+              <td>
+	                176<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-62">Diastolic Blood Pressure</td>
+          <td ID="vitals-code-62">LOINC: 8462-4<br/></td>
+          <td>September 9th, 2016 06:22 - September 9th, 2016 06:22</td>
+           
+              <td>
+	                101<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-63">Estimated Glomerular Filtration Rate</td>
+          <td ID="vitals-code-63">LOINC: 33914-3<br/></td>
+          <td>September 9th, 2016 06:22 - September 9th, 2016 06:22</td>
+           
+              <td>
+	                60<br/>
+              </td>
+        </tr>
+        <tr>
+          <td ID="vitals-desc-64">DXA [T-score] Bone density</td>
+          <td ID="vitals-code-64">LOINC: 38265-5<br/></td>
+          <td>November 6th, 2016 10:04 - November 6th, 2016 10:04</td>
+           
+              <td>
+	                0.14590467510710392<br/>
+              </td>
+        </tr>
+    </tbody>
+  </table>
+</text>
+    <entry typeCode="DRIV">
+      <organizer classCode="CLUSTER" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.26" extension="2015-08-01"/>
+        <!-- Vital signs organizer template -->
+        <id root="73df2050-a172-0135-6cb6-60f81dc2d82a"/>
+        <code code="46680005" codeSystem="2.16.840.1.113883.6.96" displayName="Vital signs" codeSystemName="SNOMED CT">
+          <translation code="74728-7" displayName="Vital signs, weight, height, head circumference, oximetry, BMI, and BSA panel" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" />
+        </code>
+        <statusCode code="completed"/>
+        <effectiveTime value="19991114"/>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df20f0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8302-2" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Height</originalText></code>
+            <text>
+              <reference value="#vitals-desc-0"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20080924031049'/>
+                <value xsi:type="PQ" value="175.63545009687206" unit="cm"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df26e0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="29463-7" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Weight</originalText></code>
+            <text>
+              <reference value="#vitals-desc-1"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20080924031049'/>
+                <value xsi:type="PQ" value="104.70907476182643" unit="kg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df2af0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="39156-5" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Mass Index</originalText></code>
+            <text>
+              <reference value="#vitals-desc-2"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20080924031049'/>
+                <value xsi:type="PQ" value="33.94376140310298" unit="kg/m2"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df2ef0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" ><originalText>Systolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-3"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20080924031049'/>
+                <value xsi:type="PQ" value="165" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df3300-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8462-4" codeSystem="2.16.840.1.113883.6.1" ><originalText>Diastolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-4"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20080924031049'/>
+                <value xsi:type="PQ" value="91" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df3760-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="33914-3" codeSystem="2.16.840.1.113883.6.1" ><originalText>Estimated Glomerular Filtration Rate</originalText></code>
+            <text>
+              <reference value="#vitals-desc-5"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20080924031049'/>
+                <value xsi:type="PQ" value="60" unit="mL/min/{1.73_m2}"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df3b90-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8302-2" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Height</originalText></code>
+            <text>
+              <reference value="#vitals-desc-6"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20090907182755'/>
+                <value xsi:type="PQ" value="175.63545009687206" unit="cm"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df3f60-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="29463-7" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Weight</originalText></code>
+            <text>
+              <reference value="#vitals-desc-7"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20090907182755'/>
+                <value xsi:type="PQ" value="103.03754135437686" unit="kg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df4310-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="39156-5" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Mass Index</originalText></code>
+            <text>
+              <reference value="#vitals-desc-8"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20090907182755'/>
+                <value xsi:type="PQ" value="33.40189689624107" unit="kg/m2"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df4730-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" ><originalText>Systolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-9"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20090907182755'/>
+                <value xsi:type="PQ" value="140" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df4ab0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8462-4" codeSystem="2.16.840.1.113883.6.1" ><originalText>Diastolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-10"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20090907182755'/>
+                <value xsi:type="PQ" value="114" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df4e70-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="33914-3" codeSystem="2.16.840.1.113883.6.1" ><originalText>Estimated Glomerular Filtration Rate</originalText></code>
+            <text>
+              <reference value="#vitals-desc-11"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20090907182755'/>
+                <value xsi:type="PQ" value="60" unit="mL/min/{1.73_m2}"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df5230-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="38265-5" codeSystem="2.16.840.1.113883.6.1" ><originalText>DXA [T-score] Bone density</originalText></code>
+            <text>
+              <reference value="#vitals-desc-12"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20100528233913'/>
+                <value xsi:type="PQ" value="-0.09895097929003394" unit="{T-score}"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df55f0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8302-2" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Height</originalText></code>
+            <text>
+              <reference value="#vitals-desc-13"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20100711094806'/>
+                <value xsi:type="PQ" value="175.63545009687206" unit="cm"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df59d0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="29463-7" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Weight</originalText></code>
+            <text>
+              <reference value="#vitals-desc-14"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20100711094806'/>
+                <value xsi:type="PQ" value="101.32346610036322" unit="kg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df5db0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="39156-5" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Mass Index</originalText></code>
+            <text>
+              <reference value="#vitals-desc-15"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20100711094806'/>
+                <value xsi:type="PQ" value="32.8462415093365" unit="kg/m2"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df6140-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" ><originalText>Systolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-16"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20100711094806'/>
+                <value xsi:type="PQ" value="151" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df64c0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8462-4" codeSystem="2.16.840.1.113883.6.1" ><originalText>Diastolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-17"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20100711094806'/>
+                <value xsi:type="PQ" value="102" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df6840-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="33914-3" codeSystem="2.16.840.1.113883.6.1" ><originalText>Estimated Glomerular Filtration Rate</originalText></code>
+            <text>
+              <reference value="#vitals-desc-18"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20100711094806'/>
+                <value xsi:type="PQ" value="60" unit="mL/min/{1.73_m2}"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df6ba0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8331-1" codeSystem="2.16.840.1.113883.6.1" ><originalText>Oral temperature</originalText></code>
+            <text>
+              <reference value="#vitals-desc-19"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20100803071112'/>
+                <value xsi:type="PQ" value="38" unit="Cel"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df6f10-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8302-2" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Height</originalText></code>
+            <text>
+              <reference value="#vitals-desc-20"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20110611082713'/>
+                <value xsi:type="PQ" value="175.63545009687206" unit="cm"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df72f0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="29463-7" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Weight</originalText></code>
+            <text>
+              <reference value="#vitals-desc-21"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20110611082713'/>
+                <value xsi:type="PQ" value="99.47147695441134" unit="kg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df7670-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="39156-5" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Mass Index</originalText></code>
+            <text>
+              <reference value="#vitals-desc-22"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20110611082713'/>
+                <value xsi:type="PQ" value="32.245878285477275" unit="kg/m2"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df7a20-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" ><originalText>Systolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-23"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20110611082713'/>
+                <value xsi:type="PQ" value="167" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df7d90-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8462-4" codeSystem="2.16.840.1.113883.6.1" ><originalText>Diastolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-24"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20110611082713'/>
+                <value xsi:type="PQ" value="110" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df8160-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="2093-3" codeSystem="2.16.840.1.113883.6.1" ><originalText>Total Cholesterol</originalText></code>
+            <text>
+              <reference value="#vitals-desc-25"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20110611082713'/>
+                <value xsi:type="PQ" value="168" unit="mg/dL"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df84e0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="2571-8" codeSystem="2.16.840.1.113883.6.1" ><originalText>Triglycerides</originalText></code>
+            <text>
+              <reference value="#vitals-desc-26"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20110611082713'/>
+                <value xsi:type="PQ" value="149" unit="mg/dL"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df8870-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="18262-6" codeSystem="2.16.840.1.113883.6.1" ><originalText>Low Density Lipoprotein Cholesterol</originalText></code>
+            <text>
+              <reference value="#vitals-desc-27"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20110611082713'/>
+                <value xsi:type="PQ" value="68" unit="mg/dL"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df8b90-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="2085-9" codeSystem="2.16.840.1.113883.6.1" ><originalText>High Density Lipoprotein Cholesterol</originalText></code>
+            <text>
+              <reference value="#vitals-desc-28"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20110611082713'/>
+                <value xsi:type="PQ" value="70" unit="mg/dL"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df8f10-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="33914-3" codeSystem="2.16.840.1.113883.6.1" ><originalText>Estimated Glomerular Filtration Rate</originalText></code>
+            <text>
+              <reference value="#vitals-desc-29"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20110611082713'/>
+                <value xsi:type="PQ" value="60" unit="mL/min/{1.73_m2}"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df9280-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8302-2" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Height</originalText></code>
+            <text>
+              <reference value="#vitals-desc-30"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20120626055447'/>
+                <value xsi:type="PQ" value="175.63545009687206" unit="cm"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df9620-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="29463-7" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Weight</originalText></code>
+            <text>
+              <reference value="#vitals-desc-31"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20120626055447'/>
+                <value xsi:type="PQ" value="97.90369260354204" unit="kg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df9a00-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="39156-5" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Mass Index</originalText></code>
+            <text>
+              <reference value="#vitals-desc-32"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20120626055447'/>
+                <value xsi:type="PQ" value="31.73764632890165" unit="kg/m2"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73df9da0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" ><originalText>Systolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-33"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20120626055447'/>
+                <value xsi:type="PQ" value="155" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfa140-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8462-4" codeSystem="2.16.840.1.113883.6.1" ><originalText>Diastolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-34"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20120626055447'/>
+                <value xsi:type="PQ" value="94" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfa4d0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="33914-3" codeSystem="2.16.840.1.113883.6.1" ><originalText>Estimated Glomerular Filtration Rate</originalText></code>
+            <text>
+              <reference value="#vitals-desc-35"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20120626055447'/>
+                <value xsi:type="PQ" value="60" unit="mL/min/{1.73_m2}"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfa810-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8302-2" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Height</originalText></code>
+            <text>
+              <reference value="#vitals-desc-36"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20130721070727'/>
+                <value xsi:type="PQ" value="175.63545009687206" unit="cm"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfabf0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="29463-7" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Weight</originalText></code>
+            <text>
+              <reference value="#vitals-desc-37"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20130721070727'/>
+                <value xsi:type="PQ" value="96.86724493100442" unit="kg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfafb0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="39156-5" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Mass Index</originalText></code>
+            <text>
+              <reference value="#vitals-desc-38"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20130721070727'/>
+                <value xsi:type="PQ" value="31.401658902946053" unit="kg/m2"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfb370-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" ><originalText>Systolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-39"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20130721070727'/>
+                <value xsi:type="PQ" value="177" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfb730-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8462-4" codeSystem="2.16.840.1.113883.6.1" ><originalText>Diastolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-40"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20130721070727'/>
+                <value xsi:type="PQ" value="101" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfbb30-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="33914-3" codeSystem="2.16.840.1.113883.6.1" ><originalText>Estimated Glomerular Filtration Rate</originalText></code>
+            <text>
+              <reference value="#vitals-desc-41"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20130721070727'/>
+                <value xsi:type="PQ" value="60" unit="mL/min/{1.73_m2}"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfbf20-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8302-2" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Height</originalText></code>
+            <text>
+              <reference value="#vitals-desc-42"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20140730180208'/>
+                <value xsi:type="PQ" value="175.63545009687206" unit="cm"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfc2b0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="29463-7" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Weight</originalText></code>
+            <text>
+              <reference value="#vitals-desc-43"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20140730180208'/>
+                <value xsi:type="PQ" value="94.92058699356133" unit="kg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfc630-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="39156-5" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Mass Index</originalText></code>
+            <text>
+              <reference value="#vitals-desc-44"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20140730180208'/>
+                <value xsi:type="PQ" value="30.770606697467922" unit="kg/m2"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfc9d0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" ><originalText>Systolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-45"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20140730180208'/>
+                <value xsi:type="PQ" value="161" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfcd60-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8462-4" codeSystem="2.16.840.1.113883.6.1" ><originalText>Diastolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-46"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20140730180208'/>
+                <value xsi:type="PQ" value="113" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfd160-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="2093-3" codeSystem="2.16.840.1.113883.6.1" ><originalText>Total Cholesterol</originalText></code>
+            <text>
+              <reference value="#vitals-desc-47"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20140730180208'/>
+                <value xsi:type="PQ" value="165" unit="mg/dL"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfd480-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="2571-8" codeSystem="2.16.840.1.113883.6.1" ><originalText>Triglycerides</originalText></code>
+            <text>
+              <reference value="#vitals-desc-48"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20140730180208'/>
+                <value xsi:type="PQ" value="129" unit="mg/dL"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfd7f0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="18262-6" codeSystem="2.16.840.1.113883.6.1" ><originalText>Low Density Lipoprotein Cholesterol</originalText></code>
+            <text>
+              <reference value="#vitals-desc-49"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20140730180208'/>
+                <value xsi:type="PQ" value="61" unit="mg/dL"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfdb90-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="2085-9" codeSystem="2.16.840.1.113883.6.1" ><originalText>High Density Lipoprotein Cholesterol</originalText></code>
+            <text>
+              <reference value="#vitals-desc-50"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20140730180208'/>
+                <value xsi:type="PQ" value="78" unit="mg/dL"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfdf00-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="33914-3" codeSystem="2.16.840.1.113883.6.1" ><originalText>Estimated Glomerular Filtration Rate</originalText></code>
+            <text>
+              <reference value="#vitals-desc-51"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20140730180208'/>
+                <value xsi:type="PQ" value="60" unit="mL/min/{1.73_m2}"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfe260-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8302-2" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Height</originalText></code>
+            <text>
+              <reference value="#vitals-desc-52"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20150831234512'/>
+                <value xsi:type="PQ" value="175.63545009687206" unit="cm"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfe600-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="29463-7" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Weight</originalText></code>
+            <text>
+              <reference value="#vitals-desc-53"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20150831234512'/>
+                <value xsi:type="PQ" value="93.07972002944452" unit="kg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfe9c0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="39156-5" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Mass Index</originalText></code>
+            <text>
+              <reference value="#vitals-desc-54"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20150831234512'/>
+                <value xsi:type="PQ" value="30.173848974730255" unit="kg/m2"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfedc0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" ><originalText>Systolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-55"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20150831234512'/>
+                <value xsi:type="PQ" value="176" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dff140-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8462-4" codeSystem="2.16.840.1.113883.6.1" ><originalText>Diastolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-56"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20150831234512'/>
+                <value xsi:type="PQ" value="105" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dff4e0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="33914-3" codeSystem="2.16.840.1.113883.6.1" ><originalText>Estimated Glomerular Filtration Rate</originalText></code>
+            <text>
+              <reference value="#vitals-desc-57"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20150831234512'/>
+                <value xsi:type="PQ" value="60" unit="mL/min/{1.73_m2}"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dff8a0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8302-2" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Height</originalText></code>
+            <text>
+              <reference value="#vitals-desc-58"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20160909062246'/>
+                <value xsi:type="PQ" value="175.63545009687206" unit="cm"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dffc20-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="29463-7" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Weight</originalText></code>
+            <text>
+              <reference value="#vitals-desc-59"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20160909062246'/>
+                <value xsi:type="PQ" value="91.77702356859436" unit="kg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73dfffd0-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="39156-5" codeSystem="2.16.840.1.113883.6.1" ><originalText>Body Mass Index</originalText></code>
+            <text>
+              <reference value="#vitals-desc-60"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20160909062246'/>
+                <value xsi:type="PQ" value="29.751551118041668" unit="kg/m2"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73e00370-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8480-6" codeSystem="2.16.840.1.113883.6.1" ><originalText>Systolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-61"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20160909062246'/>
+                <value xsi:type="PQ" value="176" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73e00700-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="8462-4" codeSystem="2.16.840.1.113883.6.1" ><originalText>Diastolic Blood Pressure</originalText></code>
+            <text>
+              <reference value="#vitals-desc-62"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20160909062246'/>
+                <value xsi:type="PQ" value="101" unit="mmHg"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73e00a90-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="33914-3" codeSystem="2.16.840.1.113883.6.1" ><originalText>Estimated Glomerular Filtration Rate</originalText></code>
+            <text>
+              <reference value="#vitals-desc-63"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20160909062246'/>
+                <value xsi:type="PQ" value="60" unit="mL/min/{1.73_m2}"/>
+          </observation>
+        </component>
+        <component>
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.27" extension="2014-06-09"/>
+            <!-- Result observation template -->
+            <id root="73e00e20-a172-0135-6cb6-60f81dc2d82a"/>
+            <code code="38265-5" codeSystem="2.16.840.1.113883.6.1" ><originalText>DXA [T-score] Bone density</originalText></code>
+            <text>
+              <reference value="#vitals-desc-64"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime value='20161106100425'/>
+                <value xsi:type="PQ" value="0.14590467510710392" unit="{T-score}"/>
+          </observation>
+        </component>
+      </organizer>
+    </entry>
+  </section>
+</component>
+              <component>
+        <!--Immunizations-->
+        <section>
+		      <templateId root="2.16.840.1.113883.10.20.22.2.2" extension="2015-08-01"/>
+          <!--Immunizations section template-->
+          <code code="11369-6" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of immunizations"/>
+          <title>Immunizations</title>
+          <text>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Codes</th>
+        <th>Time</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td ID="immunizations-desc-0">[&quot;Influenza, seasonal, injectable, preservative free&quot;]</td>
+          <td ID="immunizations-code-0">CVX: 140<br/></td>
+          <td>September 24th, 2008 03:10</td>
+           
+        </tr>
+        <tr>
+          <td ID="immunizations-desc-1">[&quot;Influenza, seasonal, injectable, preservative free&quot;]</td>
+          <td ID="immunizations-code-1">CVX: 140<br/></td>
+          <td>September 7th, 2009 18:27</td>
+           
+        </tr>
+        <tr>
+          <td ID="immunizations-desc-2">[&quot;Influenza, seasonal, injectable, preservative free&quot;]</td>
+          <td ID="immunizations-code-2">CVX: 140<br/></td>
+          <td>July 11th, 2010 09:48</td>
+           
+        </tr>
+        <tr>
+          <td ID="immunizations-desc-3">[&quot;Td (adult) preservative free&quot;]</td>
+          <td ID="immunizations-code-3">CVX: 113<br/></td>
+          <td>July 11th, 2010 09:48</td>
+           
+        </tr>
+        <tr>
+          <td ID="immunizations-desc-4">[&quot;Influenza, seasonal, injectable, preservative free&quot;]</td>
+          <td ID="immunizations-code-4">CVX: 140<br/></td>
+          <td>June 11th, 2011 08:27</td>
+           
+        </tr>
+        <tr>
+          <td ID="immunizations-desc-5">[&quot;Influenza, seasonal, injectable, preservative free&quot;]</td>
+          <td ID="immunizations-code-5">CVX: 140<br/></td>
+          <td>June 26th, 2012 05:54</td>
+           
+        </tr>
+        <tr>
+          <td ID="immunizations-desc-6">[&quot;Influenza, seasonal, injectable, preservative free&quot;]</td>
+          <td ID="immunizations-code-6">CVX: 140<br/></td>
+          <td>July 21st, 2013 07:07</td>
+           
+        </tr>
+        <tr>
+          <td ID="immunizations-desc-7">[&quot;Influenza, seasonal, injectable, preservative free&quot;]</td>
+          <td ID="immunizations-code-7">CVX: 140<br/></td>
+          <td>July 30th, 2014 18:02</td>
+           
+        </tr>
+        <tr>
+          <td ID="immunizations-desc-8">[&quot;Influenza, seasonal, injectable, preservative free&quot;]</td>
+          <td ID="immunizations-code-8">CVX: 140<br/></td>
+          <td>August 31st, 2015 23:45</td>
+           
+        </tr>
+        <tr>
+          <td ID="immunizations-desc-9">[&quot;Influenza, seasonal, injectable, preservative free&quot;]</td>
+          <td ID="immunizations-code-9">CVX: 140<br/></td>
+          <td>September 9th, 2016 06:22</td>
+           
+        </tr>
+    </tbody>
+  </table>
+</text>
+          <entry typeCode="DRIV">
+            <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+			        <templateId root="2.16.840.1.113883.10.20.22.4.52"/>
+              <!-- Medication activity template -->
+              <id root="73e04160-a172-0135-6cb6-60f81dc2d82a"/>
+              <code code='IMMUNIZ' codeSystem='2.16.840.1.113883.5.4' codeSystemName='ActCode'/>
+              <text>
+                <reference value="#immunizations-desc-0"/>
+              </text>
+              <statusCode code="completed"/>
+              <effectiveTime value='20080924031049'/>
+              <doseQuantity nullFlavor="UNK"/>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.54"/>
+                  <!-- Product template -->
+                  <manufacturedMaterial>
+                    <code code="140" codeSystem="2.16.840.1.113883.12.292" displayName="[&quot;Influenza, seasonal, injectable, preservative free&quot;]">
+  <originalText><reference value="#immunizations-desc-0"/></originalText>
+</code>
+
+                    <name>[&quot;Influenza, seasonal, injectable, preservative free&quot;]</name>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+            </substanceAdministration>
+          </entry>
+          <entry typeCode="DRIV">
+            <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+			        <templateId root="2.16.840.1.113883.10.20.22.4.52"/>
+              <!-- Medication activity template -->
+              <id root="73e04e00-a172-0135-6cb6-60f81dc2d82a"/>
+              <code code='IMMUNIZ' codeSystem='2.16.840.1.113883.5.4' codeSystemName='ActCode'/>
+              <text>
+                <reference value="#immunizations-desc-1"/>
+              </text>
+              <statusCode code="completed"/>
+              <effectiveTime value='20090907182755'/>
+              <doseQuantity nullFlavor="UNK"/>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.54"/>
+                  <!-- Product template -->
+                  <manufacturedMaterial>
+                    <code code="140" codeSystem="2.16.840.1.113883.12.292" displayName="[&quot;Influenza, seasonal, injectable, preservative free&quot;]">
+  <originalText><reference value="#immunizations-desc-1"/></originalText>
+</code>
+
+                    <name>[&quot;Influenza, seasonal, injectable, preservative free&quot;]</name>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+            </substanceAdministration>
+          </entry>
+          <entry typeCode="DRIV">
+            <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+			        <templateId root="2.16.840.1.113883.10.20.22.4.52"/>
+              <!-- Medication activity template -->
+              <id root="73e05900-a172-0135-6cb6-60f81dc2d82a"/>
+              <code code='IMMUNIZ' codeSystem='2.16.840.1.113883.5.4' codeSystemName='ActCode'/>
+              <text>
+                <reference value="#immunizations-desc-2"/>
+              </text>
+              <statusCode code="completed"/>
+              <effectiveTime value='20100711094806'/>
+              <doseQuantity nullFlavor="UNK"/>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.54"/>
+                  <!-- Product template -->
+                  <manufacturedMaterial>
+                    <code code="140" codeSystem="2.16.840.1.113883.12.292" displayName="[&quot;Influenza, seasonal, injectable, preservative free&quot;]">
+  <originalText><reference value="#immunizations-desc-2"/></originalText>
+</code>
+
+                    <name>[&quot;Influenza, seasonal, injectable, preservative free&quot;]</name>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+            </substanceAdministration>
+          </entry>
+          <entry typeCode="DRIV">
+            <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+			        <templateId root="2.16.840.1.113883.10.20.22.4.52"/>
+              <!-- Medication activity template -->
+              <id root="73e062b0-a172-0135-6cb6-60f81dc2d82a"/>
+              <code code='IMMUNIZ' codeSystem='2.16.840.1.113883.5.4' codeSystemName='ActCode'/>
+              <text>
+                <reference value="#immunizations-desc-3"/>
+              </text>
+              <statusCode code="completed"/>
+              <effectiveTime value='20100711094806'/>
+              <doseQuantity nullFlavor="UNK"/>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.54"/>
+                  <!-- Product template -->
+                  <manufacturedMaterial>
+                    <code code="113" codeSystem="2.16.840.1.113883.12.292" displayName="[&quot;Td (adult) preservative free&quot;]">
+  <originalText><reference value="#immunizations-desc-3"/></originalText>
+</code>
+
+                    <name>[&quot;Td (adult) preservative free&quot;]</name>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+            </substanceAdministration>
+          </entry>
+          <entry typeCode="DRIV">
+            <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+			        <templateId root="2.16.840.1.113883.10.20.22.4.52"/>
+              <!-- Medication activity template -->
+              <id root="73e06c90-a172-0135-6cb6-60f81dc2d82a"/>
+              <code code='IMMUNIZ' codeSystem='2.16.840.1.113883.5.4' codeSystemName='ActCode'/>
+              <text>
+                <reference value="#immunizations-desc-4"/>
+              </text>
+              <statusCode code="completed"/>
+              <effectiveTime value='20110611082713'/>
+              <doseQuantity nullFlavor="UNK"/>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.54"/>
+                  <!-- Product template -->
+                  <manufacturedMaterial>
+                    <code code="140" codeSystem="2.16.840.1.113883.12.292" displayName="[&quot;Influenza, seasonal, injectable, preservative free&quot;]">
+  <originalText><reference value="#immunizations-desc-4"/></originalText>
+</code>
+
+                    <name>[&quot;Influenza, seasonal, injectable, preservative free&quot;]</name>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+            </substanceAdministration>
+          </entry>
+          <entry typeCode="DRIV">
+            <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+			        <templateId root="2.16.840.1.113883.10.20.22.4.52"/>
+              <!-- Medication activity template -->
+              <id root="73e075d0-a172-0135-6cb6-60f81dc2d82a"/>
+              <code code='IMMUNIZ' codeSystem='2.16.840.1.113883.5.4' codeSystemName='ActCode'/>
+              <text>
+                <reference value="#immunizations-desc-5"/>
+              </text>
+              <statusCode code="completed"/>
+              <effectiveTime value='20120626055447'/>
+              <doseQuantity nullFlavor="UNK"/>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.54"/>
+                  <!-- Product template -->
+                  <manufacturedMaterial>
+                    <code code="140" codeSystem="2.16.840.1.113883.12.292" displayName="[&quot;Influenza, seasonal, injectable, preservative free&quot;]">
+  <originalText><reference value="#immunizations-desc-5"/></originalText>
+</code>
+
+                    <name>[&quot;Influenza, seasonal, injectable, preservative free&quot;]</name>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+            </substanceAdministration>
+          </entry>
+          <entry typeCode="DRIV">
+            <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+			        <templateId root="2.16.840.1.113883.10.20.22.4.52"/>
+              <!-- Medication activity template -->
+              <id root="73e07f40-a172-0135-6cb6-60f81dc2d82a"/>
+              <code code='IMMUNIZ' codeSystem='2.16.840.1.113883.5.4' codeSystemName='ActCode'/>
+              <text>
+                <reference value="#immunizations-desc-6"/>
+              </text>
+              <statusCode code="completed"/>
+              <effectiveTime value='20130721070727'/>
+              <doseQuantity nullFlavor="UNK"/>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.54"/>
+                  <!-- Product template -->
+                  <manufacturedMaterial>
+                    <code code="140" codeSystem="2.16.840.1.113883.12.292" displayName="[&quot;Influenza, seasonal, injectable, preservative free&quot;]">
+  <originalText><reference value="#immunizations-desc-6"/></originalText>
+</code>
+
+                    <name>[&quot;Influenza, seasonal, injectable, preservative free&quot;]</name>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+            </substanceAdministration>
+          </entry>
+          <entry typeCode="DRIV">
+            <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+			        <templateId root="2.16.840.1.113883.10.20.22.4.52"/>
+              <!-- Medication activity template -->
+              <id root="73e088f0-a172-0135-6cb6-60f81dc2d82a"/>
+              <code code='IMMUNIZ' codeSystem='2.16.840.1.113883.5.4' codeSystemName='ActCode'/>
+              <text>
+                <reference value="#immunizations-desc-7"/>
+              </text>
+              <statusCode code="completed"/>
+              <effectiveTime value='20140730180208'/>
+              <doseQuantity nullFlavor="UNK"/>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.54"/>
+                  <!-- Product template -->
+                  <manufacturedMaterial>
+                    <code code="140" codeSystem="2.16.840.1.113883.12.292" displayName="[&quot;Influenza, seasonal, injectable, preservative free&quot;]">
+  <originalText><reference value="#immunizations-desc-7"/></originalText>
+</code>
+
+                    <name>[&quot;Influenza, seasonal, injectable, preservative free&quot;]</name>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+            </substanceAdministration>
+          </entry>
+          <entry typeCode="DRIV">
+            <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+			        <templateId root="2.16.840.1.113883.10.20.22.4.52"/>
+              <!-- Medication activity template -->
+              <id root="73e09310-a172-0135-6cb6-60f81dc2d82a"/>
+              <code code='IMMUNIZ' codeSystem='2.16.840.1.113883.5.4' codeSystemName='ActCode'/>
+              <text>
+                <reference value="#immunizations-desc-8"/>
+              </text>
+              <statusCode code="completed"/>
+              <effectiveTime value='20150831234512'/>
+              <doseQuantity nullFlavor="UNK"/>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.54"/>
+                  <!-- Product template -->
+                  <manufacturedMaterial>
+                    <code code="140" codeSystem="2.16.840.1.113883.12.292" displayName="[&quot;Influenza, seasonal, injectable, preservative free&quot;]">
+  <originalText><reference value="#immunizations-desc-8"/></originalText>
+</code>
+
+                    <name>[&quot;Influenza, seasonal, injectable, preservative free&quot;]</name>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+            </substanceAdministration>
+          </entry>
+          <entry typeCode="DRIV">
+            <substanceAdministration classCode="SBADM" moodCode="EVN" negationInd="false">
+			        <templateId root="2.16.840.1.113883.10.20.22.4.52"/>
+              <!-- Medication activity template -->
+              <id root="73e09ca0-a172-0135-6cb6-60f81dc2d82a"/>
+              <code code='IMMUNIZ' codeSystem='2.16.840.1.113883.5.4' codeSystemName='ActCode'/>
+              <text>
+                <reference value="#immunizations-desc-9"/>
+              </text>
+              <statusCode code="completed"/>
+              <effectiveTime value='20160909062246'/>
+              <doseQuantity nullFlavor="UNK"/>
+              <consumable>
+                <manufacturedProduct classCode="MANU">
+                  <templateId root="2.16.840.1.113883.10.20.22.4.54"/>
+                  <!-- Product template -->
+                  <manufacturedMaterial>
+                    <code code="140" codeSystem="2.16.840.1.113883.12.292" displayName="[&quot;Influenza, seasonal, injectable, preservative free&quot;]">
+  <originalText><reference value="#immunizations-desc-9"/></originalText>
+</code>
+
+                    <name>[&quot;Influenza, seasonal, injectable, preservative free&quot;]</name>
+                  </manufacturedMaterial>
+                </manufacturedProduct>
+              </consumable>
+            </substanceAdministration>
+          </entry>
+        </section>
+      </component>
+        <component>
+  <!--Plan of Care-->
+  <section>
+    <templateId root="2.16.840.1.113883.10.20.22.2.10" extension="2014-06-09"/>
+    <!--Plan of Care section template-->
+    <code code="18776-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Treatment plan"/>
+    <title>Plan of Care</title>
+    <text>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Codes</th>
+        <th>Time</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td ID="plan_of_care-desc-0">Angina self management plan</td>
+          <td ID="plan_of_care-code-0">SNOMED-CT: 698358001<br/></td>
+          <td>September 9th, 2016 06:22 - UNK</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-1">Exercise therapy</td>
+          <td ID="plan_of_care-code-1">SNOMED-CT: 229065009<br/></td>
+          <td>September 9th, 2016 06:22 - UNK</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-2">Stress management</td>
+          <td ID="plan_of_care-code-2">SNOMED-CT: 226060000<br/></td>
+          <td>September 9th, 2016 06:22 - UNK</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-3">Smoking cessation therapy</td>
+          <td ID="plan_of_care-code-3">SNOMED-CT: 710081004<br/></td>
+          <td>September 9th, 2016 06:22 - UNK</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-4">Healthy diet</td>
+          <td ID="plan_of_care-code-4">SNOMED-CT: 226234005<br/></td>
+          <td>September 9th, 2016 06:22 - UNK</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-5">Fracture care</td>
+          <td ID="plan_of_care-code-5">SNOMED-CT: 385691007<br/></td>
+          <td>May 28th, 2010 23:39 - September 3rd, 2010 02:11</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-6">Recommendation to rest</td>
+          <td ID="plan_of_care-code-6">SNOMED-CT: 183051005<br/></td>
+          <td>May 28th, 2010 23:39 - September 3rd, 2010 02:11</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-7">Physical activity target light exercise</td>
+          <td ID="plan_of_care-code-7">SNOMED-CT: 408580007<br/></td>
+          <td>May 28th, 2010 23:39 - September 3rd, 2010 02:11</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-8">Fracture care</td>
+          <td ID="plan_of_care-code-8">SNOMED-CT: 385691007<br/></td>
+          <td>November 6th, 2016 10:04 - December 31st, 2016 08:06</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-9">Recommendation to rest</td>
+          <td ID="plan_of_care-code-9">SNOMED-CT: 183051005<br/></td>
+          <td>November 6th, 2016 10:04 - December 31st, 2016 08:06</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-10">Physical activity target light exercise</td>
+          <td ID="plan_of_care-code-10">SNOMED-CT: 408580007<br/></td>
+          <td>November 6th, 2016 10:04 - December 31st, 2016 08:06</td>
+           
+        </tr>
+    </tbody>
+  </table>
+</text>
+  </section>
+</component>
+        <component>
+  <!--Social History - CCDA-->
+  <section>
+    <templateId root="2.16.840.1.113883.10.20.22.2.17" extension="2015-08-01"/>
+    <!-- Social history section template -->
+    <code code="29762-2" codeSystem="2.16.840.1.113883.6.1"/>
+    <title>Social History</title>
+    <text>There is no current social history at the time of this document's creation.</text>
+  </section>
+</component>
+
+    </structuredBody>
+  </component>
+</ClinicalDocument>

@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 http://xreg2.nist.gov:8080/hitspValidation/schema/cdar2c32/infrastructure/cda/C32_CDA.xsd">
+  <realmCode code="US"/>
+  <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+  <templateId root="2.16.840.1.113883.10.20.22.1.1" extension="2015-08-01"/>
+  <templateId root="2.16.840.1.113883.10.20.22.1.2" extension="2015-08-01"/> 
+  <id root="2.16.840.1.113883.19.5" extension="59fa32fd8b25af79322fe3f8" assigningAuthorityName="Cypress Project"/>
+  <code code="34133-9" displayName="Summarization of episode note" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+  <title>Cypress C-CDA R2.1 Patient Test Record: Ashley4 Cassin621</title>
+  <effectiveTime value="20171101204757"/>
+  <confidentialityCode code="N"/>
+  <languageCode code="en-US"/>
+  <recordTarget>
+    <patientRole>
+      <id root="Cypress" extension="59fa32fd8b25af79322fe3f8"/>
+      <addr use="HP">
+        <streetAddressLine>202 Burlington Rd.</streetAddressLine>
+        <city>Bedford</city>
+        <state>MA</state>
+        <postalCode>01730</postalCode>
+      </addr>
+      <telecom value="tel:+1-781-271-3000"/>
+      <patient>
+        <name>
+          <given>Ashley4</given>
+          <family>Cassin621</family>
+        </name>
+        <administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1" codeSystemName="HL7 AdministrativeGender"/>
+        <birthTime value="19220109155713"/>
+          <raceCode code="2106-3" displayName="White" codeSystemName="CDC Race and Ethnicity" codeSystem="2.16.840.1.113883.6.238"/>
+          <ethnicGroupCode code="2135-2" displayName="Hispanic" codeSystemName="CDC Race and Ethnicity" codeSystem="2.16.840.1.113883.6.238"/>
+          <languageCommunication>
+            <languageCode code="eng"/>
+          </languageCommunication>
+      </patient>
+    </patientRole>
+  </recordTarget>
+  <author>
+    <time value="20171101204757"/>
+    <assignedAuthor>
+      <id nullFlavor="NA"/>
+      <addr>
+        <streetAddressLine>202 Burlington Rd.</streetAddressLine>
+        <city>Bedford</city>
+        <state>MA</state>
+        <postalCode>01730</postalCode>
+      </addr>
+      <telecom value="tel:+1-781-271-3000"/>
+      <assignedPerson>
+        <name>Auto Generated</name>
+      </assignedPerson>
+    </assignedAuthor>
+  </author>
+  <custodian>
+    <assignedCustodian>
+      <representedCustodianOrganization>
+        <id nullFlavor="NA"/>
+        <name>Cypress</name>
+        <telecom value="tel:+1-781-271-3000"/>
+        <addr>
+          <streetAddressLine>202 Burlington Rd.</streetAddressLine>
+          <city>Bedford</city>
+          <state>MA</state>
+          <postalCode>01730</postalCode>
+        </addr>
+      </representedCustodianOrganization>
+    </assignedCustodian>
+  </custodian>
+  <documentationOf>
+    <serviceEvent classCode="PCPR">
+      <effectiveTime>
+        <low value="19220109155713"/>
+        <high value="20171101204757"/>
+      </effectiveTime>
+    </serviceEvent>
+  </documentationOf>
+  <component>
+    <structuredBody>
+        <component>
+  <!-- Allergies: patient has no allergies -->
+  <section nullFlavor="NI">
+    <templateId root="2.16.840.1.113883.10.20.22.2.6.1" extension="2015-08-01"/>
+    <code code="48765-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Allergy List"/>
+    <title>Allergies</title>                
+    <text>There are no current allergies at the time of this document's creation.</text>
+  </section>
+</component>
+        <component>
+  <!--Medications-->
+  <section>
+	<templateId root="2.16.840.1.113883.10.20.22.2.1.1" extension="2014-06-09"/>
+    <code code="10160-0" displayName="History of medication use" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+    <title>Medications</title>
+    <text>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Codes</th>
+        <th>Time</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td ID="medications-desc-0">Penicillin V Potassium 250 MG</td>
+          <td ID="medications-code-0">RxNorm: 834060<br/></td>
+          <td>January 21st, 1925 02:31 - UNK</td>
+           
+        </tr>
+        <tr>
+          <td ID="medications-desc-1">Penicillin V Potassium 500 MG</td>
+          <td ID="medications-code-1">RxNorm: 834101<br/></td>
+          <td>July 5th, 1948 09:41 - UNK</td>
+           
+        </tr>
+        <tr>
+          <td ID="medications-desc-2">Insulin Lispro 100 UNT/ML Injectable Solution [Humalog]</td>
+          <td ID="medications-code-2">RxNorm: 106892<br/></td>
+          <td>May 19th, 1971 03:43 - UNK</td>
+           
+        </tr>
+    </tbody>
+  </table>
+</text>
+    <entry>
+      <!--CCD Medication activity - Required-->
+      <substanceAdministration classCode="SBADM" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.16" extension="2014-06-09"/>
+        <id root="dd72ab50-a173-0135-6cb6-60f81dc2d82a"/>
+        <statusCode code="completed"/>
+        <effectiveTime xsi:type="IVL_TS">
+          <low value='19250121023140'/>
+          <high nullFlavor="UNK"/>
+        </effectiveTime>
+          <doseQuantity value="1"/>
+        <consumable>
+          <!--CCD Product - Required-->
+          <manufacturedProduct classCode="MANU">
+			    <templateId root="2.16.840.1.113883.10.20.22.4.23" extension="2014-06-09"/>
+            <manufacturedMaterial>
+              <code code="834060" codeSystem="2.16.840.1.113883.6.88" displayName="Penicillin V Potassium 250 MG">
+  <originalText><reference value="#medications-desc-0"/></originalText>
+</code>
+
+              <name>Penicillin V Potassium 250 MG</name>
+            </manufacturedMaterial>
+          </manufacturedProduct>
+        </consumable>
+      </substanceAdministration>
+    </entry>
+    <entry>
+      <!--CCD Medication activity - Required-->
+      <substanceAdministration classCode="SBADM" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.16" extension="2014-06-09"/>
+        <id root="dd72bd10-a173-0135-6cb6-60f81dc2d82a"/>
+        <statusCode code="completed"/>
+        <effectiveTime xsi:type="IVL_TS">
+          <low value='19480705094132'/>
+          <high nullFlavor="UNK"/>
+        </effectiveTime>
+          <doseQuantity value="1"/>
+        <consumable>
+          <!--CCD Product - Required-->
+          <manufacturedProduct classCode="MANU">
+			    <templateId root="2.16.840.1.113883.10.20.22.4.23" extension="2014-06-09"/>
+            <manufacturedMaterial>
+              <code code="834101" codeSystem="2.16.840.1.113883.6.88" displayName="Penicillin V Potassium 500 MG">
+  <originalText><reference value="#medications-desc-1"/></originalText>
+</code>
+
+              <name>Penicillin V Potassium 500 MG</name>
+            </manufacturedMaterial>
+          </manufacturedProduct>
+        </consumable>
+      </substanceAdministration>
+    </entry>
+    <entry>
+      <!--CCD Medication activity - Required-->
+      <substanceAdministration classCode="SBADM" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.16" extension="2014-06-09"/>
+        <id root="dd72c710-a173-0135-6cb6-60f81dc2d82a"/>
+        <statusCode code="completed"/>
+        <effectiveTime xsi:type="IVL_TS">
+          <low value='19710519034309'/>
+          <high nullFlavor="UNK"/>
+        </effectiveTime>
+          <doseQuantity value="1"/>
+        <consumable>
+          <!--CCD Product - Required-->
+          <manufacturedProduct classCode="MANU">
+			    <templateId root="2.16.840.1.113883.10.20.22.4.23" extension="2014-06-09"/>
+            <manufacturedMaterial>
+              <code code="106892" codeSystem="2.16.840.1.113883.6.88" displayName="Insulin Lispro 100 UNT/ML Injectable Solution [Humalog]">
+  <originalText><reference value="#medications-desc-2"/></originalText>
+</code>
+
+              <name>Insulin Lispro 100 UNT/ML Injectable Solution [Humalog]</name>
+            </manufacturedMaterial>
+          </manufacturedProduct>
+        </consumable>
+      </substanceAdministration>
+    </entry>
+  </section>
+</component>
+        <component>
+  <!-- Diagnostic Results: patient has no results -->
+  <section nullFlavor="NI">
+    <templateId root="2.16.840.1.113883.10.20.22.2.3.1" extension="2015-08-01"/>
+    <code code="30954-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Results"/>
+    <title>Diagnostic Results</title>
+    <text>There are no current results at the time of this document's creation.</text>
+  </section>
+</component>
+        <component>
+  <!--Problems-->
+  <section>
+    <templateId root="2.16.840.1.113883.10.20.22.2.5.1" extension="2015-08-01"/>
+    <!--Problems section template-->
+    <code code="11450-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Problem list"/>
+    <title>Problems</title>
+    <text>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Codes</th>
+        <th>Time</th>
+          <th>Status</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td ID="conditions-desc-0">Hypertension</td>
+          <td ID="conditions-code-0">SNOMED-CT: 38341003<br/></td>
+          <td>May 15th, 1951 00:42 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-1">Diabetes</td>
+          <td ID="conditions-code-1">SNOMED-CT: 44054006<br/></td>
+          <td>May 15th, 1951 00:42 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-2">Diabetic renal disease (disorder)</td>
+          <td ID="conditions-code-2">SNOMED-CT: 127013003<br/></td>
+          <td>May 2nd, 1955 14:57 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-3">Prediabetes</td>
+          <td ID="conditions-code-3">SNOMED-CT: 15777000<br/></td>
+          <td>May 19th, 1971 03:43 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-4">Microalbuminuria due to type 2 diabetes mellitus (disorder)</td>
+          <td ID="conditions-code-4">SNOMED-CT: 90781000119102<br/></td>
+          <td>May 19th, 1971 03:43 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-5">Proteinuria due to type 2 diabetes mellitus (disorder)</td>
+          <td ID="conditions-code-5">SNOMED-CT: 157141000119108<br/></td>
+          <td>May 19th, 1971 03:43 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-6">Polyp of colon</td>
+          <td ID="conditions-code-6">SNOMED-CT: 68496003<br/></td>
+          <td>January 10th, 1982 17:40 - February 18th, 1983 11:39</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-7">Chronic sinusitis (disorder)</td>
+          <td ID="conditions-code-7">SNOMED-CT: 40055000<br/></td>
+          <td>February 17th, 1983 06:25 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-8">Polyp of colon</td>
+          <td ID="conditions-code-8">SNOMED-CT: 68496003<br/></td>
+          <td>February 18th, 1993 12:52 - UNK</td>
+            <td></td>
+           
+        </tr>
+        <tr>
+          <td ID="conditions-desc-9">Chronic pain</td>
+          <td ID="conditions-code-9">SNOMED-CT: 82423001<br/></td>
+          <td>September 16th, 1998 14:57 - UNK</td>
+            <td></td>
+           
+        </tr>
+    </tbody>
+  </table>
+</text>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="dd730620-a173-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19510515004228'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="dd730740-a173-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-0"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19510515004228'/>
+            </effectiveTime>
+            <value code="38341003" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Hypertension</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="dd730a70-a173-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19510515004228'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="dd730b40-a173-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-1"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19510515004228'/>
+            </effectiveTime>
+            <value code="44054006" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Diabetes</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="dd730ed0-a173-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19550502145713'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="dd730fa0-a173-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-2"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19550502145713'/>
+            </effectiveTime>
+            <value code="127013003" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Diabetic renal disease (disorder)</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="dd7311e0-a173-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19710519034309'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="dd7312b0-a173-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-3"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19710519034309'/>
+            </effectiveTime>
+            <value code="15777000" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Prediabetes</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="dd7314d0-a173-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19710519034309'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="dd7315a0-a173-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-4"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19710519034309'/>
+            </effectiveTime>
+            <value code="90781000119102" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Microalbuminuria due to type 2 diabetes mellitus (disorder)</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="dd731970-a173-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19710519034309'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="dd731a40-a173-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-5"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19710519034309'/>
+            </effectiveTime>
+            <value code="157141000119108" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Proteinuria due to type 2 diabetes mellitus (disorder)</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="dd731c50-a173-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19820110174030'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="dd731d40-a173-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-6"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19820110174030'/>
+            </effectiveTime>
+            <value code="68496003" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Polyp of colon</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="dd7320f0-a173-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19830217062508'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="dd7321c0-a173-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-7"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19830217062508'/>
+            </effectiveTime>
+            <value code="40055000" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Chronic sinusitis (disorder)</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="dd7323d0-a173-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19930218125207'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="dd7324a0-a173-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-8"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19930218125207'/>
+            </effectiveTime>
+            <value code="68496003" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Polyp of colon</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+    <entry typeCode="DRIV">
+      <act classCode="ACT" moodCode="EVN">
+        <templateId root="2.16.840.1.113883.10.20.22.4.3" extension="2015-08-01"/>
+        <!-- Problem act template -->
+        <id root="dd732760-a173-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="NA"/>
+        <statusCode code="active"/>
+        <effectiveTime>
+          <low value='19980916145713'/>
+        </effectiveTime>
+        <entryRelationship typeCode="SUBJ" inversionInd="false">
+          <observation classCode="OBS" moodCode="EVN">
+            <templateId root="2.16.840.1.113883.10.20.22.4.4" extension="2015-08-01"/>
+            
+            <!--Problem observation template - NOT episode template-->
+            <id root="dd732830-a173-0135-6cb6-60f81dc2d82a"/>
+            <code code="64572001" displayName="Condition" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED-CT">
+              <translation code="75323-6" displayName="Condition" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+            </code>
+            <text>
+              <reference value="#conditions-desc-9"/>
+            </text>
+            <statusCode code="completed"/>
+            <effectiveTime>
+              <low value='19980916145713'/>
+            </effectiveTime>
+            <value code="82423001" codeSystem="2.16.840.1.113883.6.96" xsi:type="CD"><originalText>Chronic pain</originalText></value>
+          </observation>
+        </entryRelationship>
+      </act>
+    </entry>
+  </section>
+</component>
+
+        <component>
+  <!-- Procedures: patient has no procedures -->
+  <section nullFlavor="NI">
+    <templateId root="2.16.840.1.113883.10.20.22.2.7.1" extension="2014-06-09"/>
+    <code code="47519-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Procedures"/>
+    <title>Procedures</title>
+    <text>There are no current procedures at the time of this document's creation.</text>
+  </section>
+</component>
+        <component>
+  <!--Encounters-->
+  <section>
+    <templateId root="2.16.840.1.113883.10.20.22.2.22" extension="2015-08-01"/> <!-- CCDA Template id -->
+    <!--Encounters section template-->
+    <code code="46240-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of encounters"/>
+    <title>Encounters</title>
+    <text>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Codes</th>
+        <th>Time</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td ID="encounters-desc-0">Death Certification</td>
+          <td ID="encounters-code-0">SNOMED-CT: 308646001<br/></td>
+          <td>January 18th, 1999 15:57 - January 18th, 1999 16:12</td>
+           
+        </tr>
+    </tbody>
+  </table>
+</text>
+    <entry typeCode="DRIV">
+      <encounter classCode="ENC" moodCode="EVN">
+		    <templateId root="2.16.840.1.113883.10.20.22.4.49"/>
+        <!-- Encounter activity template -->
+        <id root="dd734d00-a173-0135-6cb6-60f81dc2d82a"/>
+        <code nullFlavor="UNK">
+  <originalText><reference value="#encounters-desc-0"/></originalText>
+  <translation code="308646001" codeSystem="2.16.840.1.113883.6.96" />
+</code>
+
+        <text>
+          <reference value="#encounters-desc-0"/>
+        </text>
+        <effectiveTime value='19990118155713'/>
+      </encounter>
+    </entry>
+  </section>
+</component>
+        <component>
+  <!--Vital Signs: Patient has no current vital signs -->
+  <section nullFlavor="NI">
+    <templateId root="2.16.840.1.113883.10.20.22.2.4.1" extension="2015-08-01"/>
+    <!--Vital Signs section template-->
+    <code code="8716-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Vital signs"/>
+    <title>Vital Signs</title>
+    <text>There are no current vital signs at the time of this document's creation.</text>
+  </section>
+</component>
+        <component>
+  <!--Plan of Care-->
+  <section>
+    <templateId root="2.16.840.1.113883.10.20.22.2.10" extension="2014-06-09"/>
+    <!--Plan of Care section template-->
+    <code code="18776-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Treatment plan"/>
+    <title>Plan of Care</title>
+    <text>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Codes</th>
+        <th>Time</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td ID="plan_of_care-desc-0">Diabetes self management plan</td>
+          <td ID="plan_of_care-code-0">SNOMED-CT: 698360004<br/></td>
+          <td>May 15th, 1951 00:42 - UNK</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-1">Diabetic diet</td>
+          <td ID="plan_of_care-code-1">SNOMED-CT: 160670007<br/></td>
+          <td>May 15th, 1951 00:42 - UNK</td>
+           
+        </tr>
+        <tr>
+          <td ID="plan_of_care-desc-2">Exercise therapy</td>
+          <td ID="plan_of_care-code-2">SNOMED-CT: 229065009<br/></td>
+          <td>May 15th, 1951 00:42 - UNK</td>
+           
+        </tr>
+    </tbody>
+  </table>
+</text>
+  </section>
+</component>
+        <component>
+  <!--Social History - CCDA-->
+  <section>
+    <templateId root="2.16.840.1.113883.10.20.22.2.17" extension="2015-08-01"/>
+    <!-- Social history section template -->
+    <code code="29762-2" codeSystem="2.16.840.1.113883.6.1"/>
+    <title>Social History</title>
+    <text>There is no current social history at the time of this document's creation.</text>
+  </section>
+</component>
+
+    </structuredBody>
+  </component>
+</ClinicalDocument>
