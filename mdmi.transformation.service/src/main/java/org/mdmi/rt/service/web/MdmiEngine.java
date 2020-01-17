@@ -55,16 +55,6 @@ public class MdmiEngine {
 				return;
 			}
 
-			Properties prop = new Properties();
-			InputStream xxx = getClass().getClassLoader().getResourceAsStream("version.properties");
-			if (xxx != null) {
-				prop.load(xxx);
-				String RUNTIMEVERSION = prop.getProperty("version");
-				String RUNTIMEBUILD = prop.getProperty("build.date");
-				System.setProperty("${mdmi.engine.version}", RUNTIMEVERSION + " :: " + RUNTIMEBUILD);
-
-			}
-
 			Set<String> maps = Stream.of(new File(mapsFolder).listFiles()).filter(
 				file -> (!file.isDirectory() && file.toString().endsWith("mdmi"))).map(File::getName).collect(
 					Collectors.toSet());
