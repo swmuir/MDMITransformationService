@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application {
 
 	public static void main(String[] args) throws Exception {
+		
 		Properties prop = new Properties();
 		InputStream xxx = Application.class.getClassLoader().getResourceAsStream("version.properties");
 		if (xxx != null) {
@@ -17,14 +18,8 @@ public class Application {
 			String RUNTIMEVERSION = prop.getProperty("version");
 			String RUNTIMEBUILD = prop.getProperty("build.date");
 			System.setProperty("mdmi.engine.version", RUNTIMEVERSION + " :: " + RUNTIMEBUILD);
-
 		}
 
 		SpringApplication.run(Application.class, args);
-		// MdmiEngineTest
-
-		// ApplicationContext context = SpringApplication.run(Application.class, args);
-		// MdmiEngineTest myBean = context.getBean(MdmiEngineTest.class);
-		// myBean.testCDA2FHIR();
 	}
 }
