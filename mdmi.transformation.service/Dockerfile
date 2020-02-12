@@ -13,8 +13,6 @@ ARG JAR_FILE=target/org.mdmi.transformation.service.jar
 # Add the application's jar to the container
 ADD ${JAR_FILE} mdmi-transformation-service.jar
 
-COPY maps /maps/
-
 CMD ["bundle",  "exec", "rails", "server", "-e", "production"]
 
 ENV CLASSPATH /maps 
