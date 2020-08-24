@@ -1,5 +1,12 @@
+# MDMI Transformation Service
 
-Create Docker Image
+## Running A Release build
+
+`docker run -it --rm -p 3000:8080 -v maps:/maps logicahealth/mdmi-transformation-service:latest`
+
+## Create a New Docker Image
+
+`docker build logicahealth/mdmi-transformation-service:latest`
 
 docker build -t mdmi-transformation-service .
 
