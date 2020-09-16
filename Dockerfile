@@ -12,7 +12,7 @@ RUN mvn package
 # RUN java -Xmx4g -jar input-cache/org.hl7.fhir.publisher.jar -ig .
 # RUN ls -alh
 
-FROM openjdk:16-alpine
+FROM openjdk:8-jdk-alpine
 LABEL maintainer="Preston Lee <preston.lee@prestonlee.com>"
 # # We need to make a few changes to the default configuration file.
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
