@@ -25,4 +25,3 @@ CMD exec java $JAVA_OPTS -jar org.mdmi.transformation.service.jar
 
 # # Run the jar file 
 # ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/mdmi-transformation-service.jar"]
-
