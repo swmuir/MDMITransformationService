@@ -4,12 +4,12 @@ RUN mkdir /build
 WORKDIR /build
 
 COPY pom.xml pom.xml
-## RUN mvn dependency:go-offline
+##RUN mvn dependency:go-offline
 
 COPY src src
 RUN mvn -U package
 
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11.0.6-jdk
 
 RUN pwd
 COPY --from=builder /build/target/org.mdmi.transformation.service.jar org.mdmi.transformation.service.jar
