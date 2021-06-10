@@ -117,6 +117,25 @@ public class MdmiEngineTest {
 		}
 	}
 
+	@Test
+	public void testV2toFHIR() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/samples/v2").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (int count = 0; count < 1; count++) {
+			Optional<String> document = getRandom(documents);
+			if (document.isPresent()) {
+				runTransformation("HL7V2.ADTA01CONTENT", "Perspecta.PerspectaFHIRmap", document.get());
+			}
+		}
+	}
+
 	private void runTransformation(String source, String target, String message) throws Exception {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("source", source);

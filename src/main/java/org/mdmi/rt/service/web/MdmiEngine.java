@@ -19,6 +19,9 @@ import javax.ws.rs.core.Context;
 
 import org.mdmi.core.Mdmi;
 import org.mdmi.core.engine.MdmiUow;
+import org.mdmi.core.engine.postprocessors.CDAPostProcessor;
+import org.mdmi.core.engine.preprocessors.HL7V2MessagePreProcessor;
+import org.mdmi.core.engine.terminology.FHIRTerminologyTransform;
 import org.mdmi.core.runtime.RuntimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +41,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class MdmiEngine {
 
 	@Autowired
+	FHIRTerminologySettings terminologySettings;
+
+	@Autowired
 	ServletContext context;
 
 	static Boolean loaded = Boolean.FALSE;
@@ -54,6 +60,16 @@ public class MdmiEngine {
 			if (loaded) {
 				return;
 			}
+
+			FHIRTerminologyTransform.codeValues.clear();
+
+			FHIRTerminologyTransform.processTerminology = true;
+
+			FHIRTerminologyTransform.setFHIRTerminologyURL(terminologySettings.getUrl());
+
+			FHIRTerminologyTransform.setUserName(terminologySettings.getUserName());
+
+			FHIRTerminologyTransform.setPassword(terminologySettings.getPassword());
 
 			Set<String> maps = Stream.of(new File(mapsFolder).listFiles()).filter(
 				file -> (!file.isDirectory() && file.toString().endsWith("mdmi"))).map(File::getName).collect(
@@ -116,6 +132,14 @@ public class MdmiEngine {
 		logger.debug("DEBUG Start transformation ");
 		loadMaps();
 		MdmiUow.setSerializeSemanticModel(false);
+
+		// Set Stylesheet for CDA document section generation
+		CDAPostProcessor.setStylesheet("perspectasections.xsl");
+
+		// add in fhir post processor
+		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson());
+		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new HL7V2MessagePreProcessor());
+
 		String result = RuntimeService.runTransformation(
 			source, uploadedInputStream.getBytes(), target, null, getMapProperties(source), getMapProperties(target));
 		return result;
