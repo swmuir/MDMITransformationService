@@ -20,7 +20,6 @@ import javax.ws.rs.core.Context;
 import org.mdmi.core.Mdmi;
 import org.mdmi.core.engine.MdmiUow;
 import org.mdmi.core.engine.postprocessors.CDAPostProcessor;
-import org.mdmi.core.engine.preprocessors.HL7V2MessagePreProcessor;
 import org.mdmi.core.engine.terminology.FHIRTerminologyTransform;
 import org.mdmi.core.runtime.RuntimeService;
 import org.slf4j.Logger;
