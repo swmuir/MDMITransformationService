@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -59,7 +60,7 @@
 			<artifactId>org.mdmi.core.runtime</artifactId>
 			<version>${mdmi.runtime.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
@@ -108,6 +109,36 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.eclipse.uml2.types</groupId>
+			<artifactId>org.eclipse.uml2.types</artifactId>
+			<version>2.0.0.v20170605</version>
+		</dependency>
+
+		<dependency>
+			<groupId>lpg.runtime.java_2.0.17.v201004271640</groupId>
+			<artifactId>lpg.runtime.java_2.0.17.v201004271640</artifactId>
+			<version>2.0.17.v201004271640</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.ocl.ecore</groupId>
+			<artifactId>org.eclipse.ocl.ecore</artifactId>
+			<version>3.6.200.v20170522</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.ocl.common_1.4.200.v20160613</groupId>
+			<artifactId>org.eclipse.ocl.common_1.4.200.v20160613</artifactId>
+			<version>1.4.200.v20160613-1518</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.ocl_3.6.200.v20170522</groupId>
+			<artifactId>org.eclipse.ocl_3.6.200.v20170522</artifactId>
+			<version>3.6.200.v20170522-1736</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.ecore</artifactId>
 			<version>2.15.0</version>
@@ -130,6 +161,42 @@
 			<artifactId>org.eclipse.emf.ecore.xmi</artifactId>
 			<version>2.15.0</version>
 		</dependency>
+
+
+		<!-- cda -->
+
+		<dependency>
+			<groupId>org.eclipse.mdht</groupId>
+			<artifactId>org.eclipse.mdht.emf.runtime</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.mdht</groupId>
+			<artifactId>org.eclipse.mdht.uml.hl7.vocab</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.mdht</groupId>
+			<artifactId>org.eclipse.mdht.uml.hl7.datatypes</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.mdht</groupId>
+			<artifactId>org.eclipse.mdht.uml.hl7.rim</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.mdht</groupId>
+			<artifactId>org.eclipse.mdht.uml.cda</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+
+
+
 
 		<dependency>
 			<groupId>ca.uhn.hapi</groupId>
@@ -180,22 +247,22 @@
 		</dependency>
 
 
- 
-		
+
+
 		<dependency>
-      <groupId>ca.uhn.hapi</groupId>
-      <artifactId>hapi-base</artifactId>
-      <version>2.2</version>
-    </dependency>
-    
-    <dependency>
-      <groupId>ca.uhn.hapi</groupId>
-      <artifactId>hapi-structures-v251</artifactId>
-      <version>2.2</version>
-    </dependency>
-    
-    
-     
+			<groupId>ca.uhn.hapi</groupId>
+			<artifactId>hapi-base</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ca.uhn.hapi</groupId>
+			<artifactId>hapi-structures-v251</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+
+
 		<dependency>
 			<groupId>org.antlr</groupId>
 			<artifactId>antlr4-runtime</artifactId>
@@ -236,26 +303,26 @@
 			<version>1.2.18</version>
 		</dependency>
 
-		  <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5 -->
-                <dependency>
-                        <groupId>org.apache.httpcomponents.core5</groupId>
-                        <artifactId>httpcore5</artifactId>
-                        <version>5.0.3</version>
-                </dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5 -->
+		<dependency>
+			<groupId>org.apache.httpcomponents.core5</groupId>
+			<artifactId>httpcore5</artifactId>
+			<version>5.0.3</version>
+		</dependency>
 
-                <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5 -->
-                <dependency>
-                        <groupId>org.apache.httpcomponents.client5</groupId>
-                        <artifactId>httpclient5</artifactId>
-                        <version>5.0.3</version>
-                </dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5 -->
+		<dependency>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
+			<version>5.0.3</version>
+		</dependency>
 
-                <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5-h2 -->
-                <dependency>
-                        <groupId>org.apache.httpcomponents.core5</groupId>
-                        <artifactId>httpcore5-h2</artifactId>
-                        <version>5.0.2</version>
-                </dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5-h2 -->
+		<dependency>
+			<groupId>org.apache.httpcomponents.core5</groupId>
+			<artifactId>httpcore5-h2</artifactId>
+			<version>5.0.2</version>
+		</dependency>
 
 
 	</dependencies>
@@ -313,8 +380,8 @@
 		</repository>
 
 
- 
-				
+
+
 		<repository>
 			<id>mdixsnaphpt</id>
 			<name>7ed03140605b-snapshots</name>

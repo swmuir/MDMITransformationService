@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.mdmi.rt.service;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -24,6 +25,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +35,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
@@ -46,7 +51,7 @@ public class MdmiEngineTest {
 
 	@BeforeClass
 	public static void setEnvironment() {
-		System.setProperty("mdmi.maps", "src/test/resources/testmaps");
+		System.setProperty("mdmi.maps", "/Users/seanmuir/git/PerspectaGit/maps/PerfectSearch/maps");
 	}
 
 	@Autowired
@@ -99,8 +104,46 @@ public class MdmiEngineTest {
 	}
 
 	@Test
+	public void testFHIR2CDA() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/samples/PS/FHIR").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (int count = 0; count < 1; count++) {
+			Optional<String> document = getRandom(documents);
+			if (document.isPresent()) {
+				runTransformation("FHIRR4JSON.MasterBundle", "CDAR2.ContinuityOfCareDocument", document.get());
+			}
+		}
+	}
+
+	@Test
 	public void testCDA2FHIR() throws Exception {
-		Set<String> documents = Stream.of(new File("src/test/resources/samples/CCDA").listFiles()).filter(
+		Set<String> documents = Stream.of(new File("src/test/resources/samples/PS/CCD").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (int count = 0; count < 1; count++) {
+			Optional<String> document = getRandom(documents);
+			if (document.isPresent()) {
+				runTransformation("CDAR2.ContinuityOfCareDocument", "FHIRR4JSON.MasterBundle", document.get());
+			}
+		}
+	}
+
+	@Test
+	public void testCQL() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/samples/cql").listFiles()).filter(
 			file -> !file.isDirectory()).map(t -> {
 				try {
 					return t.getCanonicalPath();
@@ -112,7 +155,7 @@ public class MdmiEngineTest {
 		for (int count = 0; count < 10; count++) {
 			Optional<String> document = getRandom(documents);
 			if (document.isPresent()) {
-				runTransformation("CDAR2.ContinuityOfCareDocument", "R4JSON.PortalBundle", document.get());
+				runTransformation("JSON.CQLCovidSeverity", "JSON.RiskScore", document.get());
 			}
 		}
 	}
@@ -145,6 +188,29 @@ public class MdmiEngineTest {
 		System.out.println(response.getStatusCode());
 		assertTrue(response.getStatusCode().equals(HttpStatus.OK));
 		System.out.println(response.getBody());
+	}
+
+	private String runTransformation2(String source, String target, String message) throws Exception {
+
+		HttpHeaders headers = new HttpHeaders();
+
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<String> request = new HttpEntity<>(message, headers);
+
+		ResponseEntity<String> response = template.postForEntity(
+			"/mdmi/transformation/byvalue?source=" + source + "&target=" + target, request, String.class);
+		assertTrue(response.getStatusCode().equals(HttpStatus.OK));
+		String value = response.getBody();
+		assertFalse(StringUtils.isEmpty(value));
+		System.out.println(value);
+		return value;
+	}
+
+	@Test
+	public void testCDA2FHIRByValue() throws Exception {
+		runTransformation2("CDAR2.ContinuityOfCareDocument", "FHIRR4JSON.PortalBundle", "messageexample");
+
 	}
 
 	public static <E> Optional<E> getRandom(Collection<E> e) {
