@@ -104,6 +104,12 @@ public class CDAPreProcesor implements IPreProcessor {
 							ed.eUnset(
 								ed.eClass().getEStructuralFeature(
 									DatatypesPackage.eINSTANCE.getED_Reference().getFeatureID()));
+
+							ed.eUnset(
+								ed.eClass().getEStructuralFeature(
+									DatatypesPackage.eINSTANCE.getED_Mixed().getFeatureID()));
+
+							// DatatypesPackage.ED__MIXED
 						} catch (AssertionError ae) {
 							ae.printStackTrace();
 
