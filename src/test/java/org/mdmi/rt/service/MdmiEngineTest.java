@@ -51,7 +51,7 @@ public class MdmiEngineTest {
 
 	@BeforeClass
 	public static void setEnvironment() {
-		System.setProperty("mdmi.maps", "/Users/seanmuir/git/PerspectaGit/maps/PerfectSearch/maps");
+		System.setProperty("mdmi.maps", "/Users/seanmuir/git/MDMI/MDMITransformationService/maps2");
 	}
 
 	@Autowired
@@ -123,6 +123,25 @@ public class MdmiEngineTest {
 	}
 
 	@Test
+	public void testFHIR2CDA2() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/samples/FHIR").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (int count = 0; count < 1; count++) {
+			Optional<String> document = getRandom(documents);
+			if (document.isPresent()) {
+				runTransformation("FHIRR4JSON.CompositionBundle", "CDAR2.ContinuityOfCareDocument", document.get());
+			}
+		}
+	}
+
+	@Test
 	public void testCDA2FHIR() throws Exception {
 		Set<String> documents = Stream.of(new File("src/test/resources/samples/PS/CCD").listFiles()).filter(
 			file -> !file.isDirectory()).map(t -> {
@@ -136,7 +155,26 @@ public class MdmiEngineTest {
 		for (int count = 0; count < 1; count++) {
 			Optional<String> document = getRandom(documents);
 			if (document.isPresent()) {
-				runTransformation("CDAR2.ContinuityOfCareDocument", "FHIRR4JSON.MasterBundle", document.get());
+				runTransformation("CDAR2.ContinuityOfCareDocument", "FHIRR4JSON.ImmunizationUSCore", document.get());
+			}
+		}
+	}
+
+	@Test
+	public void testCDA2FHIR2() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/samples/PS/CCD").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (int count = 0; count < 1; count++) {
+			Optional<String> document = getRandom(documents);
+			if (document.isPresent()) {
+				runTransformation("CDAR2.ContinuityOfCareDocument", "FHIRR4JSON.CompositionBundle", document.get());
 			}
 		}
 	}

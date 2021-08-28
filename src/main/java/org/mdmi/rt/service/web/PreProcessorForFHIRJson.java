@@ -35,7 +35,7 @@ public class PreProcessorForFHIRJson implements IPreProcessor {
 	 */
 	@Override
 	public boolean canProcess(MessageModel messageModel) {
-		if ("FHIRR4JSON".equals(messageModel.getGroup().getName())) {
+		if ("xFHIRR4JSON".equals(messageModel.getGroup().getName())) {
 			return true;
 		}
 		return false;
