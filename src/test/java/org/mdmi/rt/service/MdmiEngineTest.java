@@ -51,7 +51,8 @@ public class MdmiEngineTest {
 
 	@BeforeClass
 	public static void setEnvironment() {
-		System.setProperty("mdmi.maps", "/Users/seanmuir/git/MDMI/MDMITransformationService/maps2");
+		System.setProperty(
+			"mdmi.maps", "/Users/seanmuir/git/deletethis/MDMITransformationService/src/test/resources/testmaps");
 	}
 
 	@Autowired
@@ -155,7 +156,7 @@ public class MdmiEngineTest {
 		for (int count = 0; count < 1; count++) {
 			Optional<String> document = getRandom(documents);
 			if (document.isPresent()) {
-				runTransformation("CDAR2.ContinuityOfCareDocument", "FHIRR4JSON.ImmunizationUSCore", document.get());
+				runTransformation("CDAR2.ContinuityOfCareDocument", "FHIRR4JSON.MasterBundle", document.get());
 			}
 		}
 	}

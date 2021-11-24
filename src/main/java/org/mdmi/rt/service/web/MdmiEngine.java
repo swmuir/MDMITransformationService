@@ -36,12 +36,21 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.rest.api.EncodingEnum;
+import ca.uhn.fhir.rest.api.PreferReturnEnum;
+import ca.uhn.fhir.rest.client.api.IGenericClient;
+import ca.uhn.fhir.rest.client.interceptor.LoggingInterceptor;
+
 @RestController
 @RequestMapping("/mdmi/transformation")
 public class MdmiEngine {
 
 	@Autowired
 	FHIRTerminologySettings terminologySettings;
+
+	@Autowired
+	FHIRClientSettings fhirClientSettings;
 
 	@Autowired
 	ServletContext context;
@@ -168,6 +177,41 @@ public class MdmiEngine {
 		// Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4JsonPostProcessor());
 		String result = RuntimeService.runTransformation(
 			source, message.getBytes(), target, null, getMapProperties(source), getMapProperties(target));
+		return result;
+	}
+
+	@PostMapping(path = "transformAndPost", consumes = {
+			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, produces =
+
+	{ MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	public String transformAndPost(@Context HttpServletRequest req, @RequestParam("source") String source,
+			@RequestParam("target") String target, @RequestBody String message) throws Exception {
+		logger.debug("DEBUG Start transformation ");
+		loadMaps();
+		MdmiUow.setSerializeSemanticModel(false);
+
+		// Set Stylesheet for CDA document section generation
+		CDAPostProcessor.setStylesheet("perspectasections.xsl");
+		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson());
+		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new HL7V2MessagePreProcessor());
+		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new PreProcessorForFHIRJson());
+		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new CDAPreProcesor());
+
+		// add in fhir post processor
+		// Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4JsonPostProcessor());
+		String result = RuntimeService.runTransformation(
+			source, message.getBytes(), target, null, getMapProperties(source), getMapProperties(target));
+
+		FhirContext ourCtx = FhirContext.forDstu3();
+
+		IGenericClient client;
+		ourCtx.getRestfulClientFactory().setConnectTimeout(50000);
+		ourCtx.getRestfulClientFactory().setSocketTimeout(10000000);
+		client = ourCtx.newRestfulGenericClient(fhirClientSettings.getUrl());
+		client.setEncoding(EncodingEnum.JSON);
+		client.registerInterceptor(new LoggingInterceptor(true));
+		client.create().resource(result).prefer(PreferReturnEnum.REPRESENTATION).execute();
+
 		return result;
 	}
 
