@@ -20,6 +20,8 @@ import javax.ws.rs.core.Context;
 import org.mdmi.core.Mdmi;
 import org.mdmi.core.engine.MdmiUow;
 import org.mdmi.core.engine.postprocessors.CDAPostProcessor;
+import org.mdmi.core.engine.semanticprocessors.LogSemantic;
+import org.mdmi.core.engine.semanticprocessors.LogSemantic.DIRECTION;
 import org.mdmi.core.engine.terminology.FHIRTerminologyTransform;
 import org.mdmi.core.runtime.RuntimeService;
 import org.slf4j.Logger;
@@ -35,12 +37,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.rest.api.EncodingEnum;
-import ca.uhn.fhir.rest.api.PreferReturnEnum;
-import ca.uhn.fhir.rest.client.api.IGenericClient;
-import ca.uhn.fhir.rest.client.interceptor.LoggingInterceptor;
 
 @RestController
 @RequestMapping("/mdmi/transformation")
@@ -59,6 +55,21 @@ public class MdmiEngine {
 
 	@Value("#{systemProperties['mdmi.maps'] ?: '/maps'}")
 	private String mapsFolder;
+
+	@Value("#{systemProperties['GOOGLE_APPLICATION_CREDENTIALS'] ?: '/credentials/google_application_credentials.json'}")
+	private String credentials;
+
+	@Value("#{systemProperties['your_project_id'] ?: 'zanenet-njinck'}")
+	private String your_project_id;
+
+	@Value("#{systemProperties['your_region_id'] ?: 'us-central1'}")
+	private String your_region_id;
+
+	@Value("#{systemProperties['your_dataset_id'] ?: 'dev-zanenet-njinck'}")
+	private String your_dataset_id;
+
+	@Value("#{systemProperties['your_fhir_id'] ?: 'dev-mdix-datastore'}")
+	private String your_fhir_id;
 
 	private HashMap<String, Properties> mapProperties = new HashMap<String, Properties>();
 
@@ -85,7 +96,11 @@ public class MdmiEngine {
 					Collectors.toSet());
 			for (String map : maps) {
 				InputStream targetStream = new FileInputStream(mapsFolder + "/" + map);
-				Mdmi.INSTANCE().getResolver().resolve(targetStream);
+				try {
+					Mdmi.INSTANCE().getResolver().resolve(targetStream);
+				} catch (Exception exception) {
+					logger.error("invalid map");
+				}
 			}
 			loaded = Boolean.TRUE;
 		}
@@ -146,10 +161,15 @@ public class MdmiEngine {
 		CDAPostProcessor.setStylesheet("perspectasections.xsl");
 
 		// add in fhir post processor
+
+		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new Deliminated2XML("NJ", "\\|"));
+
 		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new HL7V2MessagePreProcessor());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new PreProcessorForFHIRJson());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new CDAPreProcesor());
+		Mdmi.INSTANCE().getSourceSemanticModelProcessors().addSourceSemanticProcessor(new LogSemantic(DIRECTION.TO));
+		Mdmi.INSTANCE().getTargetSemanticModelProcessors().addTargetSemanticProcessor(new LogSemantic(DIRECTION.FROM));
 
 		String result = RuntimeService.runTransformation(
 			source, uploadedInputStream.getBytes(), target, null, getMapProperties(source), getMapProperties(target));
@@ -172,9 +192,8 @@ public class MdmiEngine {
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new HL7V2MessagePreProcessor());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new PreProcessorForFHIRJson());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new CDAPreProcesor());
-
-		// add in fhir post processor
-		// Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4JsonPostProcessor());
+		Mdmi.INSTANCE().getSourceSemanticModelProcessors().addSourceSemanticProcessor(new LogSemantic(DIRECTION.TO));
+		Mdmi.INSTANCE().getTargetSemanticModelProcessors().addTargetSemanticProcessor(new LogSemantic(DIRECTION.FROM));
 		String result = RuntimeService.runTransformation(
 			source, message.getBytes(), target, null, getMapProperties(source), getMapProperties(target));
 		return result;
@@ -190,29 +209,22 @@ public class MdmiEngine {
 		loadMaps();
 		MdmiUow.setSerializeSemanticModel(false);
 
-		// Set Stylesheet for CDA document section generation
-		CDAPostProcessor.setStylesheet("perspectasections.xsl");
+		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new Deliminated2XML("NJ", "\\|"));
+
 		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new HL7V2MessagePreProcessor());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new PreProcessorForFHIRJson());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new CDAPreProcesor());
+		Mdmi.INSTANCE().getSourceSemanticModelProcessors().addSourceSemanticProcessor(new LogSemantic(DIRECTION.TO));
+		Mdmi.INSTANCE().getTargetSemanticModelProcessors().addTargetSemanticProcessor(new LogSemantic(DIRECTION.FROM));
 
-		// add in fhir post processor
-		// Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4JsonPostProcessor());
 		String result = RuntimeService.runTransformation(
 			source, message.getBytes(), target, null, getMapProperties(source), getMapProperties(target));
 
-		FhirContext ourCtx = FhirContext.forDstu3();
-
-		IGenericClient client;
-		ourCtx.getRestfulClientFactory().setConnectTimeout(50000);
-		ourCtx.getRestfulClientFactory().setSocketTimeout(10000000);
-		client = ourCtx.newRestfulGenericClient(fhirClientSettings.getUrl());
-		client.setEncoding(EncodingEnum.JSON);
-		client.registerInterceptor(new LoggingInterceptor(true));
-		client.create().resource(result).prefer(PreferReturnEnum.REPRESENTATION).execute();
-
-		return result;
+		System.err.println(result);
+		String fhirStoreName = String.format(
+			FhirResourceCreate.FHIR_NAME, your_project_id, your_region_id, your_dataset_id, your_fhir_id);
+		return FhirResourceCreate.postBundle(credentials, fhirStoreName, result);
 	}
 
 }

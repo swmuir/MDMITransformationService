@@ -15,6 +15,7 @@ FROM openjdk:11.0.6-jdk
 RUN pwd
 COPY --from=builder /build/target/org.mdmi.transformation.service.jar org.mdmi.transformation.service.jar
 COPY maps maps
+COPY credentials credentials
 CMD exec java $JAVA_OPTS -jar org.mdmi.transformation.service.jar
 
 

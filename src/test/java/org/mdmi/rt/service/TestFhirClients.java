@@ -13,6 +13,8 @@ package org.mdmi.rt.service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 import org.mdmi.rt.service.web.FhirResourceCreate;
@@ -31,22 +33,66 @@ class TestFhirClients {
 	// https://healthcare.googleapis.com/v1/projects/mystic-sun-330921/locations/us-east4/datasets/TestData/fhirStores/TestData
 
 	@Test
-	void test() throws IOException, URISyntaxException {
-		System.getenv();
-
-		System.setProperty(
-			"GOOGLE_APPLICATION_CREDENTIALS",
-			"/Users/seanmuir/git/deletethis/MDMITransformationService/src/test/resources/mystic-sun-330921-66bbdbba8601.json");
-		// FhirResourceCreate api = new FhirResourceCreate();
-
-		// FhirResourceCreate.authExplicit("src/test/resources/mystic-sun-330921-66bbdbba8601.json");
+	void test01() throws IOException, URISyntaxException {
 
 		String fhirStoreName = String.format(
-			FhirResourceCreate.FHIR_NAME, "mystic-sun-330921", "us-east4", "TestData", "TestData");
-		String resourceType = "Patient";
+			FhirResourceCreate.FHIR_NAME, "zanenet-njinck", "us-central1", "dev-zanenet-njinck", "dev-mdix-datastore");
 
-		FhirResourceCreate.fhirResourceCreate(
-			"src/test/resources/mystic-sun-330921-66bbdbba8601.json", fhirStoreName, resourceType);
+		String content = Files.readString(
+			Paths.get(
+				"/Users/seanmuir/git/deletethis/MDMITransformationService/target/test-output/ADT_A01/ADT_A01.json"));
+		;
+		FhirResourceCreate.postBundle(
+			"/Users/seanmuir/git/deletethis/MDMITransformationService/credentials/google_application_credentials.json",
+			fhirStoreName, content);
+
+	}
+
+	@Test
+	void test03() throws IOException, URISyntaxException {
+
+		String fhirStoreName = String.format(
+			FhirResourceCreate.FHIR_NAME, "zanenet-njinck", "us-central1", "dev-zanenet-njinck", "dev-mdix-datastore");
+
+		String content = Files.readString(
+			Paths.get(
+				"/Users/seanmuir/git/deletethis/MDMITransformationService/target/test-output/ADT_A03/ADT_A03.json"));
+		;
+		FhirResourceCreate.postBundle(
+			"/Users/seanmuir/git/deletethis/MDMITransformationService/credentials/google_application_credentials.json",
+			fhirStoreName, content);
+
+	}
+
+	@Test
+	void test04() throws IOException, URISyntaxException {
+
+		String fhirStoreName = String.format(
+			FhirResourceCreate.FHIR_NAME, "zanenet-njinck", "us-central1", "dev-zanenet-njinck", "dev-mdix-datastore");
+
+		String content = Files.readString(
+			Paths.get(
+				"/Users/seanmuir/git/deletethis/MDMITransformationService/target/test-output/ADT_A04/ADT_A04.json"));
+		;
+		FhirResourceCreate.postBundle(
+			"/Users/seanmuir/git/deletethis/MDMITransformationService/credentials/google_application_credentials.json",
+			fhirStoreName, content);
+
+	}
+
+	@Test
+	void test08() throws IOException, URISyntaxException {
+
+		String fhirStoreName = String.format(
+			FhirResourceCreate.FHIR_NAME, "zanenet-njinck", "us-central1", "dev-zanenet-njinck", "dev-mdix-datastore");
+
+		String content = Files.readString(
+			Paths.get(
+				"/Users/seanmuir/git/deletethis/MDMITransformationService/target/test-output/ADT_A08/ADT_A08.json"));
+		;
+		FhirResourceCreate.postBundle(
+			"/Users/seanmuir/git/deletethis/MDMITransformationService/credentials/google_application_credentials.json",
+			fhirStoreName, content);
 
 	}
 

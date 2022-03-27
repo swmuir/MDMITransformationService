@@ -105,8 +105,8 @@ public class HL7V2MessagePreProcessor implements IPreProcessor {
 			logger.trace(theMessage);
 
 			logger.trace("message version is " + genericParser.getVersion(theMessage));
-
-			CanonicalModelClassFactory mcf = new CanonicalModelClassFactory("2.6");
+			String myVersion = genericParser.getVersion(theMessage);
+			CanonicalModelClassFactory mcf = new CanonicalModelClassFactory("2.8");
 			messageContext.setModelClassFactory(mcf);
 			PipeParser messageParser = messageContext.getPipeParser();
 			messageParser.setValidationContext(new NoValidation());
