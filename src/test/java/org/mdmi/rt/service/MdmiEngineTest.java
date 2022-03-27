@@ -52,10 +52,8 @@ public class MdmiEngineTest {
 
 	@BeforeClass
 	public static void setEnvironment() {
-		System.setProperty("mdmi.maps", "/Users/seanmuir/git/deletethis/MDMITransformationService/maps");
-		System.setProperty(
-			"GOOGLE_APPLICATION_CREDENTIALS",
-			"/Users/seanmuir/git/deletethis/MDMITransformationService/credentials/google_application_credentials.json");
+		System.setProperty("mdmi.maps", "maps");
+		System.setProperty("GOOGLE_APPLICATION_CREDENTIALS", "credentials/google_application_credentials.json");
 
 		System.setProperty("your_project_id", "zanenet-njinck");
 
