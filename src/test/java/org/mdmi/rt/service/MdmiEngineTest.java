@@ -564,4 +564,25 @@ public class MdmiEngineTest {
 		}
 	}
 
+	@Test
+	public void testPatientandPost() {
+		Set<String> documents = Stream.of(new File("src/test/resources/patient").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+			try {
+				runTransformation3(
+					"patient", "NJ.Person", "FHIRR4JSON.MasterBundle", Files.readString(Path.of(fileName)));
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		}
+	}
+
 }
