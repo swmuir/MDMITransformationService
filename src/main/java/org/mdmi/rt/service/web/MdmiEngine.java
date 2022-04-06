@@ -163,8 +163,11 @@ public class MdmiEngine {
 		// add in fhir post processor
 
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new Deliminated2XML("NJ", "\\|"));
+		String fhirStoreName = String.format(
+			FhirResourceCreate.FHIR_NAME, your_project_id, your_region_id, your_dataset_id, your_fhir_id);
 
-		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson());
+		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson(credentials, fhirStoreName));
+
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new HL7V2MessagePreProcessor());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new PreProcessorForFHIRJson());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new CDAPreProcesor());
@@ -186,9 +189,11 @@ public class MdmiEngine {
 		loadMaps();
 		MdmiUow.setSerializeSemanticModel(false);
 
-		// Set Stylesheet for CDA document section generation
-		CDAPostProcessor.setStylesheet("perspectasections.xsl");
-		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson());
+		String fhirStoreName = String.format(
+			FhirResourceCreate.FHIR_NAME, your_project_id, your_region_id, your_dataset_id, your_fhir_id);
+
+		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson(credentials, fhirStoreName));
+
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new HL7V2MessagePreProcessor());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new PreProcessorForFHIRJson());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new CDAPreProcesor());
@@ -208,10 +213,12 @@ public class MdmiEngine {
 		logger.debug("DEBUG Start transformation ");
 		loadMaps();
 		MdmiUow.setSerializeSemanticModel(false);
+		String fhirStoreName = String.format(
+			FhirResourceCreate.FHIR_NAME, your_project_id, your_region_id, your_dataset_id, your_fhir_id);
 
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new Deliminated2XML("NJ", "\\|"));
 
-		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson());
+		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson(credentials, fhirStoreName));
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new HL7V2MessagePreProcessor());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new PreProcessorForFHIRJson());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new CDAPreProcesor());
@@ -222,8 +229,6 @@ public class MdmiEngine {
 			source, message.getBytes(), target, null, getMapProperties(source), getMapProperties(target));
 
 		System.err.println(result);
-		String fhirStoreName = String.format(
-			FhirResourceCreate.FHIR_NAME, your_project_id, your_region_id, your_dataset_id, your_fhir_id);
 		return FhirResourceCreate.postBundle(credentials, fhirStoreName, result);
 	}
 

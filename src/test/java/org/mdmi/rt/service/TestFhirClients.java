@@ -96,4 +96,19 @@ class TestFhirClients {
 
 	}
 
+	@Test
+	void testQuery() throws IOException, URISyntaxException {
+
+		String fhirStoreName = String.format(
+			FhirResourceCreate.FHIR_NAME, "zanenet-njinck", "us-central1", "dev-zanenet-njinck", "dev-mdix-datastore");
+
+		;
+		String result = FhirResourceCreate.query(
+			"/Users/seanmuir/git/deletethis/MDMITransformationService/credentials/google_application_credentials.json",
+			fhirStoreName, "Patient?identifier=012002076302x");
+
+		System.out.println(result);
+
+	}
+
 }

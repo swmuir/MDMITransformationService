@@ -31,6 +31,10 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,6 +103,61 @@ public class FhirResourceCreate {
 		return responseString;
 	}
 
+	public static String query(String jsonPath, String fhirStoreName, String query)
+			throws IOException, URISyntaxException {
+
+		GoogleCredentials credential = GoogleCredentials.fromStream(new FileInputStream(jsonPath)).createScoped(
+			Collections.singleton(CloudHealthcareScopes.CLOUD_PLATFORM));
+		HttpRequestInitializer requestInitializer = request -> {
+			new HttpCredentialsAdapter(credential).initialize(request);
+			request.setConnectTimeout(60000); // 1 minute connect timeout
+			request.setReadTimeout(60000); // 1 minute read timeout
+		};
+
+		// Build the client for interacting with the service.
+		CloudHealthcare client = new CloudHealthcare.Builder(
+			HTTP_TRANSPORT, JSON_FACTORY, requestInitializer).setApplicationName("mdmi-transform-postbundle").build();
+
+		HttpClient httpClient = HttpClients.createDefault();
+
+		String uri = String.format("%sv1/%s/fhir/%s", client.getRootUrl(), fhirStoreName, query);
+		URIBuilder uriBuilder = new URIBuilder(uri).setParameter(
+			"access_token", credential.refreshAccessToken().getTokenValue());
+
+		HttpUriRequest request = RequestBuilder.get().setUri(uriBuilder.build()).addHeader(
+			"Content-Type", "application/fhir+json").addHeader("Accept-Charset", "utf-8").addHeader(
+				"Accept", "application/fhir+json; charset=utf-8").build();
+
+		// Execute the request and process the results.
+		HttpResponse response = httpClient.execute(request);
+		HttpEntity responseEntity = response.getEntity();
+		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+			logger.error(String.format("Exception creating FHIR resource: %s\n", response.getStatusLine().toString()));
+			responseEntity.writeTo(System.err);
+			throw new RuntimeException();
+		}
+		logger.info("FHIR resource created: ");
+
+		String responseString = EntityUtils.toString(responseEntity, "UTF-8");
+
+		JSONParser parser = new JSONParser();
+
+		try {
+			Object obj = parser.parse(responseString);
+			JSONObject jsonObject = (JSONObject) obj;
+			if (jsonObject.containsKey("entry")) {
+				JSONArray entries = (JSONArray) jsonObject.get("entry");
+				JSONObject entry = (JSONObject) entries.get(0);
+				JSONObject resource = (JSONObject) entry.get("resource");
+				return (String) resource.get("id");
+			}
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public static void authExplicit(String jsonPath) throws IOException {
 		// You can specify a credential file by providing a path to GoogleCredentials.
 		// Otherwise credentials are read from the GOOGLE_APPLICATION_CREDENTIALS environment variable.
@@ -129,11 +188,4 @@ public class FhirResourceCreate {
 			"your-application-name").build();
 	}
 
-	// private static String getAccessToken() throws IOException {
-	// GoogleCredentials credential = GoogleCredentials.getApplicationDefault().createScoped(
-	// Collections.singleton(CloudHealthcareScopes.CLOUD_PLATFORM));
-	//
-	// return credential.refreshAccessToken().getTokenValue();
-	// }
 }
-// [END healthcare_create_resource]

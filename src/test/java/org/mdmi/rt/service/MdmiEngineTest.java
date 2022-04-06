@@ -439,6 +439,22 @@ public class MdmiEngineTest {
 	}
 
 	@Test
+	public void testRevenue() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/revenue").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+			runTransformation("NJ.Revenue", "FHIRR4JSON.MasterBundle", fileName);
+		}
+	}
+
+	@Test
 	public void testRevenueandPost() {
 		Set<String> documents = Stream.of(new File("src/test/resources/revenue").listFiles()).filter(
 			file -> !file.isDirectory()).map(t -> {
@@ -474,6 +490,46 @@ public class MdmiEngineTest {
 			try {
 				runTransformation3(
 					"providernpi", "NJ.ProviderNPI", "FHIRR4JSON.MasterBundle", Files.readString(Path.of(fileName)));
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		}
+	}
+
+	@Test
+	public void testProviderNPI() {
+		// Set<String> documents = Stream.of(new File("src/test/resources/providernpi").listFiles()).filter(
+		// file -> !file.isDirectory()).map(t -> {
+		// try {
+		// return t.getCanonicalPath();
+		// } catch (IOException e) {
+		// return "";
+		// }
+		// }).collect(Collectors.toSet());
+		//
+		// for (String fileName : documents) {
+		// try {
+		//
+		// runTransformation("providernpi", "NJ.ProviderNPI", "FHIRR4JSON.MasterBundle", fileName);
+		// } catch (Exception exception) {
+		// exception.printStackTrace();
+		// }
+		// }
+
+		Set<String> documents = Stream.of(new File("src/test/resources/providernpi").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+			try {
+				// if (fileName.endsWith("ADT_A01 - 2.txt")) {
+				runTransformation("NJ.ProviderNPI", "FHIRR4JSON.MasterBundle", fileName);
+				// }
 			} catch (Exception exception) {
 				exception.printStackTrace();
 			}
@@ -579,6 +635,45 @@ public class MdmiEngineTest {
 			try {
 				runTransformation3(
 					"patient", "NJ.Person", "FHIRR4JSON.MasterBundle", Files.readString(Path.of(fileName)));
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		}
+	}
+
+	@Test
+	public void testProviderAllandPost() {
+		Set<String> documents = Stream.of(new File("src/test/resources/provider").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+			try {
+				runTransformation3(
+					"provider", "NJ.Provider", "FHIRR4JSON.MasterBundle", Files.readString(Path.of(fileName)));
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		}
+
+		documents = Stream.of(new File("src/test/resources/providernpi").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+			try {
+				runTransformation3(
+					"providernpi", "NJ.ProviderNPI", "FHIRR4JSON.MasterBundle", Files.readString(Path.of(fileName)));
 			} catch (Exception exception) {
 				exception.printStackTrace();
 			}
