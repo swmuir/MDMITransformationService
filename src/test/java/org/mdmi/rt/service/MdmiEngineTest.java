@@ -316,29 +316,6 @@ public class MdmiEngineTest {
 	}
 
 	@Test
-	public void testMMISPatient() {
-
-		Set<String> documents = Stream.of(new File("src/test/resources/patient").listFiles()).filter(
-			file -> !file.isDirectory()).map(t -> {
-				try {
-					return t.getCanonicalPath();
-				} catch (IOException e) {
-					return "";
-				}
-			}).collect(Collectors.toSet());
-
-		for (String fileName : documents) {
-			try {
-				// if (fileName.endsWith("ADT_A01 - 2.txt")) {
-				runTransformation("NJ.Person", "FHIRR4JSON.MasterBundle", fileName);
-				// }
-			} catch (Exception exception) {
-				exception.printStackTrace();
-			}
-		}
-	}
-
-	@Test
 	public void testclaims1() throws Exception {
 		Set<String> documents = Stream.of(new File("src/test/resources/claims1").listFiles()).filter(
 			file -> !file.isDirectory()).map(t -> {
@@ -389,7 +366,7 @@ public class MdmiEngineTest {
 		for (String fileName : documents) {
 			try {
 				runTransformation3(
-					"provider", "NJ.Provider", "FHIRR4JSON.MasterBundle", Files.readString(Path.of(fileName)));
+					"provider", "NJ.PROVIDER", "FHIRR4JSON.MasterBundle", Files.readString(Path.of(fileName)));
 			} catch (Exception exception) {
 				exception.printStackTrace();
 			}
@@ -451,6 +428,22 @@ public class MdmiEngineTest {
 
 		for (String fileName : documents) {
 			runTransformation("NJ.Revenue", "FHIRR4JSON.MasterBundle", fileName);
+		}
+	}
+
+	@Test
+	public void testTempCCDA() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/TEMPCCDA").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+			runTransformation("CDAR2.ContinuityOfCareDocument", "FHIRR4JSON.MasterBundle", fileName);
 		}
 	}
 
@@ -579,6 +572,38 @@ public class MdmiEngineTest {
 	}
 
 	@Test
+	public void testRCP_SPEC_PGM() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/rcp_spec_pgm").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+			runTransformation("NJ.RCP_SPEC_PGM", "FHIRR4JSON.MasterBundle", fileName);
+		}
+	}
+
+	@Test
+	public void testRCPMGCARE() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/rcpmgcare").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+			runTransformation("NJ.RCPMGCARE", "FHIRR4JSON.MasterBundle", fileName);
+		}
+	}
+
+	@Test
 	public void testRCPMGCAREandPost() {
 		Set<String> documents = Stream.of(new File("src/test/resources/rcpmgcare").listFiles()).filter(
 			file -> !file.isDirectory()).map(t -> {
@@ -680,4 +705,35 @@ public class MdmiEngineTest {
 		}
 	}
 
+	@Test
+	public void testDiagPOA() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/diagpoa").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+			runTransformation("NJ.DiagPOA", "FHIRR4JSON.MasterBundle", fileName);
+		}
+	}
+
+	@Test
+	public void testPatient() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/patient").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+			runTransformation("NJ.Person", "FHIRR4JSON.MasterBundle", fileName);
+		}
+	}
 }

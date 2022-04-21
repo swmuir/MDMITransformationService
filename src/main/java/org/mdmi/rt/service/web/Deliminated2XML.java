@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.mdmi.Bag;
 import org.mdmi.MessageModel;
 import org.mdmi.core.MdmiMessage;
@@ -32,6 +31,8 @@ import org.mdmi.core.engine.preprocessors.IPreProcessor;
  *
  */
 public class Deliminated2XML implements IPreProcessor {
+
+	// private static final String CSV2XML = "CSV2XML";
 
 	private String name;
 
@@ -45,6 +46,13 @@ public class Deliminated2XML implements IPreProcessor {
 		super();
 		this.name = name;
 		this.delim = delim;
+
+		// ParseException asdfasfd;
+
+		// EcoreResourceFactoryImpl asdf;
+
+		// TreeWalker l;
+
 	}
 
 	/*
@@ -95,10 +103,8 @@ public class Deliminated2XML implements IPreProcessor {
 				Bag rootBag = (Bag) messageModel.getSyntaxModel().getRoot();
 				if (!rootBag.getNodes().isEmpty()) {
 					String root = rootBag.getLocation();
-					String element = rootBag.getNodes().get(0).getLocation();
+					String element = messageModel.getMessageModelName();
 					message.setData(toXML(lines, delim, root, element).getBytes());
-
-					// System.err.println(message.getDataAsString());
 				}
 
 			}
@@ -111,7 +117,6 @@ public class Deliminated2XML implements IPreProcessor {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	private String toXML(List<String> inputLines, String delim, String root, String elementName) {
 
 		List<String> header = new ArrayList<>(
@@ -120,9 +125,11 @@ public class Deliminated2XML implements IPreProcessor {
 
 		String output = "<" + root + ">" + System.lineSeparator() + inputLines.stream().skip(1).map(line -> {
 			List<String> cells = Arrays.asList(line.split(delim));
-			return "<" + elementName + ">" + System.lineSeparator() + IntStream.range(0, cells.size()).mapToObj(
-				i -> "<" + header.get(i) + ">" + StringEscapeUtils.escapeXml(cells.get(i).replaceAll("\"", "")) + "</" +
-						header.get(i) + ">").collect(Collectors.joining(System.lineSeparator())) +
+			return "<" + elementName + ">" + System.lineSeparator() +
+					IntStream.range(0, cells.size()).mapToObj(
+						i -> "<" + header.get(i) + ">" +
+								cells.get(i).replaceAll("\"", "").replaceAll("<", "&lt;").replaceAll(">", "&gt;") +
+								"</" + header.get(i) + ">").collect(Collectors.joining(System.lineSeparator())) +
 					"</" + elementName + ">" + System.lineSeparator();
 		}).collect(Collectors.joining(System.lineSeparator())).replaceAll("&", "&amp;") + System.lineSeparator() +
 				"</" + root + ">";

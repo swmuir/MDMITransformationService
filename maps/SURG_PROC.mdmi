@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mdmi="http://schema.omg.org/spec/MDMI/1.0">
   <mdmi:MessageGroup xmi:id="__Ba5IFxBEey5BJC0fIpLLQ" name="NJ" description="SKIPCONTAINMENT" defaultLocationExprLang="XPath" defaultConstraintExprLang="JavaScript" defaultRuleExprLang="JavaScript">
-    <models xmi:id="__Ba5IVxBEey5BJC0fIpLLQ" messageModelName="SurgProc" description="2022-03-24 09:41:56.553">
+    <models xmi:id="__Ba5IVxBEey5BJC0fIpLLQ" messageModelName="SurgProc" description="2022-04-01 11:34:33.759">
       <syntaxModel xmi:id="__Ba5IlxBEey5BJC0fIpLLQ">
         <root xsi:type="mdmi:Bag" xmi:id="__Ba5I1xBEey5BJC0fIpLLQ" name="root" minOccurs="1" maxOccurs="1" location="root" semanticElement="__Ba5LVxBEey5BJC0fIpLLQ">
-          <nodes xsi:type="mdmi:Bag" xmi:id="_KKi4YKoPEeyy4qycE_x_4Q" name="SURG_PROC" maxOccurs="2147483647" location="SURG_PROC" semanticElement="_N0RYIKoPEeyy4qycE_x_4Q">
+          <nodes xsi:type="mdmi:Bag" xmi:id="_KKi4YKoPEeyy4qycE_x_4Q" name="SURG_PROC" maxOccurs="2147483647" location="SurgProc" semanticElement="_N0RYIKoPEeyy4qycE_x_4Q">
             <nodes xsi:type="mdmi:LeafSyntaxTranslator" xmi:id="__Ba5JFxBEey5BJC0fIpLLQ" name="CLM_ICN_IDN" maxOccurs="1" location="CLM_ICN_IDN" semanticElement="__Ba5LlxBEey5BJC0fIpLLQ"/>
             <nodes xsi:type="mdmi:LeafSyntaxTranslator" xmi:id="__Ba5JVxBEey5BJC0fIpLLQ" name="CLM_SRC_CDE" maxOccurs="1" location="CLM_SRC_CDE" semanticElement="__Ba5L1xBEey5BJC0fIpLLQ"/>
             <nodes xsi:type="mdmi:LeafSyntaxTranslator" xmi:id="__Ba5JlxBEey5BJC0fIpLLQ" name="CLM_PMT_DTE" maxOccurs="1" location="CLM_PMT_DTE" semanticElement="__Ba5MFxBEey5BJC0fIpLLQ"/>
@@ -78,7 +78,7 @@
         </semanticElements>
         <semanticElements xmi:id="_NEpuMKtxEeyy4qycE_x_4Q" name="ClaimPatient" elementType="NORMAL" datatype="__BcPClxBEey5BJC0fIpLLQ" parent="_N0RYIKoPEeyy4qycE_x_4Q">
           <mapFromMdmi xmi:id="_pUPwcatxEeyy4qycE_x_4Q" name="MDMI2Message4ClaimPatient" businessElement="__Ba5SlxBEey5BJC0fIpLLQ"/>
-          <computedValue xmi:id="_NEpuMatxEeyy4qycE_x_4Q" expression="value.getXValue().addValue('root', 'Patient/patient');" language="JavaScript"/>
+          <computedValue xmi:id="_NEpuMatxEeyy4qycE_x_4Q" expression="value.getXValue().addValue('assigningAuthorityName', 'Patient');" language="JavaScript"/>
           <mapToMdmi xmi:id="_pUPwcKtxEeyy4qycE_x_4Q" name="Message2MDMI4ClaimPatient" businessElement="__Ba5SlxBEey5BJC0fIpLLQ"/>
         </semanticElements>
         <semanticElements xmi:id="_Q2oyEKtxEeyy4qycE_x_4Q" name="ClaimItemSequence" elementType="NORMAL" datatype="__BcOr1xBEey5BJC0fIpLLQ" parent="_N0RYIKoPEeyy4qycE_x_4Q">
@@ -98,7 +98,7 @@
         </semanticElements>
         <semanticElements xmi:id="_cr-oYKtxEeyy4qycE_x_4Q" name="ClaimInsuranceCoverage" elementType="NORMAL" datatype="__BcPClxBEey5BJC0fIpLLQ" parent="_N0RYIKoPEeyy4qycE_x_4Q">
           <mapFromMdmi xmi:id="_x7vxwatxEeyy4qycE_x_4Q" name="MDMI2Message4ClaimInsuranceCoverage" businessElement="__Ba5vFxBEey5BJC0fIpLLQ"/>
-          <computedValue xmi:id="_cr-oYatxEeyy4qycE_x_4Q" expression="value.getXValue().addValue('root', 'Coverage/coverage');" language="JavaScript"/>
+          <computedValue xmi:id="_cr-oYatxEeyy4qycE_x_4Q" expression="value.getXValue().addValue('assigningAuthorityName', 'Coverage');" language="JavaScript"/>
           <mapToMdmi xmi:id="_x7vxwKtxEeyy4qycE_x_4Q" name="Message2MDMI4ClaimInsuranceCoverage" businessElement="__Ba5vFxBEey5BJC0fIpLLQ"/>
         </semanticElements>
       </elementSet>
@@ -5247,6 +5247,7 @@
       <businessElements xmi:id="_znzsF4BdEeyNUtvEXKvkfg" name="GoalId" description="Internal file identifier for Goal Resource" reference="GoalId" uniqueIdentifier="379177f0-5357-4055-a837-4f058f093d05" referenceDatatype="__BcPClxBEey5BJC0fIpLLQ" readonly="true"/>
       <businessElements xmi:id="_FresEKoPEeyy4qycE_x_4Q" name="ConditionOnsetStartTime" description="The start time period of the onset of the condition" reference="ConditionOnsetStartTime" uniqueIdentifier="70667d2f-c27b-429a-92f7-e4ef9cb1aa0a" referenceDatatype="__BcOrVxBEey5BJC0fIpLLQ" readonly="true"/>
       <businessElements xmi:id="_FresEaoPEeyy4qycE_x_4Q" name="EncounterPartOfRef" description="A reference to the parent encounter" reference="EncounterPartOfReference" uniqueIdentifier="b222c889-4a37-4a09-b415-27a4687c9bd1" referenceDatatype="__BcOsFxBEey5BJC0fIpLLQ" readonly="true"/>
+      <businessElements xmi:id="_ymQD8LAqEeyUUcdNn8ifXA" name="ClaimPayeeContainer" reference="ClaimPayeeContainer" uniqueIdentifier="15dc8634-74ca-4e5e-8efc-907ebb5672b9" referenceDatatype="__BcOuVxBEey5BJC0fIpLLQ" readonly="true"/>
     </domainDictionary>
     <datatypes xsi:type="mdmi:DTSPrimitive" xmi:id="__BcOq1xBEey5BJC0fIpLLQ" typeName="Binary" description="Binary" reference="http://www.w3.org/2001/XMLSchema#hexBinary"/>
     <datatypes xsi:type="mdmi:DTSPrimitive" xmi:id="__BcOrFxBEey5BJC0fIpLLQ" typeName="Boolean" description="Boolean" reference="http://www.w3.org/2001/XMLSchema#boolean"/>

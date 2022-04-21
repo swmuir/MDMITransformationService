@@ -12,13 +12,14 @@
 package org.mdmi.rt.service.web;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import org.apache.commons.lang3.StringUtils;
@@ -38,7 +39,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.hl7.fhir.instance.model.api.IIdType;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
 import org.hl7.fhir.r4.model.Bundle.HTTPVerb;
@@ -51,6 +51,7 @@ import org.hl7.fhir.r4.model.Medication;
 import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Practitioner;
+import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.ResourceType;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -115,6 +116,44 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 		return "FHIRR4PostProcessor";
 	}
 
+	private void resolveReference(HashMap<String, String> referenceMappings, Reference reference, String resource) {
+
+		if (reference != null && !StringUtils.isEmpty(reference.getDisplay())) {
+			try {
+				String result = FhirResourceCreate.query(
+					credentials, fhirStoreName, resource + "?identifier=" + reference.getDisplay());
+				if (result != null) {
+					reference.setReference(resource + "/" + result);
+				} else {
+					if (referenceMappings.containsKey(reference.getDisplay())) {
+						reference.setReference(referenceMappings.get(reference.getDisplay()));
+					}
+
+				}
+			} catch (Exception e) {
+
+			}
+		}
+
+	}
+
+	private String searchForExistingResource(String resourceType, Identifier identifier) {
+
+		if (identifier != null) {
+			if (!StringUtils.isEmpty(identifier.getValue())) {
+				try {
+					return FhirResourceCreate.query(
+						credentials, fhirStoreName, resourceType + "?identifier=" + identifier.getValue());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		}
+		return null;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -174,7 +213,30 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 			deduplicate(bundle);
 
-			HashSet<String> noIdentifier = new HashSet<String>();
+			for (BundleEntryComponent bundleEntry : bundle.getEntry()) {
+				UUID uuid = UUID.randomUUID();
+				String resourceId = "urn:uuid:" + uuid;
+				bundleEntry.setFullUrl(resourceId);
+
+				try {
+					Method getIdentifier = bundleEntry.getResource().getClass().getDeclaredMethod("getIdentifier");
+
+					@SuppressWarnings("unchecked")
+					List<Identifier> identifiers = (List<Identifier>) getIdentifier.invoke(bundleEntry.getResource());
+
+					if (!identifiers.isEmpty()) {
+						for (Identifier identifier : identifiers) {
+							referenceMappings.put(identifier.getValue(), resourceId);
+						}
+
+					} else {
+						identifiers.add(new Identifier().setValue(uuid.toString()));
+					}
+
+				} catch (Exception e) {
+					logger.trace(e.getMessage());
+				}
+			}
 
 			for (BundleEntryComponent bundleEntry : bundle.getEntry()) {
 
@@ -199,13 +261,19 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 								patientResource.setId(id);
 
+								Identifier identifier = new Identifier();
+								identifier.setId(id);
+								identifier.setSystem(
+									"https://master-patient-index-test-ocp.nicheaimlabs.com/api/v1/patients/");
+
+								patientResource.getIdentifier().add(identifier);
+
 								bundleEntry.getRequest().setUrl(
 									bundleEntry.getResource().getResourceType().name() + "/" + id);
 								bundleEntry.getRequest().setMethod(HTTPVerb.PUT);
 
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								logger.trace(e.getMessage());
 							}
 						} else {
 							if (!patientResource.getIdentifier().isEmpty()) {
@@ -221,29 +289,19 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 									bundleEntry.getRequest().setMethod(HTTPVerb.PUT);
 
 								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+									logger.trace(e.getMessage());
 								}
 							}
-
-							// coverage.getBeneficiary().setReference("Patient/" + result);
-
 						}
 
 					}
 
 					if (theResourceType.equals(ResourceType.Coverage)) {
 						Coverage coverage = (Coverage) bundleEntry.getResource();
-						if (coverage.getBeneficiary() != null && coverage.getBeneficiary().getReference() != null) {
-							IIdType rid = coverage.getBeneficiary().getReferenceElement();
-							try {
-								String result = FhirResourceCreate.query(
-									credentials, fhirStoreName, "Patient?identifier=" + rid.getIdPart());
 
-								coverage.getBeneficiary().setReference("Patient/" + result);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
+						resolveReference(referenceMappings, coverage.getBeneficiary(), "Patient");
+						for (Reference payor : coverage.getPayor()) {
+							resolveReference(referenceMappings, payor, "Organization");
 						}
 
 						bundleEntry.getRequest().setUrl(bundleEntry.getResource().getResourceType().name());
@@ -253,70 +311,33 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 					}
 
 					if (theResourceType.equals(ResourceType.Claim)) {
-						bundleEntry.getRequest().setUrl(bundleEntry.getResource().getResourceType().name());
-
-						bundleEntry.getRequest().setMethod(HTTPVerb.POST);
 
 						Claim claim = (Claim) bundleEntry.getResource();
 
-						if (claim.getProvider() != null && !StringUtils.isEmpty(claim.getProvider().getDisplay())) {
+						resolveReference(referenceMappings, claim.getProvider(), "Practitioner");
 
-							try {
-								String result = FhirResourceCreate.query(
-									credentials, fhirStoreName,
-									"Practitioner?identifier=" + claim.getProvider().getDisplay());
-								if (result != null) {
-									claim.getProvider().setReference("Practitioner/" + result);
-								}
-							} catch (Exception e) {
+						resolveReference(referenceMappings, claim.getPatient(), "Patient");
 
-							}
+						resolveReference(referenceMappings, claim.getInsurer(), "Organization");
 
-						}
+						String existingId = searchForExistingResource("Claim", claim.getIdentifierFirstRep());
 
-						if (claim.getPatient() != null && !StringUtils.isEmpty(claim.getPatient().getDisplay())) {
+						if (existingId != null) {
 
-							try {
-								String result = FhirResourceCreate.query(
-									credentials, fhirStoreName,
-									"Patient?identifier=" + claim.getPatient().getDisplay());
-								if (result != null) {
-									claim.getPatient().setReference("Patient/" + result);
-								}
-							} catch (Exception e) {
+							bundleEntry.getRequest().setMethod(HTTPVerb.PUT);
 
-							}
+							claim.setId(existingId);
+							bundleEntry.getRequest().setUrl(
+								bundleEntry.getResource().getResourceType().name() + "/" + existingId);
 
-						}
+						} else {
 
-						if (claim.getInsurer() != null && !StringUtils.isEmpty(claim.getInsurer().getDisplay())) {
+							bundleEntry.getRequest().setUrl(bundleEntry.getResource().getResourceType().name());
 
-							try {
-								String result = FhirResourceCreate.query(
-									credentials, fhirStoreName,
-									"Organization?identifier=" + claim.getInsurer().getDisplay());
-								if (result != null) {
-									claim.getInsurer().setReference("Organization/" + result);
-								}
-							} catch (Exception e) {
-
-							}
-
+							bundleEntry.getRequest().setMethod(HTTPVerb.POST);
 						}
 
 					}
-
-					/*
-					 * "provider": {
-					 * "display": "3675807"
-					 * },
-					 * "patient": {
-					 * "display": "800004654951"
-					 * },
-					 * "insurer": {
-					 * "display": "3675807"
-					 * },
-					 */
 
 					if (theResourceType.equals(ResourceType.ExplanationOfBenefit)) {
 						bundleEntry.getRequest().setUrl(bundleEntry.getResource().getResourceType().name());
@@ -325,53 +346,13 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 						ExplanationOfBenefit explanationOfBenefit = (ExplanationOfBenefit) bundleEntry.getResource();
 
-						if (explanationOfBenefit.getProvider() != null &&
-								!StringUtils.isEmpty(explanationOfBenefit.getProvider().getDisplay())) {
+						resolveReference(referenceMappings, explanationOfBenefit.getProvider(), "Practitioner");
 
-							try {
-								String result = FhirResourceCreate.query(
-									credentials, fhirStoreName,
-									"Practitioner?identifier=" + explanationOfBenefit.getProvider().getDisplay());
-								if (result != null) {
-									explanationOfBenefit.getProvider().setReference("Practitioner/" + result);
-								}
-							} catch (Exception e) {
+						resolveReference(referenceMappings, explanationOfBenefit.getPatient(), "Patient");
 
-							}
+						resolveReference(referenceMappings, explanationOfBenefit.getInsurer(), "Organization");
 
-						}
-
-						if (explanationOfBenefit.getPatient() != null &&
-								!StringUtils.isEmpty(explanationOfBenefit.getPatient().getDisplay())) {
-
-							try {
-								String result = FhirResourceCreate.query(
-									credentials, fhirStoreName,
-									"Patient?identifier=" + explanationOfBenefit.getPatient().getDisplay());
-								if (result != null) {
-									explanationOfBenefit.getPatient().setReference("Patient/" + result);
-								}
-							} catch (Exception e) {
-
-							}
-
-						}
-
-						if (explanationOfBenefit.getInsurer() != null &&
-								!StringUtils.isEmpty(explanationOfBenefit.getInsurer().getDisplay())) {
-
-							try {
-								String result = FhirResourceCreate.query(
-									credentials, fhirStoreName,
-									"Organization?identifier=" + explanationOfBenefit.getInsurer().getDisplay());
-								if (result != null) {
-									explanationOfBenefit.getInsurer().setReference("Organization/" + result);
-								}
-							} catch (Exception e) {
-
-							}
-
-						}
+						resolveReference(referenceMappings, explanationOfBenefit.getClaim(), "Claim");
 
 					}
 
@@ -401,7 +382,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 												bundleEntry.getResource().getResourceType().name() + "/" + result);
 										}
 									} catch (Exception e) {
-										e.printStackTrace();
+										logger.trace(e.getMessage());
 									}
 								}
 
@@ -441,35 +422,6 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 				}
 
-				// UUID uuid = UUID.randomUUID();
-				// bundleEntry.setFullUrl("urn:uuid:" + uuid);
-				// if (bundleEntry.getResource() instanceof DomainResource) {
-				// DomainResource dr = (DomainResource) bundleEntry.getResource();
-				// if (!noIdentifier.contains(bundleEntry.getResource().getResourceType().name())) {
-				// try {
-				// Method sumInstanceMethod = dr.getClass().getMethod("getIdentifier");
-				//
-				// List<Identifier> identifiers = (List<Identifier>) sumInstanceMethod.invoke(dr);
-				//
-				// for (Identifier identifier : identifiers) {
-				// String theSystem = identifier.getSystem();
-				// String theValue = identifier.getValue();
-				// if (!StringUtils.isEmpty(theValue)) {
-				// String theKey = (!StringUtils.isEmpty(theSystem)
-				// ? theSystem + "::"
-				// : "") + theValue;
-				//
-				// referenceMappings.put(
-				// bundleEntry.getResource().getResourceType().name() + "/" + theKey,
-				// "urn:uuid:" + uuid);
-				// }
-				// }
-				// } catch (Exception e) {
-				// noIdentifier.add(bundleEntry.getResource().getResourceType().name());
-				// }
-				// }
-				// }
-
 			}
 
 			String result = ctx.newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle);
@@ -495,7 +447,6 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 		for (Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext();) {
 			String key = (String) iterator.next();
 			if (key.equals("reference")) {
-				System.out.println(key + " : " + jsonObject.get(key));
 				if (referenceMappings.containsKey(jsonObject.get(key))) {
 					jsonObject.replace(key, referenceMappings.get(jsonObject.get(key)));
 				}

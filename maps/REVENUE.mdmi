@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mdmi="http://schema.omg.org/spec/MDMI/1.0">
   <mdmi:MessageGroup xmi:id="_5IpH4FxBEey5BJC0fIpLLQ" name="NJ" description="SKIPCONTAINMENT" defaultLocationExprLang="XPath" defaultConstraintExprLang="JavaScript" defaultRuleExprLang="JavaScript">
-    <models xmi:id="_5IpH4VxBEey5BJC0fIpLLQ" messageModelName="Revenue" description="2022-04-05 16:46:05.035">
+    <models xmi:id="_5IpH4VxBEey5BJC0fIpLLQ" messageModelName="Revenue" description="2022-04-01 11:35:02.33">
       <syntaxModel xmi:id="_5IpH4lxBEey5BJC0fIpLLQ">
         <root xsi:type="mdmi:Bag" xmi:id="_5IpH41xBEey5BJC0fIpLLQ" name="root" minOccurs="1" maxOccurs="1" location="root" semanticElement="_5IpH7lxBEey5BJC0fIpLLQ">
-          <nodes xsi:type="mdmi:Bag" xmi:id="_iAhEcKoOEeyy4qycE_x_4Q" name="REVENUE" maxOccurs="2147483647" location="REVENUE" semanticElement="_lWJjgKoOEeyy4qycE_x_4Q">
+          <nodes xsi:type="mdmi:Bag" xmi:id="_iAhEcKoOEeyy4qycE_x_4Q" name="REVENUE" maxOccurs="2147483647" location="Revenue" semanticElement="_lWJjgKoOEeyy4qycE_x_4Q">
             <nodes xsi:type="mdmi:LeafSyntaxTranslator" xmi:id="_5IpH5FxBEey5BJC0fIpLLQ" name="CLM_ICN_IDN" maxOccurs="1" location="CLM_ICN_IDN" semanticElement="_5IpH71xBEey5BJC0fIpLLQ"/>
             <nodes xsi:type="mdmi:LeafSyntaxTranslator" xmi:id="_5IpH5VxBEey5BJC0fIpLLQ" name="CLM_SRC_CDE" maxOccurs="1" location="CLM_SRC_CDE" semanticElement="_5IpH8FxBEey5BJC0fIpLLQ"/>
             <nodes xsi:type="mdmi:LeafSyntaxTranslator" xmi:id="_5IpH5lxBEey5BJC0fIpLLQ" name="CLM_PMT_DTE" maxOccurs="1" location="CLM_PMT_DTE" semanticElement="_5IpH8VxBEey5BJC0fIpLLQ"/>
@@ -20,8 +20,8 @@
       <elementSet xmi:id="_5IpH7VxBEey5BJC0fIpLLQ">
         <semanticElements xmi:id="_5IpH7lxBEey5BJC0fIpLLQ" name="root" elementType="NORMAL" datatype="_5Iqa6lxBEey5BJC0fIpLLQ" children="_lWJjgKoOEeyy4qycE_x_4Q" syntaxNode="_5IpH41xBEey5BJC0fIpLLQ"/>
         <semanticElements xmi:id="_5IpH71xBEey5BJC0fIpLLQ" name="CLM_ICN_IDN" description="Claim identification number (110121)" elementType="NORMAL" datatype="_5Iqa4VxBEey5BJC0fIpLLQ" parent="_lWJjgKoOEeyy4qycE_x_4Q" syntaxNode="_5IpH5FxBEey5BJC0fIpLLQ">
-          <mapFromMdmi xmi:id="_W3GPwbUhEeymcsOpm32mZw" name="MDMI2Message4CLM_ICN_IDN2" businessElement="_5IqYKVxBEey5BJC0fIpLLQ" rule="DATATYPEMAP:mapInstanceIdentifierToString"/>
-          <mapToMdmi xmi:id="_W3GPwLUhEeymcsOpm32mZw" name="Message2MDMI4CLM_ICN_IDN1" businessElement="_5IqYKVxBEey5BJC0fIpLLQ" rule="DATATYPEMAP:mapStringToInstanceIdentifier"/>
+          <mapFromMdmi xmi:id="_m4XYAVxNEey5BJC0fIpLLQ" name="MDMI2Message4CLM_ICN_IDN" businessElement="_5Ip4DVxBEey5BJC0fIpLLQ" rule="DATATYPEMAP:mapInstanceIdentifierToString"/>
+          <mapToMdmi xmi:id="_m4XYAFxNEey5BJC0fIpLLQ" name="Message2MDMI4CLM_ICN_IDN" businessElement="_5Ip4DVxBEey5BJC0fIpLLQ" rule="DATATYPEMAP:mapStringToInstanceIdentifier"/>
         </semanticElements>
         <semanticElements xmi:id="_5IpH8FxBEey5BJC0fIpLLQ" name="CLM_SRC_CDE" elementType="NORMAL" datatype="_5Iqa4VxBEey5BJC0fIpLLQ" parent="_lWJjgKoOEeyy4qycE_x_4Q" syntaxNode="_5IpH5VxBEey5BJC0fIpLLQ"/>
         <semanticElements xmi:id="_5IpH8VxBEey5BJC0fIpLLQ" name="CLM_PMT_DTE" description="Paycycle date, as established by system on processing date (020274)" elementType="NORMAL" datatype="_5Iqa4VxBEey5BJC0fIpLLQ" parent="_lWJjgKoOEeyy4qycE_x_4Q" syntaxNode="_5IpH5lxBEey5BJC0fIpLLQ">
@@ -79,7 +79,7 @@
         </semanticElements>
         <semanticElements xmi:id="_aPphIKt3Eeyy4qycE_x_4Q" name="ClaimPatient" elementType="NORMAL" datatype="_5IqbO1xBEey5BJC0fIpLLQ" parent="_lWJjgKoOEeyy4qycE_x_4Q">
           <mapFromMdmi xmi:id="__9j38at3Eeyy4qycE_x_4Q" name="MDMI2Message4ClaimPatient" businessElement="_5IpIDFxBEey5BJC0fIpLLQ"/>
-          <computedValue xmi:id="_xXUnUKt3Eeyy4qycE_x_4Q" expression="value.getXValue().addValue('root', 'Patient/patient');" language="JavaScript"/>
+          <computedValue xmi:id="_xXUnUKt3Eeyy4qycE_x_4Q" expression="value.getXValue().addValue('assigningAuthorityName', 'Patient');" language="JavaScript"/>
           <mapToMdmi xmi:id="__9j38Kt3Eeyy4qycE_x_4Q" name="Message2MDMI4ClaimPatient" businessElement="_5IpIDFxBEey5BJC0fIpLLQ"/>
         </semanticElements>
         <semanticElements xmi:id="_dciT4Kt3Eeyy4qycE_x_4Q" name="ClaimItemSequence" elementType="NORMAL" datatype="_5Iqa4FxBEey5BJC0fIpLLQ" parent="_lWJjgKoOEeyy4qycE_x_4Q">
@@ -99,7 +99,7 @@
         </semanticElements>
         <semanticElements xmi:id="_kS7j8Kt3Eeyy4qycE_x_4Q" name="ClaimInsuranceCoverage" elementType="NORMAL" datatype="_5IqbO1xBEey5BJC0fIpLLQ" parent="_lWJjgKoOEeyy4qycE_x_4Q">
           <mapFromMdmi xmi:id="_IMGmsat4Eeyy4qycE_x_4Q" name="MDMI2Message4ClaimInsuranceCoverage" businessElement="_5IpIflxBEey5BJC0fIpLLQ"/>
-          <computedValue xmi:id="_3BG6UKt3Eeyy4qycE_x_4Q" expression="value.getXValue().addValue('root', 'Coverage/coverage');" language="JavaScript"/>
+          <computedValue xmi:id="_3BG6UKt3Eeyy4qycE_x_4Q" expression="value.getXValue().addValue('assigningAuthorityName', 'Coverage');" language="JavaScript"/>
           <mapToMdmi xmi:id="_IMGmsKt4Eeyy4qycE_x_4Q" name="Message2MDMI4ClaimInsuranceCoverage" businessElement="_5IpIflxBEey5BJC0fIpLLQ"/>
         </semanticElements>
       </elementSet>
@@ -5248,7 +5248,7 @@
       <businessElements xmi:id="_163lw4BbEeyNUtvEXKvkfg" name="GoalId" description="Internal file identifier for Goal Resource" reference="GoalId" uniqueIdentifier="379177f0-5357-4055-a837-4f058f093d05" referenceDatatype="_5IqbO1xBEey5BJC0fIpLLQ" readonly="true"/>
       <businessElements xmi:id="_gv9bgKoOEeyy4qycE_x_4Q" name="ConditionOnsetStartTime" description="The start time period of the onset of the condition" reference="ConditionOnsetStartTime" uniqueIdentifier="70667d2f-c27b-429a-92f7-e4ef9cb1aa0a" referenceDatatype="_5Iqa3lxBEey5BJC0fIpLLQ" readonly="true"/>
       <businessElements xmi:id="_gv-CkKoOEeyy4qycE_x_4Q" name="EncounterPartOfRef" description="A reference to the parent encounter" reference="EncounterPartOfReference" uniqueIdentifier="b222c889-4a37-4a09-b415-27a4687c9bd1" referenceDatatype="_5Iqa4VxBEey5BJC0fIpLLQ" readonly="true"/>
-      <businessElements xmi:id="_-hIKcLUgEeymcsOpm32mZw" name="ClaimPayeeContainer" reference="ClaimPayeeContainer" uniqueIdentifier="15dc8634-74ca-4e5e-8efc-907ebb5672b9" referenceDatatype="_5Iqa6lxBEey5BJC0fIpLLQ" readonly="true"/>
+      <businessElements xmi:id="_M0Z3ILHREeyUUcdNn8ifXA" name="ClaimPayeeContainer" reference="ClaimPayeeContainer" uniqueIdentifier="15dc8634-74ca-4e5e-8efc-907ebb5672b9" referenceDatatype="_5Iqa6lxBEey5BJC0fIpLLQ" readonly="true"/>
     </domainDictionary>
     <datatypes xsi:type="mdmi:DTSPrimitive" xmi:id="_5Iqa3FxBEey5BJC0fIpLLQ" typeName="Binary" description="Binary" reference="http://www.w3.org/2001/XMLSchema#hexBinary"/>
     <datatypes xsi:type="mdmi:DTSPrimitive" xmi:id="_5Iqa3VxBEey5BJC0fIpLLQ" typeName="Boolean" description="Boolean" reference="http://www.w3.org/2001/XMLSchema#boolean"/>
