@@ -14,9 +14,12 @@ package org.mdmi.rt.service.web;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -50,6 +53,8 @@ import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Medication;
 import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.Patient.LinkType;
+import org.hl7.fhir.r4.model.Patient.PatientLinkComponent;
 import org.hl7.fhir.r4.model.Practitioner;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.ResourceType;
@@ -82,13 +87,43 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 	String fhirStoreName;
 
+	String mpiurl;
+
+	private String mpi_client_id;
+
+	private String mpi_grant_type;
+
+	private String mpi_client_secret;
+
+	private String mpi_scope;
+
+	private Boolean mpi_usetoken;
+
+	private String mpi_tokenurl;
+
 	/**
 	 * @param credentials
 	 * @param fhirStoreName
+	 * @param mpiurl
 	 */
-	public FHIRR4PostProcessorJson(String credentials, String fhirStoreName) {
+	public FHIRR4PostProcessorJson(String credentials, String fhirStoreName, String mpiurl, String mpi_client_id,
+			String mpi_grant_type, String mpi_client_secret, String mpi_scope, String mpi_tokenurl,
+			Boolean mpiusetoken) {
 		this.credentials = credentials;
 		this.fhirStoreName = fhirStoreName;
+		this.mpiurl = mpiurl;
+
+		this.mpi_client_id = mpi_client_id;
+
+		this.mpi_grant_type = mpi_grant_type;
+
+		this.mpi_client_secret = mpi_client_secret;
+
+		this.mpi_scope = mpi_scope;
+
+		this.mpi_usetoken = mpiusetoken;
+
+		this.mpi_tokenurl = mpi_tokenurl;
 	}
 
 	/*
@@ -116,25 +151,39 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 		return "FHIRR4PostProcessor";
 	}
 
+	private static boolean skipReference = false;
+
 	private void resolveReference(HashMap<String, String> referenceMappings, Reference reference, String resource) {
-
-		if (reference != null && !StringUtils.isEmpty(reference.getDisplay())) {
-			try {
-				String result = FhirResourceCreate.query(
-					credentials, fhirStoreName, resource + "?identifier=" + reference.getDisplay());
-				if (result != null) {
-					reference.setReference(resource + "/" + result);
-				} else {
-					if (referenceMappings.containsKey(reference.getDisplay())) {
-						reference.setReference(referenceMappings.get(reference.getDisplay()));
-					}
-
-				}
-			} catch (Exception e) {
-
-			}
+		if (skipReference == true) {
+			return;
 		}
 
+		if (reference != null && !StringUtils.isEmpty(reference.getDisplay())) {
+			String referenceMappingsKey = resource + "_" + reference.getDisplay();
+
+			if (referenceMappings.containsKey(referenceMappingsKey)) {
+				if (referenceMappings.get(referenceMappingsKey) != null) {
+					reference.setReference(resource + "/" + referenceMappings.get(referenceMappingsKey));
+				}
+
+			} else {
+
+				try {
+
+					String result = FhirResourceCreate.query(
+						credentials, fhirStoreName,
+						resource + "?identifier=" + URLEncoder.encode(reference.getDisplay(), StandardCharsets.UTF_8));
+					if (result != null) {
+						reference.setReference(resource + "/" + result);
+					}
+					referenceMappings.put(referenceMappingsKey, result);
+
+				} catch (Exception e) {
+					logger.error(e.getLocalizedMessage());
+
+				}
+			}
+		}
 	}
 
 	private String searchForExistingResource(String resourceType, Identifier identifier) {
@@ -161,6 +210,15 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 	 */
 	@Override
 	public void processMessage(MessageModel messageModel, MdmiMessage mdmiMessage) {
+
+		String tokenRequest = null;
+		if (this.mpi_usetoken) {
+			try {
+				tokenRequest = getAccessToken();
+			} catch (Exception e1) {
+				logger.error("getAccessToken() Error", e1);
+			}
+		}
 		FhirContext ctx = FhirContext.forR4();
 		if (ctx != null) {
 			IParser parse = ctx.newXmlParser();
@@ -206,10 +264,19 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 				public void unknownReference(IParseLocation arg0, String arg1) {
 
 				}
+
+				@Override
+				public void extensionContainsValueAndNestedExtensions(IParseLocation theLocation) {
+					// TODO Auto-generated method stub
+
+				}
 			};
 			parse.setParserErrorHandler(doNothingHandler);
 			HashMap<String, String> referenceMappings = new HashMap<String, String>();
 			Bundle bundle = parse.parseResource(Bundle.class, mdmiMessage.getDataAsString());
+
+			// String asdf = ctx.newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle);
+			// System.err.println(asdf);
 
 			deduplicate(bundle);
 
@@ -238,9 +305,15 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 				}
 			}
 
+			HashSet<String> claims = new HashSet<String>();
+			HashSet<String> patients = new HashSet<String>();
+
+			int resourceCount = 0;
 			for (BundleEntryComponent bundleEntry : bundle.getEntry()) {
 
 				if (bundleEntry.getResource().getResourceType() != null) {
+
+					logger.info("RESOURCE COUNT : " + ++resourceCount);
 
 					ResourceType theResourceType = bundleEntry.getResource().getResourceType();
 					if (theResourceType.equals(ResourceType.Patient)) {
@@ -255,44 +328,60 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 							HumanName name = patientResource.getName().get(0);
 
 							try {
-								String id = proccessMPI(
-									getAccessToken(), name.getFamily(), name.getGivenAsSingleString(),
-									patientResource.getBirthDate());
 
-								patientResource.setId(id);
+								// UUID uuid = UUID.randomUUID();
+								// String id = uuid.toString();
+								String id = proccessMPI(
+									tokenRequest, name.getFamily(), name.getGivenAsSingleString(),
+									patientResource.getBirthDate());
 
 								Identifier identifier = new Identifier();
 								identifier.setId(id);
 								identifier.setSystem(
 									"https://master-patient-index-test-ocp.nicheaimlabs.com/api/v1/patients/");
-
 								patientResource.getIdentifier().add(identifier);
 
-								bundleEntry.getRequest().setUrl(
-									bundleEntry.getResource().getResourceType().name() + "/" + id);
-								bundleEntry.getRequest().setMethod(HTTPVerb.PUT);
+								if (patients.contains(id)) {
+									bundleEntry.getRequest().setUrl(bundleEntry.getResource().getResourceType().name());
+									bundleEntry.getRequest().setMethod(HTTPVerb.POST);
+
+									PatientLinkComponent link = patientResource.addLink();
+									// LinkType LinkType.SEEALSO;
+									link.setType(LinkType.SEEALSO);
+									Reference other = new Reference();
+									other.setId(id);
+									link.setOther(other);
+
+								} else {
+									patients.add(id);
+									patientResource.setId(id);
+									bundleEntry.getRequest().setUrl(
+										bundleEntry.getResource().getResourceType().name() + "/" + id);
+									bundleEntry.getRequest().setMethod(HTTPVerb.PUT);
+								}
 
 							} catch (Exception e) {
 								logger.trace(e.getMessage());
 							}
-						} else {
-							if (!patientResource.getIdentifier().isEmpty()) {
-								String pid = patientResource.getIdentifier().get(0).getValue();
-								String result;
-								try {
-									result = FhirResourceCreate.query(
-										credentials, fhirStoreName, "Patient?identifier=" + pid);
-									patientResource.setId(result);
-
-									bundleEntry.getRequest().setUrl(
-										bundleEntry.getResource().getResourceType().name() + "/" + result);
-									bundleEntry.getRequest().setMethod(HTTPVerb.PUT);
-
-								} catch (Exception e) {
-									logger.trace(e.getMessage());
-								}
-							}
 						}
+						// else {
+						// if (!patientResource.getIdentifier().isEmpty()) {
+						// String pid = patientResource.getIdentifier().get(0).getValue();
+						// String result;
+						// try {
+						// result = FhirResourceCreate.query(
+						// credentials, fhirStoreName, "Patient?identifier=" + pid);
+						// patientResource.setId(result);
+						//
+						// bundleEntry.getRequest().setUrl(
+						// bundleEntry.getResource().getResourceType().name() + "/" + result);
+						// bundleEntry.getRequest().setMethod(HTTPVerb.PUT);
+						//
+						// } catch (Exception e) {
+						// logger.trace(e.getMessage());
+						// }
+						// }
+						// }
 
 					}
 
@@ -315,26 +404,24 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 						Claim claim = (Claim) bundleEntry.getResource();
 
 						resolveReference(referenceMappings, claim.getProvider(), "Practitioner");
-
 						resolveReference(referenceMappings, claim.getPatient(), "Patient");
-
 						resolveReference(referenceMappings, claim.getInsurer(), "Organization");
 
-						String existingId = searchForExistingResource("Claim", claim.getIdentifierFirstRep());
+						Identifier current = claim.getIdentifierFirstRep();
 
-						if (existingId != null) {
-
-							bundleEntry.getRequest().setMethod(HTTPVerb.PUT);
-
-							claim.setId(existingId);
+						if (!claims.contains(claim.getIdentifierFirstRep().getValue())) {
 							bundleEntry.getRequest().setUrl(
-								bundleEntry.getResource().getResourceType().name() + "/" + existingId);
-
+								bundleEntry.getResource().getResourceType().name() + "/" + current.getValue());
+							bundleEntry.getRequest().setMethod(HTTPVerb.PUT);
+							claims.add(current.getValue());
 						} else {
 
-							bundleEntry.getRequest().setUrl(bundleEntry.getResource().getResourceType().name());
+							Reference claimreference = new Reference();
+							claimreference.setId(claim.getIdentifierFirstRep().getValue());
 
+							claim.addRelated().setClaim(claimreference);
 							bundleEntry.getRequest().setMethod(HTTPVerb.POST);
+							bundleEntry.getRequest().setUrl(bundleEntry.getResource().getResourceType().name());
 						}
 
 					}
@@ -347,11 +434,8 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 						ExplanationOfBenefit explanationOfBenefit = (ExplanationOfBenefit) bundleEntry.getResource();
 
 						resolveReference(referenceMappings, explanationOfBenefit.getProvider(), "Practitioner");
-
 						resolveReference(referenceMappings, explanationOfBenefit.getPatient(), "Patient");
-
 						resolveReference(referenceMappings, explanationOfBenefit.getInsurer(), "Organization");
-
 						resolveReference(referenceMappings, explanationOfBenefit.getClaim(), "Claim");
 
 					}
@@ -360,7 +444,6 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 						Practitioner practitioner = (Practitioner) bundleEntry.getResource();
 
-						// bundleEntry.getRequest().setUrl(bundleEntry.getResource().getResourceType().name());
 						bundleEntry.getRequest().setUrl(bundleEntry.getResource().getResourceType().name());
 						bundleEntry.getRequest().setMethod(HTTPVerb.POST);
 
@@ -375,7 +458,6 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 											"Practitioner?identifier=" + identifier.getValue());
 
 										if (result != null) {
-											System.err.println(result);
 											bundleEntry.getRequest().setMethod(HTTPVerb.PUT);
 											practitioner.setId(result);
 											bundleEntry.getRequest().setUrl(
@@ -512,15 +594,23 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 		bundle.getEntry().removeAll(removelist);
 	}
 
-	public static String proccessMPI(String token, String family, String given, Date dob)
+	boolean skipMPI = false;
+
+	public String proccessMPI(String token, String family, String given, Date dob)
 			throws URISyntaxException, ClientProtocolException, IOException {
+		if (skipMPI) {
+			UUID uuid = UUID.randomUUID();
+			String resourceId = "" + uuid;
+			return resourceId;
+		}
+
+		logger.info("START MPI ");
 
 		HttpClient httpClient = HttpClients.createDefault();
 
-		String uri = "https://master-patient-index-test-ocp.nicheaimlabs.com/api/v1/patients/?";
-		URIBuilder uriBuilder = new URIBuilder(uri);
+		URIBuilder uriBuilder = new URIBuilder(mpiurl);
 
-		logger.trace(
+		logger.debug(
 			String.format(
 				"{\"name\": [{\"use\": \"official\", \"family\": \"%s\", \"given\": [\"%s\"]}], \"dob\": \"%tF\", \"createIfNotExist\":\"True\"}",
 				family, given, dob));
@@ -530,9 +620,18 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 				"{\"name\": [{\"use\": \"official\", \"family\": \"%s\", \"given\": [\"%s\"]}], \"dob\": \"%tF\", \"createIfNotExist\":\"True\"}",
 				family, given, dob));
 
-		HttpUriRequest request = RequestBuilder.post().setUri(uriBuilder.build()).setEntity(requestEntity).addHeader(
-			"Content-Type", "application/json").addHeader("Accept-Charset", "utf-8").addHeader(
-				"Accept", "application/json; charset=utf-8").addHeader("Authorization", "Bearer " + token).build();
+		HttpUriRequest request = null;
+
+		if (this.mpi_usetoken) {
+			request = RequestBuilder.post().setUri(uriBuilder.build()).setEntity(requestEntity).addHeader(
+				"Content-Type", "application/json").addHeader("Accept-Charset", "utf-8").addHeader(
+					"Accept", "application/json; charset=utf-8").addHeader("Authorization", "Bearer " + token).build();
+
+		} else {
+			request = RequestBuilder.post().setUri(uriBuilder.build()).setEntity(requestEntity).addHeader(
+				"Content-Type", "application/json").addHeader("Accept-Charset", "utf-8").addHeader(
+					"Accept", "application/json; charset=utf-8").build();
+		}
 		HttpResponse response = httpClient.execute(request);
 
 		HttpEntity responseEntity = response.getEntity();
@@ -541,7 +640,6 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 			responseEntity.writeTo(System.err);
 			throw new RuntimeException();
 		}
-		logger.info("FHIR resource created: ");
 
 		String responseString = EntityUtils.toString(responseEntity, "UTF-8");
 
@@ -551,26 +649,30 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 			Object obj = parser.parse(responseString);
 			JSONArray array = (JSONArray) obj;
 			JSONObject jsonObject = (JSONObject) array.get(0);
+
+			logger.info("Recieved MPI ");
+
 			return (String) jsonObject.get("uuid");
 
 		} catch (ParseException e) {
-			e.printStackTrace();
+			logger.error(e.getLocalizedMessage());
 		}
+
+		logger.info("END MPI ");
 		return responseString;
 	}
 
-	public static String getAccessToken() throws IOException, URISyntaxException {
+	public String getAccessToken() throws IOException, URISyntaxException {
 
 		HttpClient httpClient = HttpClients.createDefault();
 
-		String uri = "https://iam.mynjinck.com/auth/realms/ocp/protocol/openid-connect/token";
-		URIBuilder uriBuilder = new URIBuilder(uri);
+		URIBuilder uriBuilder = new URIBuilder(mpi_tokenurl);
 
 		List<NameValuePair> form = new ArrayList<>();
-		form.add(new BasicNameValuePair("client_id", "master_patient_index_api"));
-		form.add(new BasicNameValuePair("grant_type", "client_credentials"));
-		form.add(new BasicNameValuePair("client_secret", "c1742c9e-d9cc-4450-bea6-f1be317d5dae"));
-		form.add(new BasicNameValuePair("scope", "openid email"));
+		form.add(new BasicNameValuePair("client_id", mpi_client_id));
+		form.add(new BasicNameValuePair("grant_type", mpi_grant_type));
+		form.add(new BasicNameValuePair("client_secret", mpi_client_secret));
+		form.add(new BasicNameValuePair("scope", mpi_scope));
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(form, Consts.UTF_8);
 
 		// HttpEntity form;
@@ -585,7 +687,6 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 			responseEntity.writeTo(System.err);
 			throw new RuntimeException();
 		}
-		logger.info("TOKEN created: ");
 
 		String responseString = EntityUtils.toString(responseEntity, "UTF-8");
 

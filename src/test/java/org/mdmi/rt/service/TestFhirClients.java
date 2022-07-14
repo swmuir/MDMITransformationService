@@ -105,7 +105,24 @@ class TestFhirClients {
 		;
 		String result = FhirResourceCreate.query(
 			"/Users/seanmuir/git/deletethis/MDMITransformationService/credentials/google_application_credentials.json",
-			fhirStoreName, "Patient?identifier=012002076302x");
+			fhirStoreName, "Patient?identifier=800004625577");
+
+		System.out.println(result);
+
+	}
+
+	@Test
+	void testBuilkQuery() throws IOException, URISyntaxException {
+
+		String fhirStoreName = String.format(
+			FhirResourceCreate.FHIR_NAME, "zanenet-njinck", "us-central1", "dev-zanenet-njinck", "dev-mdix-datastore");
+
+		String content = Files.readString(
+			Paths.get("/Users/seanmuir/git/deletethis/MDMITransformationService/bulkquery/bq.json"));
+		;
+		String result = FhirResourceCreate.postBundle(
+			"/Users/seanmuir/git/deletethis/MDMITransformationService/credentials/google_application_credentials.json",
+			fhirStoreName, content);
 
 		System.out.println(result);
 

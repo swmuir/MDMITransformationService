@@ -97,7 +97,7 @@ public class FhirResourceCreate {
 			responseEntity.writeTo(System.err);
 			throw new RuntimeException();
 		}
-		logger.info("FHIR resource created: ");
+		logger.info("Post Bundle: ");
 
 		String responseString = EntityUtils.toString(responseEntity, "UTF-8");
 		return responseString;
@@ -136,7 +136,7 @@ public class FhirResourceCreate {
 			responseEntity.writeTo(System.err);
 			throw new RuntimeException();
 		}
-		logger.info("FHIR resource created: ");
+		logger.info("Query Result: " + query);
 
 		String responseString = EntityUtils.toString(responseEntity, "UTF-8");
 
@@ -149,6 +149,7 @@ public class FhirResourceCreate {
 				JSONArray entries = (JSONArray) jsonObject.get("entry");
 				JSONObject entry = (JSONObject) entries.get(0);
 				JSONObject resource = (JSONObject) entry.get("resource");
+
 				return (String) resource.get("id");
 			}
 
@@ -186,6 +187,50 @@ public class FhirResourceCreate {
 		// Build the client for interacting with the service.
 		return new CloudHealthcare.Builder(HTTP_TRANSPORT, JSON_FACTORY, requestInitializer).setApplicationName(
 			"your-application-name").build();
+	}
+
+	// projects/zanenet-njinck/locations/us-central1/datasets/dev-zanenet-njinck/fhirStores/dev-mdix-datastore
+	// projects/zanenet-njinck/locations/us-central1/datasets/dev-zanenet-njinck/fhirStores/dev-mdix-datastore
+
+	public static void fhirResourceDelete(String jsonPath, String fhirStoreName, String resourceName)
+			throws IOException, URISyntaxException {
+		GoogleCredentials credential = GoogleCredentials.fromStream(new FileInputStream(jsonPath)).createScoped(
+			Collections.singleton(CloudHealthcareScopes.CLOUD_PLATFORM));
+		HttpRequestInitializer requestInitializer = request -> {
+			new HttpCredentialsAdapter(credential).initialize(request);
+			request.setConnectTimeout(60000); // 1 minute connect timeout
+			request.setReadTimeout(60000); // 1 minute read timeout
+		};
+
+		// Build the client for interacting with the service.
+		CloudHealthcare client = new CloudHealthcare.Builder(
+			HTTP_TRANSPORT, JSON_FACTORY, requestInitializer).setApplicationName("mdmi-transform-postbundle").build();
+
+		HttpClient httpClient = HttpClients.createDefault();
+		String uri = String.format("%sv1/%s", client.getRootUrl(), resourceName);
+		URIBuilder uriBuilder = new URIBuilder(uri).setParameter(
+			"access_token", credential.refreshAccessToken().getTokenValue());
+
+		HttpUriRequest request = RequestBuilder.delete().setUri(uriBuilder.build()).addHeader(
+			"Content-Type", "application/fhir+json").addHeader("Accept-Charset", "utf-8").addHeader(
+				"Accept", "application/fhir+json; charset=utf-8").build();
+
+		// Execute the request and process the results.
+		// Regardless of whether the operation succeeds or
+		// fails, the server returns a 200 OK HTTP status code. To check that the
+		// resource was successfully deleted, search for or get the resource and
+		// see if it exists.
+		HttpResponse response = httpClient.execute(request);
+		HttpEntity responseEntity = response.getEntity();
+		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+			String errorMessage = String.format(
+				"Exception deleting FHIR resource: %s\n", response.getStatusLine().toString());
+			System.err.print(errorMessage);
+			responseEntity.writeTo(System.err);
+			throw new RuntimeException(errorMessage);
+		}
+		System.out.println("FHIR resource deleted.");
+		responseEntity.writeTo(System.out);
 	}
 
 }

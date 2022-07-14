@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,9 +32,17 @@ import org.hl7.fhir.r4.model.CarePlan;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Condition;
 import org.hl7.fhir.r4.model.DateType;
+import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Dosage.DosageDoseAndRateComponent;
+import org.hl7.fhir.r4.model.Duration;
 import org.hl7.fhir.r4.model.Goal;
 import org.hl7.fhir.r4.model.Goal.GoalLifecycleStatus;
+import org.hl7.fhir.r4.model.MedicationRequest;
+import org.hl7.fhir.r4.model.MedicationRequest.MedicationRequestDispenseRequestComponent;
+import org.hl7.fhir.r4.model.MedicationRequest.MedicationRequestPriority;
+import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.ResourceType;
+import org.hl7.fhir.r4.model.Timing.UnitsOfTime;
 import org.junit.jupiter.api.Test;
 
 import ca.uhn.fhir.context.FhirContext;
@@ -110,6 +119,9 @@ class UpdateBundle {
 			for (String fileName : documents) {
 				ArrayList<Condition> plist = new ArrayList<Condition>();
 				ArrayList<Goal> glist = new ArrayList<Goal>();
+
+				ArrayList<MedicationRequest> mlist = new ArrayList<MedicationRequest>();
+
 				try {
 					if (fileName.endsWith(".json")) {
 						System.out.println(fileName);
@@ -183,12 +195,187 @@ class UpdateBundle {
 								}
 
 							}
+
+							if (theResourceType.equals(ResourceType.MedicationRequest)) {
+								mlist.add((MedicationRequest) bundleEntry.getResource());
+							}
+
 						}
+
 						for (Condition c : plist) {
 							UUID uuid = UUID.randomUUID();
 							BundleEntryComponent be = bundle.addEntry();
 							be.getRequest().setMethod(HTTPVerb.POST);
 							be.setFullUrl("urn:uuid:" + uuid).setResource(c);
+						}
+
+						/*
+						 *
+						 * "dosageInstruction": [
+						 * {
+						 * "sequence": 1,
+						 * "text": "one to two tablets every 4-6 hours as needed for rib pain",
+						 * "additionalInstruction": [
+						 * {
+						 * "coding": [
+						 * {
+						 * "system": "http://snomed.info/sct",
+						 * "code": "418914006",
+						 * "display":
+						 * "Warning. May cause drowsiness. If affected do not drive or operate machinery. Avoid alcoholic drink (qualifier value)"
+						 * }
+						 * ]
+						 * }
+						 * ],
+						 * "patientInstruction": "Take one to two tablets every four to six hours as needed for rib pain",
+						 * "timing": {
+						 * "repeat": {
+						 * "frequency": 1,
+						 * "period": 4,
+						 * "periodMax": 6,
+						 * "periodUnit": "h"
+						 * }
+						 * },
+						 * "asNeededCodeableConcept": {
+						 * "coding": [
+						 * {
+						 * "system": "http://snomed.info/sct",
+						 * "code": "297217002",
+						 * "display": "Rib Pain (finding)"
+						 * }
+						 * ]
+						 * },
+						 * "route": {
+						 * "coding": [
+						 * {
+						 * "system": "http://snomed.info/sct",
+						 * "code": "26643006",
+						 * "display": "Oral Route"
+						 * }
+						 * ]
+						 * },
+						 * "method": {
+						 * "coding": [
+						 * {
+						 * "system": "http://snomed.info/sct",
+						 * "code": "421521009",
+						 * "display": "Swallow - dosing instruction imperative (qualifier value)"
+						 * }
+						 * ]
+						 * },
+						 * "doseAndRate": [
+						 * {
+						 * "type": {
+						 * "coding": [
+						 * {
+						 * "system": "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+						 * "code": "ordered",
+						 * "display": "Ordered"
+						 * }
+						 * ]
+						 * },
+						 * "doseRange": {
+						 * "low": {
+						 * "value": 1,
+						 * "unit": "TAB",
+						 * "system": "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+						 * "code": "TAB"
+						 * },
+						 * "high": {
+						 * "value": 2,
+						 * "unit": "TAB",
+						 * "system": "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+						 * "code": "TAB"
+						 * }
+						 * }
+						 * }
+						 * ]
+						 * }
+						 * ],
+						 */
+
+						/*
+						 * "dispenseRequest": {
+						 * "validityPeriod": {
+						 * "start": "2015-01-15",
+						 * "end": "2016-01-15"
+						 * },
+						 * "numberOfRepeatsAllowed": 0,
+						 * "quantity": {
+						 * "value": 30,
+						 * "unit": "TAB",
+						 * "system": "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+						 * "code": "TAB"
+						 * },
+						 * "expectedSupplyDuration": {
+						 * "value": 10,
+						 * "unit": "days",
+						 * "system": "http://unitsofmeasure.org",
+						 * "code": "d"
+						 * },
+						 * "performer": {
+						 * "reference": "Practitioner/f001"
+						 * }
+						 */
+
+						for (MedicationRequest m : mlist) {
+							for (Condition c : plist) {
+								if (set.contains(c.getCode().getText())) {
+									m.addReasonCode().setText(c.getCode().getText()).addCoding(
+										c.getCode().getCodingFirstRep());
+
+									break;
+								}
+
+							}
+							if ((Instant.now().getEpochSecond() % 2) == 0) {
+								m.addDetectedIssue().setDisplay("Drug Interaction Alert");
+							} else {
+								m.addDetectedIssue().setDisplay("NONE");
+							}
+
+							Dosage d = m.addDosageInstruction().setText("Take every 8 hours").setSequence(
+								1).setPatientInstruction("Take with food");
+							d.getRoute().setText("By Mouth").addCoding().setCode("26643006").setSystem(
+								"http://snomed.info/sct").setDisplay("Oral Route");
+
+							d.getMethod().setText(
+								"Swallow - dosing instruction imperative (qualifier value)").addCoding().setCode(
+									"421521009").setSystem("http://snomed.info/sct").setDisplay(
+										"Swallow - dosing instruction imperative (qualifier value)");
+							// UnitsOfTime UnitsOfTime;
+							d.getTiming().getRepeat().setFrequency(1).setPeriod(4).setPeriodMax(6).setPeriodUnit(
+								UnitsOfTime.H);
+
+							DosageDoseAndRateComponent dar = d.addDoseAndRate();
+							dar.getType().setText("Ordered").addCoding().setCode("ordered").setSystem(
+								"http://terminology.hl7.org/CodeSystem/dose-rate-type").setDisplay("Ordered");
+							Quantity low = new Quantity();
+							low.setValue(1);
+							low.setUnit("TAB");
+
+							Quantity high = new Quantity();
+							high.setValue(2);
+							high.setUnit("TAB");
+
+							dar.getDoseRange().setLow(low).setHigh(high);
+
+							m.setPriority(MedicationRequestPriority.ROUTINE);
+
+							MedicationRequestDispenseRequestComponent dr = m.getDispenseRequest();
+							dr.setNumberOfRepeatsAllowed(4);
+
+							Quantity q = new Quantity();
+							q.setValue(30);
+							q.setUnit("TAB");
+
+							dr.setQuantity(q);
+
+							Duration duration = dr.getExpectedSupplyDuration();
+
+							duration.setValue(10);
+							duration.setUnit("days");
+
 						}
 
 						for (Goal g : glist) {

@@ -12,7 +12,6 @@
 package org.mdmi.rt.service.web;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -21,10 +20,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.mdmi.Bag;
 import org.mdmi.MessageModel;
 import org.mdmi.core.MdmiMessage;
 import org.mdmi.core.engine.preprocessors.IPreProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author seanmuir
@@ -32,11 +34,11 @@ import org.mdmi.core.engine.preprocessors.IPreProcessor;
  */
 public class Deliminated2XML implements IPreProcessor {
 
-	// private static final String CSV2XML = "CSV2XML";
-
 	private String name;
 
 	private String delim;
+
+	private static Logger logger = LoggerFactory.getLogger(Deliminated2XML.class);
 
 	/**
 	 * @param name
@@ -46,13 +48,6 @@ public class Deliminated2XML implements IPreProcessor {
 		super();
 		this.name = name;
 		this.delim = delim;
-
-		// ParseException asdfasfd;
-
-		// EcoreResourceFactoryImpl asdf;
-
-		// TreeWalker l;
-
 	}
 
 	/*
@@ -80,6 +75,8 @@ public class Deliminated2XML implements IPreProcessor {
 		return false;
 	}
 
+	boolean printXML = true;
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -89,6 +86,7 @@ public class Deliminated2XML implements IPreProcessor {
 	public void processMessage(MessageModel messageModel, MdmiMessage message) {
 
 		try {
+			logger.info("Start process message");
 			Reader inputString = new StringReader(message.getDataAsString());
 			BufferedReader inputReader = new BufferedReader(inputString);
 			List<String> lines = new ArrayList<>();
@@ -97,28 +95,42 @@ public class Deliminated2XML implements IPreProcessor {
 				line = inputReader.readLine();
 				if (line == null)
 					break;
-				lines.add(line);
+				lines.add(line.replaceAll("\"", ""));
 			}
+			if (lines.isEmpty()) {
+				logger.error("Error parsing inbound message");
+
+				logger.error("message is " + message.getDataAsString());
+				return;
+			}
+			logger.info("parsed message");
 			if (messageModel.getSyntaxModel() != null && messageModel.getSyntaxModel().getRoot() instanceof Bag) {
 				Bag rootBag = (Bag) messageModel.getSyntaxModel().getRoot();
 				if (!rootBag.getNodes().isEmpty()) {
 					String root = rootBag.getLocation();
 					String element = messageModel.getMessageModelName();
+					logger.info("Start toXML");
+					if (printXML) {
+						System.err.println(toXML(lines, delim, root, element).getBytes());
+					}
 					message.setData(toXML(lines, delim, root, element).getBytes());
+					logger.info("end toXML");
 				}
 
 			}
 
-		} catch (IOException e) {
-			/**
-			 * @TODO Add proper exception handling
-			 */
+		} catch (Exception e) {
+			logger.error("processMessage error " + e.getMessage(), e);
+
 		}
 
 	}
 
-	private String toXML(List<String> inputLines, String delim, String root, String elementName) {
+	public String toXML(List<String> inputLines, String delim, String root, String elementName) {
 
+		/*
+		 * Use escape to java because of mishandling of \ in name space
+		 */
 		List<String> header = new ArrayList<>(
 			Arrays.asList(inputLines.get(0).replaceAll("\"", "").split(delim))).stream().map(String::trim).collect(
 				Collectors.toList());
@@ -128,8 +140,8 @@ public class Deliminated2XML implements IPreProcessor {
 			return "<" + elementName + ">" + System.lineSeparator() +
 					IntStream.range(0, cells.size()).mapToObj(
 						i -> "<" + header.get(i) + ">" +
-								cells.get(i).replaceAll("\"", "").replaceAll("<", "&lt;").replaceAll(">", "&gt;") +
-								"</" + header.get(i) + ">").collect(Collectors.joining(System.lineSeparator())) +
+								StringEscapeUtils.escapeHtml4(StringEscapeUtils.escapeJava(cells.get(i))) + "</" +
+								header.get(i) + ">").collect(Collectors.joining(System.lineSeparator())) +
 					"</" + elementName + ">" + System.lineSeparator();
 		}).collect(Collectors.joining(System.lineSeparator())).replaceAll("&", "&amp;") + System.lineSeparator() +
 				"</" + root + ">";

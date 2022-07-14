@@ -113,6 +113,12 @@ public class PreProcessorForFHIRJson implements IPreProcessor {
 					// TODO Auto-generated method stub
 
 				}
+
+				@Override
+				public void extensionContainsValueAndNestedExtensions(IParseLocation theLocation) {
+					// TODO Auto-generated method stub
+
+				}
 			};
 			parse.setParserErrorHandler(aaa);
 

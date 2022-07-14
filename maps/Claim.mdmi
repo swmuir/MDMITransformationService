@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mdmi="http://schema.omg.org/spec/MDMI/1.0">
   <mdmi:MessageGroup xmi:id="_mHgVQDywEeymkJze6IJVJQ" name="NJ" description="SKIPCONTAINMENT" defaultLocationExprLang="XPath" defaultConstraintExprLang="JavaScript" defaultRuleExprLang="JavaScript">
-    <models xmi:id="_mHgVQTywEeymkJze6IJVJQ" messageModelName="Claim" description="2022-04-07 10:41:36.699">
+    <models xmi:id="_mHgVQTywEeymkJze6IJVJQ" messageModelName="Claim" description="2022-04-25 14:40:11.957">
       <syntaxModel xmi:id="_mHgVQjywEeymkJze6IJVJQ">
         <root xsi:type="mdmi:Bag" xmi:id="_mHgVQzywEeymkJze6IJVJQ" name="root" minOccurs="1" maxOccurs="1" location="root" semanticElement="_mHgVfzywEeymkJze6IJVJQ">
           <nodes xsi:type="mdmi:Bag" xmi:id="_W5bNgKoJEeyy4qycE_x_4Q" name="CLAIM" maxOccurs="2147483647" location="Claim" semanticElement="_Z0VfcKoJEeyy4qycE_x_4Q">
@@ -76,7 +76,9 @@
         </semanticElements>
         <semanticElements xmi:id="_mHgVgDywEeymkJze6IJVJQ" name="CLM_ICN_IDN" description="Claim identification number (110121)" elementType="NORMAL" datatype="_mHr8RzywEeymkJze6IJVJQ" parent="_Z0VfcKoJEeyy4qycE_x_4Q" syntaxNode="_mHgVRDywEeymkJze6IJVJQ">
           <mapFromMdmi xmi:id="_V-nz4Ty1EeymkJze6IJVJQ" name="MDMI2Message4CLM_ICN_IDN" businessElement="_mHnqqDywEeymkJze6IJVJQ" rule="DATATYPEMAP:mapInstanceIdentifierToString"/>
+          <mapFromMdmi xmi:id="_mbAxkZAqEeyv7LaJRwxwhQ" name="MDMI2Message4CLM_ICN_IDN2" businessElement="_zWbX9UIyEeyePrMQBbu7Jg" rule="DATATYPEMAP:mapInstanceIdentifierToString"/>
           <mapToMdmi xmi:id="_V-nz4Dy1EeymkJze6IJVJQ" name="Message2MDMI4CLM_ICN_IDN" businessElement="_mHnqqDywEeymkJze6IJVJQ" rule="DATATYPEMAP:mapStringToInstanceIdentifier"/>
+          <mapToMdmi xmi:id="_mbAxkJAqEeyv7LaJRwxwhQ" name="Message2MDMI4CLM_ICN_IDN1" businessElement="_zWbX9UIyEeyePrMQBbu7Jg" rule="DATATYPEMAP:mapStringToInstanceIdentifier"/>
         </semanticElements>
         <semanticElements xmi:id="_mHgVgTywEeymkJze6IJVJQ" name="CLM_SRC_CDE" elementType="NORMAL" datatype="_mHr8RzywEeymkJze6IJVJQ" parent="_Z0VfcKoJEeyy4qycE_x_4Q" syntaxNode="_mHgVRTywEeymkJze6IJVJQ"/>
         <semanticElements xmi:id="_mHgVgjywEeymkJze6IJVJQ" name="CLM_PMT_DTE" description="Paycycle date, as established by system on processing date (020274)" elementType="NORMAL" datatype="_mHr8RzywEeymkJze6IJVJQ" parent="_Z0VfcKoJEeyy4qycE_x_4Q" syntaxNode="_mHgVRjywEeymkJze6IJVJQ">
@@ -119,7 +121,7 @@
         <semanticElements xmi:id="_mHgVjTywEeymkJze6IJVJQ" name="CLM_MC_CAPIT_CDE" description="Identifies GSHP capitation code used for payment (030016)" elementType="NORMAL" datatype="_mHr8RzywEeymkJze6IJVJQ" parent="_Z0VfcKoJEeyy4qycE_x_4Q" syntaxNode="_mHgVUTywEeymkJze6IJVJQ"/>
         <semanticElements xmi:id="_mHgVjjywEeymkJze6IJVJQ" name="CLM_RCP_MC_HBIS_CDE" description="Identifies recipient's benefit level (039017)" elementType="NORMAL" datatype="_mHr8RzywEeymkJze6IJVJQ" parent="_Z0VfcKoJEeyy4qycE_x_4Q" syntaxNode="_mHgVUjywEeymkJze6IJVJQ">
           <mapFromMdmi xmi:id="_vswBsUb3Eeyj59ood2HnFA" name="MDMI2Message4CLM_RCP_MC_HBIS_CDE" businessElement="_zWtEwEIyEeyePrMQBbu7Jg" rule="DATATYPEMAP:mapCodedElementToString"/>
-          <mapToMdmi xmi:id="_vswBsEb3Eeyj59ood2HnFA" name="Message2MDMI4CLM_RCP_MC_HBIS_CDE" businessElement="_zWtEwEIyEeyePrMQBbu7Jg" rule="DATATYPEMAP:mapStringToCodedElement"/>
+          <mapToMdmi xmi:id="_vswBsEb3Eeyj59ood2HnFA" name="Message2MDMI4CLM_RCP_MC_HBIS_CDE" businessElement="_zWtEwEIyEeyePrMQBbu7Jg" rule="DATATYPEMAP:mapStringToICDCodedElement"/>
         </semanticElements>
         <semanticElements xmi:id="_mHgVjzywEeymkJze6IJVJQ" name="CLM_SVC_DTE" description="Date that first service covered by claim was rendered (020012)" elementType="NORMAL" datatype="_mHr8RzywEeymkJze6IJVJQ" parent="_Z0VfcKoJEeyy4qycE_x_4Q" syntaxNode="_mHgVUzywEeymkJze6IJVJQ">
           <mapFromMdmi xmi:id="_ZPrJgJWMEeysCak8Z2EGWQ" name="MDMI2Message4CLM_SVC_DTE" businessElement="_zWd0MUIyEeyePrMQBbu7Jg" rule="DATATYPEMAP:mapDateTimeToString"/>
@@ -219,8 +221,8 @@
         <semanticElements xmi:id="_mHgVrjywEeymkJze6IJVJQ" name="CLM_DRG_CDE" description="Diagnosis related group codes for inpatient hospital reimbursement (050033)" elementType="NORMAL" datatype="_mHr8RzywEeymkJze6IJVJQ" parent="_Z0VfcKoJEeyy4qycE_x_4Q" syntaxNode="_mHgVcjywEeymkJze6IJVJQ">
           <mapFromMdmi xmi:id="_VtJIQUb7Eeyj59ood2HnFA" name="MDMI2Message4CLM_DRG_CDE" businessElement="_zWgQcEIyEeyePrMQBbu7Jg" rule="DATATYPEMAP:mapCodedElementToString"/>
           <mapFromMdmi xmi:id="_YPvA0Ub7Eeyj59ood2HnFA" name="MDMI2Message4CLM_DRG_CDE2" businessElement="_mHpf8jywEeymkJze6IJVJQ" rule="DATATYPEMAP:mapCodedElementToString"/>
-          <mapToMdmi xmi:id="_VtJIQEb7Eeyj59ood2HnFA" name="Message2MDMI4CLM_DRG_CDE" businessElement="_zWgQcEIyEeyePrMQBbu7Jg" rule="DATATYPEMAP:mapStringToCodedElement"/>
-          <mapToMdmi xmi:id="_YPvA0Eb7Eeyj59ood2HnFA" name="Message2MDMI4CLM_DRG_CDE1" businessElement="_mHpf8jywEeymkJze6IJVJQ" rule="DATATYPEMAP:mapStringToCodedElement"/>
+          <mapToMdmi xmi:id="_VtJIQEb7Eeyj59ood2HnFA" name="Message2MDMI4CLM_DRG_CDE" businessElement="_zWgQcEIyEeyePrMQBbu7Jg" rule="DATATYPEMAP:mapStringToICDCodedElement"/>
+          <mapToMdmi xmi:id="_YPvA0Eb7Eeyj59ood2HnFA" name="Message2MDMI4CLM_DRG_CDE1" businessElement="_mHpf8jywEeymkJze6IJVJQ" rule="DATATYPEMAP:mapStringToICDCodedElement"/>
         </semanticElements>
         <semanticElements xmi:id="_mHgVrzywEeymkJze6IJVJQ" name="DRGCV_DRG_DESC" description="Version 34 Diagnosis related group code description (051026)" elementType="NORMAL" datatype="_mHr8RzywEeymkJze6IJVJQ" parent="_Z0VfcKoJEeyy4qycE_x_4Q" syntaxNode="_mHgVczywEeymkJze6IJVJQ"/>
         <semanticElements xmi:id="_mHgVsDywEeymkJze6IJVJQ" name="CLM_RCP_PAT_STS_CDE" description="Status of patient on the through date of service on the claim (020261)" elementType="NORMAL" datatype="_mHr8RzywEeymkJze6IJVJQ" parent="_Z0VfcKoJEeyy4qycE_x_4Q" syntaxNode="_mHgVdDywEeymkJze6IJVJQ"/>
@@ -300,8 +302,10 @@
         </semanticElements>
         <semanticElements xmi:id="_-kUBoKxqEeyy4qycE_x_4Q" name="ClaimDiagnosisSequence" description="" elementType="NORMAL" datatype="_mHr8RjywEeymkJze6IJVJQ" parent="_Z0VfcKoJEeyy4qycE_x_4Q">
           <mapFromMdmi xmi:id="_CaaJcaxrEeyy4qycE_x_4Q" name="MDMI2Message4ClaimDiagnosisSequence" businessElement="_mHpffDywEeymkJze6IJVJQ"/>
+          <mapFromMdmi xmi:id="_Iq8bwcTHEey9n7ZdgDbFXw" name="MDMI2Message4ClaimDiagnosisSequence2" businessElement="_zWebRUIyEeyePrMQBbu7Jg"/>
           <computedValue xmi:id="_-kUBoqxqEeyy4qycE_x_4Q" expression="value.getXValue().setValue('1');" language="JavaScript"/>
           <mapToMdmi xmi:id="_CaaJcKxrEeyy4qycE_x_4Q" name="Message2MDMI4ClaimDiagnosisSequence" businessElement="_mHpffDywEeymkJze6IJVJQ"/>
+          <mapToMdmi xmi:id="_Iq8bwMTHEey9n7ZdgDbFXw" name="Message2MDMI4ClaimDiagnosisSequence1" businessElement="_zWebRUIyEeyePrMQBbu7Jg"/>
         </semanticElements>
         <semanticElements xmi:id="_Pc6WcKxrEeyy4qycE_x_4Q" name="EOBStatus" description="" elementType="NORMAL" datatype="_mHr8azywEeymkJze6IJVJQ" parent="_Z0VfcKoJEeyy4qycE_x_4Q">
           <mapFromMdmi xmi:id="_ZsXNAaxrEeyy4qycE_x_4Q" name="MDMI2Message4EOBStatus" businessElement="_zWcmEUIyEeyePrMQBbu7Jg"/>
@@ -5600,7 +5604,7 @@
     <datatypeMaps xmi:id="_mHr8sjywEeymkJze6IJVJQ" name="StringAndPhysicalQuantityMapping" fromMDMI="function mapPhysicalQuantityToString(source,target) {&#xD;&#xA;&#xD;&#xA;if (source.getValue('value') + null) {&#xD;&#xA;target.setValue(source.getValue('value'));&#xD;&#xA;}&#xD;&#xA;}&#xD;&#xA;" toMDMI="function mapStringToPhysicalQuantity(source,target) {&#xD;&#xA;target.setValue('value',source);&#xD;&#xA;}&#xD;&#xA;" mdmiDatatype="_mHr8XDywEeymkJze6IJVJQ" messageDatatype="_mHr8RzywEeymkJze6IJVJQ"/>
     <datatypeMaps xmi:id="_mHr8szywEeymkJze6IJVJQ" name="StringAndAttachmentMapping" fromMDMI="" toMDMI="" mdmiDatatype="_mHr8YjywEeymkJze6IJVJQ" messageDatatype="_mHr8RzywEeymkJze6IJVJQ"/>
     <datatypeMaps xmi:id="_mHr8tDywEeymkJze6IJVJQ" name="StringAndTranslationDTMapping" fromMDMI="" toMDMI="" mdmiDatatype="_mHr8ZDywEeymkJze6IJVJQ" messageDatatype="_mHr8RzywEeymkJze6IJVJQ"/>
-    <datatypeMaps xmi:id="_mHr8tTywEeymkJze6IJVJQ" name="StringAndCodedElementMapping" fromMDMI="function mapCodedElementToString(source,target) {&#xD;&#xA;&#x9;target.setValue(source.getValue('code'));&#x9;&#xD;&#xA;}&#xD;&#xA; &#xD;&#xA; &#xD;&#xA;" toMDMI="function mapStringToCodedElement(source,target) {&#xD;&#xA;&#x9;target.setValue('code', source);&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;function mapStringToCompleteCodedElement(source,target) {&#xD;&#xA;&#x9;target.setValue('code', 'complete');&#xD;&#xA;}&#xD;&#xA;" mdmiDatatype="_mHr8azywEeymkJze6IJVJQ" messageDatatype="_mHr8RzywEeymkJze6IJVJQ"/>
+    <datatypeMaps xmi:id="_mHr8tTywEeymkJze6IJVJQ" name="StringAndCodedElementMapping" fromMDMI="function mapCodedElementToString(source,target) {&#xD;&#xA;&#x9;target.setValue(source.getValue('code'));&#x9;&#xD;&#xA;}&#xD;&#xA; &#xD;&#xA; &#xD;&#xA;" toMDMI="function mapStringToCodedElement(source,target) {&#xD;&#xA;&#x9;target.setValue('code', source);&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;function mapStringToICDCodedElement(source,target) {&#xD;&#xA;&#x9;target.setValue('code', source);&#xD;&#xA;&#x9;target.setValue('codeSystem', 'http://hl7.org/fhir/sid/icd-10');&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;function mapStringToCompleteCodedElement(source,target) {&#xD;&#xA;&#x9;target.setValue('code', 'complete');&#xD;&#xA;}&#xD;&#xA;" mdmiDatatype="_mHr8azywEeymkJze6IJVJQ" messageDatatype="_mHr8RzywEeymkJze6IJVJQ"/>
     <datatypeMaps xmi:id="_mHr8tjywEeymkJze6IJVJQ" name="StringAndDateRangeMapping" fromMDMI="" toMDMI="" mdmiDatatype="_mHr8dDywEeymkJze6IJVJQ" messageDatatype="_mHr8RzywEeymkJze6IJVJQ"/>
     <datatypeMaps xmi:id="_mHr8tzywEeymkJze6IJVJQ" name="StringAndRangeMapping" fromMDMI="" toMDMI="" mdmiDatatype="_mHr8dzywEeymkJze6IJVJQ" messageDatatype="_mHr8RzywEeymkJze6IJVJQ"/>
     <datatypeMaps xmi:id="_mHr8uDywEeymkJze6IJVJQ" name="StringAndTimePeriodMapping" fromMDMI="" toMDMI="" mdmiDatatype="_mHr8ejywEeymkJze6IJVJQ" messageDatatype="_mHr8RzywEeymkJze6IJVJQ"/>

@@ -13,11 +13,10 @@ package org.mdmi.rt.service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Date;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.junit.jupiter.api.Test;
-import org.mdmi.rt.service.web.FHIRR4PostProcessorJson;
 
 /**
  * @author seanmuir
@@ -25,15 +24,25 @@ import org.mdmi.rt.service.web.FHIRR4PostProcessorJson;
  */
 class MPITest {
 
-	@Test
-	void testToken() throws ClientProtocolException, URISyntaxException, IOException {
-		System.out.println(FHIRR4PostProcessorJson.getAccessToken());
-	}
+	// @Test
+	// void testToken() throws ClientProtocolException, URISyntaxException, IOException {
+	// System.out.println(FHIRR4PostProcessorJson.getAccessToken());
+	// }
 
 	@Test
 	void testMPI() throws ClientProtocolException, URISyntaxException, IOException {
+
+		// StringEscapeUtils.ESCAPE_JSON;
+
+		System.out.println(StringEscapeUtils.escapeHtml4(StringEscapeUtils.escapeJson("\\\\AGANATHAN")));
+
 		System.out.println(
-			FHIRR4PostProcessorJson.proccessMPI(FHIRR4PostProcessorJson.getAccessToken(), "doe2", "given", new Date()));
+			StringEscapeUtils.escapeHtml4(StringEscapeUtils.escapeJson("NEONATE, TRANSFERRED < 5 DAYS OLD, BORN HER")));
+
+		// JSON.parse(str);
+
+		// System.out.println(
+		// FHIRR4PostProcessorJson.proccessMPI(FHIRR4PostProcessorJson.getAccessToken(), "doe2", "given", new Date()));
 	}
 
 }

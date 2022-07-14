@@ -31,7 +31,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -51,6 +50,8 @@ public class MdmiEngine {
 	@Autowired
 	ServletContext context;
 
+	// /us-east4/datasets/dev-zanenet-njinck/fhirStores/dev-mdix-datastore2
+
 	static Boolean loaded = Boolean.FALSE;
 
 	@Value("#{systemProperties['mdmi.maps'] ?: '/maps'}")
@@ -62,14 +63,45 @@ public class MdmiEngine {
 	@Value("#{systemProperties['your_project_id'] ?: 'zanenet-njinck'}")
 	private String your_project_id;
 
-	@Value("#{systemProperties['your_region_id'] ?: 'us-central1'}")
+	@Value("#{systemProperties['your_region_id'] ?: 'us-east4'}")
 	private String your_region_id;
 
 	@Value("#{systemProperties['your_dataset_id'] ?: 'dev-zanenet-njinck'}")
 	private String your_dataset_id;
 
-	@Value("#{systemProperties['your_fhir_id'] ?: 'dev-mdix-datastore'}")
+	@Value("#{systemProperties['your_fhir_id'] ?: 'dev-mdix-datastore2'}")
 	private String your_fhir_id;
+
+	@Value("#{systemProperties['mpiurl'] ?: 'https://master-patient-index-test-ocp.nicheaimlabs.com/api/v1/patients/'}")
+	private String mpiurl;
+
+	@Value("#{systemProperties['mpi_client_id'] ?: 'master_patient_index_api'}")
+	private String mpi_client_id;
+
+	@Value("#{systemProperties['grant_type'] ?: 'client_credentials'}")
+	private String mpi_grant_type;
+
+	@Value("#{systemProperties['mpi_client_secret'] ?: 'c1742c9e-d9cc-4450-bea6-f1be317d5dae'}")
+	private String mpi_client_secret;
+
+	@Value("#{systemProperties['mpi_scope'] ?: 'openid email'}")
+	private String mpi_scope;
+
+	@Value("#{systemProperties['mpi_usetoken'] ?: 'true'}")
+	private Boolean mpi_usetoken;
+
+	@Value("#{systemProperties['mpi_tokenurl'] ?: 'https://iam.mynjinck.com/auth/realms/ocp/protocol/openid-connect/token'}")
+	String mpi_tokenurl;
+
+	/*
+	 * List<NameValuePair> form = new ArrayList<>();
+	 * form.add(new BasicNameValuePair("client_id", "master_patient_index_api"));
+	 * form.add(new BasicNameValuePair("grant_type", "client_credentials"));
+	 * form.add(new BasicNameValuePair("client_secret", "c1742c9e-d9cc-4450-bea6-f1be317d5dae"));
+	 * form.add(new BasicNameValuePair("scope", "openid email"));
+	 * UrlEncodedFormEntity entity = new UrlEncodedFormEntity(form, Consts.UTF_8);
+	 *
+	 */
 
 	private HashMap<String, Properties> mapProperties = new HashMap<String, Properties>();
 
@@ -166,7 +198,10 @@ public class MdmiEngine {
 		String fhirStoreName = String.format(
 			FhirResourceCreate.FHIR_NAME, your_project_id, your_region_id, your_dataset_id, your_fhir_id);
 
-		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson(credentials, fhirStoreName));
+		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(
+			new FHIRR4PostProcessorJson(
+				credentials, fhirStoreName, mpiurl, mpi_client_id, mpi_grant_type, mpi_client_secret, mpi_scope,
+				mpi_tokenurl, mpi_usetoken));
 
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new HL7V2MessagePreProcessor());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new PreProcessorForFHIRJson());
@@ -179,46 +214,30 @@ public class MdmiEngine {
 		return result;
 	}
 
-	@PostMapping(path = "byvalue", consumes = {
-			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, produces =
-
-	{ MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-	public String transformation2(@Context HttpServletRequest req, @RequestParam("source") String source,
-			@RequestParam("target") String target, @RequestBody String message) throws Exception {
-		logger.debug("DEBUG Start transformation ");
-		loadMaps();
-		MdmiUow.setSerializeSemanticModel(false);
-
-		String fhirStoreName = String.format(
-			FhirResourceCreate.FHIR_NAME, your_project_id, your_region_id, your_dataset_id, your_fhir_id);
-
-		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson(credentials, fhirStoreName));
-
-		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new HL7V2MessagePreProcessor());
-		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new PreProcessorForFHIRJson());
-		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new CDAPreProcesor());
-		Mdmi.INSTANCE().getSourceSemanticModelProcessors().addSourceSemanticProcessor(new LogSemantic(DIRECTION.TO));
-		Mdmi.INSTANCE().getTargetSemanticModelProcessors().addTargetSemanticProcessor(new LogSemantic(DIRECTION.FROM));
-		String result = RuntimeService.runTransformation(
-			source, message.getBytes(), target, null, getMapProperties(source), getMapProperties(target));
-		return result;
-	}
-
-	@PostMapping(path = "transformAndPost", consumes = {
-			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, produces =
-
-	{ MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	@PostMapping(path = "transformAndPost", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = {
+			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public String transformAndPost(@Context HttpServletRequest req, @RequestParam("source") String source,
-			@RequestParam("target") String target, @RequestBody String message) throws Exception {
+			@RequestParam("target") String target, @RequestPart("message") MultipartFile uploadedInputStream)
+			throws Exception {
+
 		logger.debug("DEBUG Start transformation ");
 		loadMaps();
 		MdmiUow.setSerializeSemanticModel(false);
-		String fhirStoreName = String.format(
-			FhirResourceCreate.FHIR_NAME, your_project_id, your_region_id, your_dataset_id, your_fhir_id);
+
+		// Set Stylesheet for CDA document section generation
+		CDAPostProcessor.setStylesheet("perspectasections.xsl");
+
+		// add in fhir post processor
 
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new Deliminated2XML("NJ", "\\|"));
+		String fhirStoreName = String.format(
+			FhirResourceCreate.FHIR_NAME, your_project_id, your_region_id, your_dataset_id, your_fhir_id);
 
-		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(new FHIRR4PostProcessorJson(credentials, fhirStoreName));
+		Mdmi.INSTANCE().getPostProcessors().addPostProcessor(
+			new FHIRR4PostProcessorJson(
+				credentials, fhirStoreName, mpiurl, mpi_client_id, mpi_grant_type, mpi_client_secret, mpi_scope,
+				mpi_tokenurl, mpi_usetoken));
+
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new HL7V2MessagePreProcessor());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new PreProcessorForFHIRJson());
 		Mdmi.INSTANCE().getPreProcessors().addPreProcessor(new CDAPreProcesor());
@@ -226,9 +245,8 @@ public class MdmiEngine {
 		Mdmi.INSTANCE().getTargetSemanticModelProcessors().addTargetSemanticProcessor(new LogSemantic(DIRECTION.FROM));
 
 		String result = RuntimeService.runTransformation(
-			source, message.getBytes(), target, null, getMapProperties(source), getMapProperties(target));
-
-		System.err.println(result);
+			source, uploadedInputStream.getBytes(), target, null, getMapProperties(source), getMapProperties(target));
+		// System.err.println(result);
 		return FhirResourceCreate.postBundle(credentials, fhirStoreName, result);
 	}
 

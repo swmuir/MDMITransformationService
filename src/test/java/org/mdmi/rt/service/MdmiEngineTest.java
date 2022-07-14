@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.mdmi.rt.service;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -26,7 +25,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,11 +34,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -52,16 +48,17 @@ public class MdmiEngineTest {
 
 	@BeforeClass
 	public static void setEnvironment() {
-		System.setProperty("mdmi.maps", "maps");
+		System.setProperty("mdmi.maps", "/Users/seanmuir/git/njservices/mmisservices2/maps");
 		System.setProperty("GOOGLE_APPLICATION_CREDENTIALS", "credentials/google_application_credentials.json");
+		System.setProperty("mpi_usetoken", "true");
 
-		System.setProperty("your_project_id", "zanenet-njinck");
-
-		System.setProperty("your_region_id", "us-central1");
-
-		System.setProperty("your_dataset_id", "dev-zanenet-njinck");
-
-		System.setProperty("your_fhir_id", "dev-mdix-datastore");
+		// System.setProperty("your_project_id", "zanenet-njinck");
+		//
+		// System.setProperty("your_region_id", "us-central1");
+		//
+		// System.setProperty("your_dataset_id", "dev-zanenet-njinck");
+		//
+		// System.setProperty("your_fhir_id", "dev-mdix-datastore");
 
 	}
 
@@ -243,11 +240,60 @@ public class MdmiEngineTest {
 		runTransformation(source, target, message, "json");
 	}
 
+	private void runTransformation4(String source, String target, String message) throws Exception {
+		runTransformation5(source, target, message, "json");
+	}
+
 	private void runTransformation(String source, String target, String message, String extension) throws Exception {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("source", source);
 		map.add("target", target);
 		map.add("message", new FileSystemResource(Paths.get(message)));
+
+		ClientHttpRequestFactory foo1 = template.getRestTemplate().getRequestFactory();
+
+		// ((SimpleClientHttpRequestFactory) template.getRestTemplate().getRequestFactory()).setConnectTimeout(100000);
+		// ((SimpleClientHttpRequestFactory) template.getRestTemplate().getRequestFactory()).setReadTimeout(100000);
+
+		// SimpleClientHttpRequestFactory simpleClientHttpRequestFactory = (SimpleClientHttpRequestFactory) template.getRequestFactory();
+		// simpleClientHttpRequestFactory.setReadTimeout(100); // millis
+		//
+
+		ResponseEntity<String> response = template.postForEntity(
+			"/mdmi/transformation/transformAndPost", map, String.class);
+		System.out.println(response.getStatusCode());
+		assertTrue(response.getStatusCode().equals(HttpStatus.OK));
+
+		Path sourcePath = Paths.get(message);
+		String testName = FilenameUtils.removeExtension(sourcePath.getFileName().toString());
+
+		Path testPath = Paths.get("target/test-output/" + testName);
+		if (!Files.exists(testPath)) {
+			Files.createDirectories(testPath);
+		}
+
+		Path path = Paths.get("target/test-output/" + testName + "/" + testName + "." + extension);
+		byte[] strToBytes = response.getBody().getBytes();
+
+		Files.write(path, strToBytes);
+
+	}
+
+	private void runTransformation5(String source, String target, String message, String extension) throws Exception {
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("source", source);
+		map.add("target", target);
+		map.add("message", new FileSystemResource(Paths.get(message)));
+
+		ClientHttpRequestFactory foo1 = template.getRestTemplate().getRequestFactory();
+
+		// ((SimpleClientHttpRequestFactory) template.getRestTemplate().getRequestFactory()).setConnectTimeout(100000);
+		// ((SimpleClientHttpRequestFactory) template.getRestTemplate().getRequestFactory()).setReadTimeout(100000);
+
+		// SimpleClientHttpRequestFactory simpleClientHttpRequestFactory = (SimpleClientHttpRequestFactory) template.getRequestFactory();
+		// simpleClientHttpRequestFactory.setReadTimeout(100); // millis
+		//
+
 		ResponseEntity<String> response = template.postForEntity("/mdmi/transformation", map, String.class);
 		System.out.println(response.getStatusCode());
 		assertTrue(response.getStatusCode().equals(HttpStatus.OK));
@@ -267,35 +313,19 @@ public class MdmiEngineTest {
 
 	}
 
-	private String runTransformation2(String source, String target, String message) throws Exception {
-
-		HttpHeaders headers = new HttpHeaders();
-
-		headers.setContentType(MediaType.APPLICATION_JSON);
-
-		HttpEntity<String> request = new HttpEntity<>(message, headers);
-
-		ResponseEntity<String> response = template.postForEntity(
-			"/mdmi/transformation/byvalue?source=" + source + "&target=" + target, request, String.class);
-		assertTrue(response.getStatusCode().equals(HttpStatus.OK));
-		String value = response.getBody();
-		assertFalse(StringUtils.isEmpty(value));
-		System.out.println(value);
-		return value;
-	}
-
 	private void runTransformation3(String testName, String source, String target, String message) throws Exception {
-		HttpHeaders headers = new HttpHeaders();
 
-		headers.setContentType(MediaType.APPLICATION_JSON);
-
-		HttpEntity<String> request = new HttpEntity<>(message, headers);
-
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("source", source);
+		map.add("target", target);
+		map.add("message", new FileSystemResource(Paths.get(message)));
 		ResponseEntity<String> response = template.postForEntity(
-			"/mdmi/transformation/transformAndPost?source=" + source + "&target=" + target, request, String.class);
+			"/mdmi/transformation/transformAndPost", map, String.class);
+		System.out.println(response.getStatusCode());
 		assertTrue(response.getStatusCode().equals(HttpStatus.OK));
-		String value = response.getBody();
-		assertFalse(StringUtils.isEmpty(value));
+
+		Path sourcePath = Paths.get(message);
+		// String testName = FilenameUtils.removeExtension(sourcePath.getFileName().toString());
 
 		Path testPath = Paths.get("target/test-output/" + testName);
 		if (!Files.exists(testPath)) {
@@ -306,9 +336,6 @@ public class MdmiEngineTest {
 		byte[] strToBytes = response.getBody().getBytes();
 
 		Files.write(path, strToBytes);
-
-		System.out.println(value);
-		// return value;
 	}
 
 	public static <E> Optional<E> getRandom(Collection<E> e) {
@@ -333,7 +360,7 @@ public class MdmiEngineTest {
 
 	@Test
 	public void testClaimsandPost() {
-		Set<String> documents = Stream.of(new File("src/test/resources/claims1").listFiles()).filter(
+		Set<String> documents = Stream.of(new File("src/test/resources/claims5").listFiles()).filter(
 			file -> !file.isDirectory()).map(t -> {
 				try {
 					return t.getCanonicalPath();
@@ -344,8 +371,7 @@ public class MdmiEngineTest {
 
 		for (String fileName : documents) {
 			try {
-				runTransformation3(
-					"claims1", "NJ.Claim", "FHIRR4JSON.MasterBundle", Files.readString(Path.of(fileName)));
+				runTransformation3("claim", "NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
 			} catch (Exception exception) {
 				exception.printStackTrace();
 			}
@@ -375,7 +401,28 @@ public class MdmiEngineTest {
 
 	@Test
 	public void testMMISPatientPost() {
-		Set<String> documents = Stream.of(new File("src/test/resources/patient").listFiles()).filter(
+		Set<String> documents = Stream.of(new File("src/test/resources/patient3").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+			try {
+				runTransformation3(
+					"NJ.Person", "NJ.Person", "FHIRR4JSON.MasterBundle", Files.readString(Path.of(fileName)));
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		}
+	}
+
+	@Test
+	public void testMMISPatientPost2() {
+		Set<String> documents = Stream.of(new File("src/test/resources/AA1").listFiles()).filter(
 			file -> !file.isDirectory()).map(t -> {
 				try {
 					return t.getCanonicalPath();
@@ -658,8 +705,7 @@ public class MdmiEngineTest {
 
 		for (String fileName : documents) {
 			try {
-				runTransformation3(
-					"patient", "NJ.Person", "FHIRR4JSON.MasterBundle", Files.readString(Path.of(fileName)));
+				runTransformation3("patient", "NJ.Person", "FHIRR4JSON.MasterBundle", fileName);
 			} catch (Exception exception) {
 				exception.printStackTrace();
 			}
@@ -736,4 +782,369 @@ public class MdmiEngineTest {
 			runTransformation("NJ.Person", "FHIRR4JSON.MasterBundle", fileName);
 		}
 	}
+
+	@Test
+	public void testPatientBoom() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/patientboom2").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Person", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testProviderBoom3() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/boom").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.PROVIDER", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testClaims3() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/claims3").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testClaims4() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/claims4").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testClaims5a() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/claims5").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testClaims5() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/AA3").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testCDA() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/CDA").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("CDAR2.ContinuityOfCareDocument", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testPatientBoom2() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/AA4").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Person", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testprovider2() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/provider").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.PROVIDER", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testClaimsAll() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/Actual/A1/split").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testClaimsAll1() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/Actual/A1/all").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testClaimsAll12() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/claims5").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testPatientsAll() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/patient3").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Person", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testPatients5() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/patient5").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Person", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testClaims6() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/claims6").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testClaims7() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/claims7").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+	// @Test
+	// public void testMMISPatientPost() {
+	// Set<String> documents = Stream.of(new File("src/test/resources/patient3").listFiles()).filter(
+	// file -> !file.isDirectory()).map(t -> {
+	// try {
+	// return t.getCanonicalPath();
+	// } catch (IOException e) {
+	// return "";
+	// }
+	// }).collect(Collectors.toSet());
+	//
+	// for (String fileName : documents) {
+	// try {
+	// runTransformation3(
+	// "NJ.Person", "NJ.Person", "FHIRR4JSON.MasterBundle", Files.readString(Path.of(fileName)));
+	// } catch (Exception exception) {
+	// exception.printStackTrace();
+	// }
+	// }
+	// }
+
+	@Test
+	public void testPatients20220711() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/latest20220711/patients").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Person", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testprovider20220711() throws Exception {
+		// System.setProperty("mdmi.maps", "/Users/seanmuir/git/njservices/mmisservices1/maps");
+
+		Set<String> documents = Stream.of(new File("src/test/resources/latest20220711/providers").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.PROVIDER", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
+	@Test
+	public void testClaims20220711() throws Exception {
+		Set<String> documents = Stream.of(new File("src/test/resources/latest20220711/claims").listFiles()).filter(
+			file -> !file.isDirectory()).map(t -> {
+				try {
+					return t.getCanonicalPath();
+				} catch (IOException e) {
+					return "";
+				}
+			}).collect(Collectors.toSet());
+
+		for (String fileName : documents) {
+
+			runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+
+		}
+	}
+
 }
