@@ -69,7 +69,7 @@ public class MdmiEngine {
 	@Value("#{systemProperties['your_dataset_id'] ?: 'dev-zanenet-njinck'}")
 	private String your_dataset_id;
 
-	@Value("#{systemProperties['your_fhir_id'] ?: 'dev-mdix-datastore2'}")
+	@Value("#{systemProperties['your_fhir_id'] ?: 'mdix-test-1'}")
 	private String your_fhir_id;
 
 	@Value("#{systemProperties['mpiurl'] ?: 'https://master-patient-index-test-ocp.nicheaimlabs.com/api/v1/patients/'}")
@@ -246,7 +246,9 @@ public class MdmiEngine {
 
 		String result = RuntimeService.runTransformation(
 			source, uploadedInputStream.getBytes(), target, null, getMapProperties(source), getMapProperties(target));
-		// System.err.println(result);
+		if (logger.isDebugEnabled()) {
+			logger.debug(result);
+		}
 		return FhirResourceCreate.postBundle(credentials, fhirStoreName, result);
 	}
 

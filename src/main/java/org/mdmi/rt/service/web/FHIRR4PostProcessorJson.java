@@ -163,6 +163,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 			if (referenceMappings.containsKey(referenceMappingsKey)) {
 				if (referenceMappings.get(referenceMappingsKey) != null) {
+//					System.err.println(referenceMappingsKey + " : " + referenceMappings.get(referenceMappingsKey));
 					reference.setReference(resource + "/" + referenceMappings.get(referenceMappingsKey));
 				}
 
@@ -176,6 +177,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 					if (result != null) {
 						reference.setReference(resource + "/" + result);
 					}
+//					System.err.println(referenceMappingsKey + " : " + result);
 					referenceMappings.put(referenceMappingsKey, result);
 
 				} catch (Exception e) {
@@ -273,6 +275,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 			};
 			parse.setParserErrorHandler(doNothingHandler);
 			HashMap<String, String> referenceMappings = new HashMap<String, String>();
+//			System.err.println(mdmiMessage.getDataAsString());
 			Bundle bundle = parse.parseResource(Bundle.class, mdmiMessage.getDataAsString());
 
 			// String asdf = ctx.newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle);
@@ -313,7 +316,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 				if (bundleEntry.getResource().getResourceType() != null) {
 
-					logger.info("RESOURCE COUNT : " + ++resourceCount);
+					logger.trace("RESOURCE COUNT : " + ++resourceCount);
 
 					ResourceType theResourceType = bundleEntry.getResource().getResourceType();
 					if (theResourceType.equals(ResourceType.Patient)) {
@@ -637,7 +640,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 		HttpEntity responseEntity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 			logger.error(String.format("Exception MPI: %s\n", response.getStatusLine().toString()));
-			responseEntity.writeTo(System.err);
+			// responseEntity.writeTo(System.err);
 			throw new RuntimeException();
 		}
 
@@ -684,7 +687,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 		HttpEntity responseEntity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 			logger.error(String.format("TOKEN EXCEPTION: %s\n", response.getStatusLine().toString()));
-			responseEntity.writeTo(System.err);
+			// responseEntity.writeTo(System.err);
 			throw new RuntimeException();
 		}
 

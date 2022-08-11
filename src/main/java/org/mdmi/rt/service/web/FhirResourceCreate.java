@@ -136,7 +136,7 @@ public class FhirResourceCreate {
 			responseEntity.writeTo(System.err);
 			throw new RuntimeException();
 		}
-		logger.info("Query Result: " + query);
+		logger.trace("Query Result: " + query);
 
 		String responseString = EntityUtils.toString(responseEntity, "UTF-8");
 

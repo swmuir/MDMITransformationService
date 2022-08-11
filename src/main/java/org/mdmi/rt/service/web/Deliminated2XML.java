@@ -143,8 +143,7 @@ public class Deliminated2XML implements IPreProcessor {
 								StringEscapeUtils.escapeHtml4(StringEscapeUtils.escapeJava(cells.get(i))) + "</" +
 								header.get(i) + ">").collect(Collectors.joining(System.lineSeparator())) +
 					"</" + elementName + ">" + System.lineSeparator();
-		}).collect(Collectors.joining(System.lineSeparator())).replaceAll("&", "&amp;") + System.lineSeparator() +
-				"</" + root + ">";
+		}).collect(Collectors.joining(System.lineSeparator())) + System.lineSeparator() + "</" + root + ">";
 		return "<?xml version=\"1.0\" ?>" + System.lineSeparator() + output + System.lineSeparator();
 	}
 
