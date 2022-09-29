@@ -16,6 +16,7 @@
 
 package org.mdmi.rt.service.web;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -94,7 +95,10 @@ public class FhirResourceCreate {
 		HttpEntity responseEntity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 			logger.error(String.format("Exception creating FHIR resource: %s\n", response.getStatusLine().toString()));
-			responseEntity.writeTo(System.err);
+
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			responseEntity.writeTo(baos);
+			logger.error(baos.toString());
 			throw new RuntimeException();
 		}
 		logger.info("Post Bundle: ");
@@ -225,8 +229,8 @@ public class FhirResourceCreate {
 		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 			String errorMessage = String.format(
 				"Exception deleting FHIR resource: %s\n", response.getStatusLine().toString());
-			System.err.print(errorMessage);
-			responseEntity.writeTo(System.err);
+			// System.err.print(errorMessage);
+			// responseEntity.writeTo(System.err);
 			throw new RuntimeException(errorMessage);
 		}
 		System.out.println("FHIR resource deleted.");

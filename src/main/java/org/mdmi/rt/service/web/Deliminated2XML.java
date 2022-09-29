@@ -78,6 +78,10 @@ public class Deliminated2XML implements IPreProcessor {
 	boolean printXML = true;
 
 	/*
+	 *
+	 * CLM_RCP_IDN
+	 * CLM_MCARE_CLM_TYPE_CDE
+	 * CLM_SVC_DTE
 	 * (non-Javadoc)
 	 *
 	 * @see org.mdmi.core.IPreProcessor#processMessage(org.mdmi.core.MdmiMessage)
@@ -93,8 +97,13 @@ public class Deliminated2XML implements IPreProcessor {
 			for (;;) {
 				String line;
 				line = inputReader.readLine();
-				if (line == null)
+				if (line == null) {
 					break;
+				}
+				if (line.startsWith("TRAILER")) {
+					continue;
+				}
+
 				lines.add(line.replaceAll("\"", ""));
 			}
 			if (lines.isEmpty()) {

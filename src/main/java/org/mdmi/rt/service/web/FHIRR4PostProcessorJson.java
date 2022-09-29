@@ -21,7 +21,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -154,30 +156,33 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 	private static boolean skipReference = false;
 
 	private void resolveReference(HashMap<String, String> referenceMappings, Reference reference, String resource) {
-		if (skipReference == true) {
+		if (skipReference) {
 			return;
 		}
-
+		logger.trace("Start resolveReference for " + resource + " " + reference.getDisplay());
 		if (reference != null && !StringUtils.isEmpty(reference.getDisplay())) {
 			String referenceMappingsKey = resource + "_" + reference.getDisplay();
 
 			if (referenceMappings.containsKey(referenceMappingsKey)) {
+				logger.trace("cache " + referenceMappingsKey);
 				if (referenceMappings.get(referenceMappingsKey) != null) {
-//					System.err.println(referenceMappingsKey + " : " + referenceMappings.get(referenceMappingsKey));
+					// System.err.println(referenceMappingsKey + " : " + referenceMappings.get(referenceMappingsKey));
 					reference.setReference(resource + "/" + referenceMappings.get(referenceMappingsKey));
 				}
 
 			} else {
-
+				logger.trace("query  " + referenceMappingsKey);
 				try {
 
+					logger.trace("Start FhirResourceCreate.query");
 					String result = FhirResourceCreate.query(
 						credentials, fhirStoreName,
 						resource + "?identifier=" + URLEncoder.encode(reference.getDisplay(), StandardCharsets.UTF_8));
+					logger.trace("End FhirResourceCreate.query");
 					if (result != null) {
 						reference.setReference(resource + "/" + result);
 					}
-//					System.err.println(referenceMappingsKey + " : " + result);
+					// System.err.println(referenceMappingsKey + " : " + result);
 					referenceMappings.put(referenceMappingsKey, result);
 
 				} catch (Exception e) {
@@ -186,6 +191,8 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 				}
 			}
 		}
+		logger.trace("Done resolveReference for " + resource + " " + reference.getDisplay());
+
 	}
 
 	private String searchForExistingResource(String resourceType, Identifier identifier) {
@@ -204,6 +211,30 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 		}
 		return null;
 	}
+
+	// static HashMap<String, String> referenceMappings = new HashMap<String, String>();
+
+	public static class ReferenceHashMap extends LinkedHashMap<String, String> {
+
+		private static final int MAX_ENTRIES = 100000;
+
+		/**
+		 *
+		 */
+		private static final long serialVersionUID = 1L;
+
+		/*
+		 * (non-Javadoc)
+		 *
+		 * @see java.util.LinkedHashMap#removeEldestEntry(java.util.Map.Entry)
+		 */
+		@Override
+		protected boolean removeEldestEntry(Entry eldest) {
+			return size() > MAX_ENTRIES;
+		}
+	}
+
+	static ReferenceHashMap referenceMappings = new ReferenceHashMap();
 
 	/*
 	 * (non-Javadoc)
@@ -274,8 +305,8 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 				}
 			};
 			parse.setParserErrorHandler(doNothingHandler);
-			HashMap<String, String> referenceMappings = new HashMap<String, String>();
-//			System.err.println(mdmiMessage.getDataAsString());
+
+			// System.err.println(mdmiMessage.getDataAsString());
 			Bundle bundle = parse.parseResource(Bundle.class, mdmiMessage.getDataAsString());
 
 			// String asdf = ctx.newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle);
@@ -607,7 +638,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 			return resourceId;
 		}
 
-		logger.info("START MPI ");
+		logger.debug("START MPI ");
 
 		HttpClient httpClient = HttpClients.createDefault();
 
@@ -653,7 +684,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 			JSONArray array = (JSONArray) obj;
 			JSONObject jsonObject = (JSONObject) array.get(0);
 
-			logger.info("Recieved MPI ");
+			logger.debug("Recieved MPI ");
 
 			return (String) jsonObject.get("uuid");
 
@@ -661,7 +692,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 			logger.error(e.getLocalizedMessage());
 		}
 
-		logger.info("END MPI ");
+		logger.debug("END MPI ");
 		return responseString;
 	}
 
