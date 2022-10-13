@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Set;
@@ -36,6 +37,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.cloud.MonitoredResource;
+import com.google.cloud.logging.LogEntry;
+import com.google.cloud.logging.Logging;
+import com.google.cloud.logging.LoggingOptions;
+import com.google.cloud.logging.Payload.StringPayload;
+import com.google.cloud.logging.Severity;
 
 @RestController
 @RequestMapping("/mdmi/transformation")
@@ -168,6 +176,26 @@ public class MdmiEngine {
 		return mapProperties.get(target);
 	}
 
+	private void googleLogError(String monitoredResource, String textPayload) {
+		// The name of the log to write to
+		String logName = "mdmi_mmis";
+
+		// Instantiates a client
+		try (Logging logging = LoggingOptions.getDefaultInstance().getService()) {
+
+			LogEntry entry = LogEntry.newBuilder(StringPayload.of(textPayload)).setSeverity(Severity.ERROR).setLogName(
+				logName).setResource(MonitoredResource.newBuilder("healthcare_fhir_store").build()).build();
+
+			// Writes the log entry asynchronously
+			logging.write(Collections.singleton(entry));
+			// Optional - flush any pending log entries just before Logging is closed
+			// logging.flush();
+		} catch (Exception e) {
+			logger.error("ERROR Google Logging", e);
+		}
+		// System.out.printf("Logged: %s%n", textPayload);
+	}
+
 	@GetMapping
 	public String get(HttpServletRequest req) throws Exception {
 		loadMaps();
@@ -249,7 +277,18 @@ public class MdmiEngine {
 		if (logger.isDebugEnabled()) {
 			logger.debug(result);
 		}
-		return FhirResourceCreate.postBundle(credentials, fhirStoreName, result);
+
+		String createResult = "";
+		try {
+			FhirResourceCreate.postBundle(credentials, fhirStoreName, result);
+
+		} catch (RuntimeException re) {
+			googleLogError(your_dataset_id, new String(uploadedInputStream.getBytes()));
+			googleLogError(your_dataset_id, result);
+			googleLogError(your_dataset_id, re.getMessage());
+			throw re;
+		}
+		return createResult;
 	}
 
 }

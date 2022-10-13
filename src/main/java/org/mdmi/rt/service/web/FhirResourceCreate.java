@@ -99,7 +99,7 @@ public class FhirResourceCreate {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			responseEntity.writeTo(baos);
 			logger.error(baos.toString());
-			throw new RuntimeException();
+			throw new RuntimeException(baos.toString());
 		}
 		logger.info("Post Bundle: ");
 
