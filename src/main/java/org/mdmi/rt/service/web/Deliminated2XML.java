@@ -75,7 +75,7 @@ public class Deliminated2XML implements IPreProcessor {
 		return false;
 	}
 
-	boolean printXML = true;
+	boolean printXML = false;
 
 	/*
 	 *
@@ -120,7 +120,7 @@ public class Deliminated2XML implements IPreProcessor {
 					String element = messageModel.getMessageModelName();
 					logger.info("Start toXML");
 					if (printXML) {
-						System.err.println(toXML(lines, delim, root, element).getBytes());
+						System.err.println(toXML(lines, delim, root, element));
 					}
 					message.setData(toXML(lines, delim, root, element).getBytes());
 					logger.info("end toXML");

@@ -48,7 +48,7 @@ public class MdmiEngineTest {
 
 	@BeforeClass
 	public static void setEnvironment() {
-		System.setProperty("mdmi.maps", "/Users/seanmuir/git/njservices/mmisservices2/maps");
+		System.setProperty("mdmi.maps", "/Users/seanmuir/git/njservices/mmisservices1/maps");
 		System.setProperty("GOOGLE_APPLICATION_CREDENTIALS", "credentials/google_application_credentials.json");
 		System.setProperty("mpi_usetoken", "true");
 
@@ -344,17 +344,21 @@ public class MdmiEngineTest {
 
 	@Test
 	public void testclaims1() throws Exception {
-		Set<String> documents = Stream.of(new File("src/test/resources/claims1").listFiles()).filter(
-			file -> !file.isDirectory()).map(t -> {
-				try {
-					return t.getCanonicalPath();
-				} catch (IOException e) {
-					return "";
-				}
-			}).collect(Collectors.toSet());
+		Set<String> documents = Stream.of(
+			new File("/Users/seanmuir/git/ZaneNet-NJinCK-OnDemandPythonFunctions/samples").listFiles()).filter(
+				file -> !file.isDirectory()).map(t -> {
+					try {
+						return t.getCanonicalPath();
+					} catch (IOException e) {
+						return "";
+					}
+				}).collect(Collectors.toSet());
 
 		for (String fileName : documents) {
-			runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+			System.err.println(fileName);
+			if (fileName.contains("step3_")) {
+				runTransformation("NJ.Claim", "FHIRR4JSON.MasterBundle", fileName);
+			}
 		}
 	}
 
@@ -636,7 +640,7 @@ public class MdmiEngineTest {
 
 	@Test
 	public void testRCPMGCARE() throws Exception {
-		Set<String> documents = Stream.of(new File("src/test/resources/rcpmgcare").listFiles()).filter(
+		Set<String> documents = Stream.of(new File("src/test/resources/rcpmgcare/issues").listFiles()).filter(
 			file -> !file.isDirectory()).map(t -> {
 				try {
 					return t.getCanonicalPath();
@@ -929,7 +933,7 @@ public class MdmiEngineTest {
 
 	@Test
 	public void testprovider2() throws Exception {
-		Set<String> documents = Stream.of(new File("src/test/resources/provider").listFiles()).filter(
+		Set<String> documents = Stream.of(new File("src/test/resources/provider2").listFiles()).filter(
 			file -> !file.isDirectory()).map(t -> {
 				try {
 					return t.getCanonicalPath();
@@ -1031,7 +1035,8 @@ public class MdmiEngineTest {
 		for (String fileName : documents) {
 
 			runTransformation("NJ.Person", "FHIRR4JSON.MasterBundle", fileName);
-
+			Thread.sleep(100);
+			runTransformation("NJ.Person", "FHIRR4JSON.MasterBundle", fileName);
 		}
 	}
 

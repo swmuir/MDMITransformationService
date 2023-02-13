@@ -25,6 +25,7 @@ import java.util.Collections;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
@@ -64,15 +65,22 @@ public class FhirResourceCreate {
 
 	private static final NetHttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 
+	public static int TIMEOUT_MILLIS = 5;
+
 	public static String postBundle(String jsonPath, String fhirStoreName, String bundleContent)
-			throws IOException, URISyntaxException {
+			throws URISyntaxException, IOException {
 
 		GoogleCredentials credential = GoogleCredentials.fromStream(new FileInputStream(jsonPath)).createScoped(
 			Collections.singleton(CloudHealthcareScopes.CLOUD_PLATFORM));
 		HttpRequestInitializer requestInitializer = request -> {
 			new HttpCredentialsAdapter(credential).initialize(request);
-			request.setConnectTimeout(60000); // 1 minute connect timeout
-			request.setReadTimeout(60000); // 1 minute read timeout
+			request.setConnectTimeout(1); // 1 minute connect timeout
+			request.setReadTimeout(1); // 1 minute read timeout
+			// request.set
+
+			// request.setSocketTimeout(TIMEOUT_MILLIS)
+			// request.setConnectTimeout(TIMEOUT_MILLIS)
+			// request.setConnectionRequestTimeout(TIMEOUT_MILLIS)
 		};
 
 		// Build the client for interacting with the service.
@@ -86,12 +94,31 @@ public class FhirResourceCreate {
 			"access_token", credential.refreshAccessToken().getTokenValue());
 		StringEntity requestEntity = new StringEntity(bundleContent);
 
+		logger.info("Post Bundle: " + uri);
+
 		HttpUriRequest request = RequestBuilder.post().setUri(uriBuilder.build()).setEntity(requestEntity).addHeader(
 			"Content-Type", "application/fhir+json").addHeader("Accept-Charset", "utf-8").addHeader(
 				"Accept", "application/fhir+json; charset=utf-8").build();
 
 		// Execute the request and process the results.
-		HttpResponse response = httpClient.execute(request);
+		logger.info("Post Bundle: execute ");
+		HttpResponse response = null;
+		int loopctr = 0;
+		while (response == null && loopctr < 10) {
+			try {
+				loopctr++;
+
+				response = httpClient.execute(request);
+			} catch (ClientProtocolException e) {
+				// This is a different error then timeout
+				throw e;
+
+			} catch (IOException e) {
+				logger.error(e.getLocalizedMessage());
+			}
+		}
+
+		logger.info("Post Bundle: response ");
 		HttpEntity responseEntity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 			logger.error(String.format("Exception creating FHIR resource: %s\n", response.getStatusLine().toString()));
@@ -101,7 +128,6 @@ public class FhirResourceCreate {
 			logger.error(baos.toString());
 			throw new RuntimeException(baos.toString());
 		}
-		logger.info("Post Bundle: ");
 
 		String responseString = EntityUtils.toString(responseEntity, "UTF-8");
 		return responseString;

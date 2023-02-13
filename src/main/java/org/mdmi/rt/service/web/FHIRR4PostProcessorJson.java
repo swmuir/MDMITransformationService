@@ -16,6 +16,7 @@ import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import org.apache.commons.lang3.StringUtils;
@@ -70,6 +73,10 @@ import org.mdmi.core.engine.postprocessors.IPostProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.parser.IParserErrorHandler;
@@ -91,17 +98,19 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 	String mpiurl;
 
-	private String mpi_client_id;
+	private static String mpi_client_id;
 
-	private String mpi_grant_type;
+	private static String mpi_grant_type;
 
-	private String mpi_client_secret;
+	private static String mpi_client_secret;
 
-	private String mpi_scope;
+	private static String mpi_scope;
 
-	private Boolean mpi_usetoken;
+	private static Boolean mpi_usetoken;
 
-	private String mpi_tokenurl;
+	private static String mpi_tokenurl;
+
+	FhirContext ctx = null;
 
 	/**
 	 * @param credentials
@@ -126,6 +135,8 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 		this.mpi_usetoken = mpiusetoken;
 
 		this.mpi_tokenurl = mpi_tokenurl;
+
+		ctx = FhirContext.forR4();
 	}
 
 	/*
@@ -153,7 +164,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 		return "FHIRR4PostProcessor";
 	}
 
-	private static boolean skipReference = false;
+	private static boolean skipReference = true;
 
 	private void resolveReference(HashMap<String, String> referenceMappings, Reference reference, String resource) {
 		if (skipReference) {
@@ -236,6 +247,10 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 	static ReferenceHashMap referenceMappings = new ReferenceHashMap();
 
+	private static Duration dura;
+
+	String tokenRequest = null;
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -244,15 +259,17 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 	@Override
 	public void processMessage(MessageModel messageModel, MdmiMessage mdmiMessage) {
 
-		String tokenRequest = null;
 		if (this.mpi_usetoken) {
 			try {
-				tokenRequest = getAccessToken();
+				if (tokenRequest == null) {
+					tokenRequest = getAccessToken();
+				}
 			} catch (Exception e1) {
 				logger.error("getAccessToken() Error", e1);
+				throw new RuntimeException(e1);
 			}
 		}
-		FhirContext ctx = FhirContext.forR4();
+
 		if (ctx != null) {
 			IParser parse = ctx.newXmlParser();
 			IParserErrorHandler doNothingHandler = new IParserErrorHandler() {
@@ -312,7 +329,7 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 			// String asdf = ctx.newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle);
 			// System.err.println(asdf);
 
-			deduplicate(bundle);
+			// deduplicate(bundle);
 
 			for (BundleEntryComponent bundleEntry : bundle.getEntry()) {
 				UUID uuid = UUID.randomUUID();
@@ -437,9 +454,9 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 						Claim claim = (Claim) bundleEntry.getResource();
 
-						resolveReference(referenceMappings, claim.getProvider(), "Practitioner");
-						resolveReference(referenceMappings, claim.getPatient(), "Patient");
-						resolveReference(referenceMappings, claim.getInsurer(), "Organization");
+						// resolveReference(referenceMappings, claim.getProvider(), "Practitioner");
+						// resolveReference(referenceMappings, claim.getPatient(), "Patient");
+						// resolveReference(referenceMappings, claim.getInsurer(), "Organization");
 
 						Identifier current = claim.getIdentifierFirstRep();
 
@@ -467,10 +484,10 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 						ExplanationOfBenefit explanationOfBenefit = (ExplanationOfBenefit) bundleEntry.getResource();
 
-						resolveReference(referenceMappings, explanationOfBenefit.getProvider(), "Practitioner");
-						resolveReference(referenceMappings, explanationOfBenefit.getPatient(), "Patient");
-						resolveReference(referenceMappings, explanationOfBenefit.getInsurer(), "Organization");
-						resolveReference(referenceMappings, explanationOfBenefit.getClaim(), "Claim");
+						// resolveReference(referenceMappings, explanationOfBenefit.getProvider(), "Practitioner");
+						// resolveReference(referenceMappings, explanationOfBenefit.getPatient(), "Patient");
+						// resolveReference(referenceMappings, explanationOfBenefit.getInsurer(), "Organization");
+						// resolveReference(referenceMappings, explanationOfBenefit.getClaim(), "Claim");
 
 					}
 
@@ -670,9 +687,19 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 
 		HttpEntity responseEntity = response.getEntity();
 		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+
+			logger.error("url : " + mpiurl);
+			logger.error("token : " + token);
+			// logger.error("grant_type : " + mpi_grant_type);
+			// logger.error("client_secret : " + mpi_client_secret);
+			// logger.error("scope : " + mpi_scope);
+			// logger.error(String.format("TOKEN EXCEPTION: %s\n", response.getStatusLine().toString()));
 			logger.error(String.format("Exception MPI: %s\n", response.getStatusLine().toString()));
 			// responseEntity.writeTo(System.err);
-			throw new RuntimeException();
+			throw new RuntimeException(response.getStatusLine().getReasonPhrase());
+
+			// responseEntity.writeTo(System.err);
+			// throw new RuntimeException();
 		}
 
 		String responseString = EntityUtils.toString(responseEntity, "UTF-8");
@@ -696,46 +723,87 @@ public class FHIRR4PostProcessorJson implements IPostProcessor {
 		return responseString;
 	}
 
-	public String getAccessToken() throws IOException, URISyntaxException {
+	static LoadingCache<String, String> loadingCache = CacheBuilder.newBuilder().expireAfterAccess(
+		2, TimeUnit.MINUTES).build(new CacheLoader<String, String>() {
+			@Override
+			public String load(final String s) throws Exception {
+				return getAccessToken2();
+			}
+		});
 
-		HttpClient httpClient = HttpClients.createDefault();
+	public String getAccessToken() throws ExecutionException {
+		return loadingCache.get("accesstoken");
+	}
 
-		URIBuilder uriBuilder = new URIBuilder(mpi_tokenurl);
+	public static String getAccessToken2() {
 
-		List<NameValuePair> form = new ArrayList<>();
-		form.add(new BasicNameValuePair("client_id", mpi_client_id));
-		form.add(new BasicNameValuePair("grant_type", mpi_grant_type));
-		form.add(new BasicNameValuePair("client_secret", mpi_client_secret));
-		form.add(new BasicNameValuePair("scope", mpi_scope));
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(form, Consts.UTF_8);
-
-		// HttpEntity form;
-		HttpUriRequest request = RequestBuilder.post().setUri(uriBuilder.build()).setEntity(entity).addHeader(
-			"Content-Type", "application/x-www-form-urlencoded").addHeader("Accept-Charset", "utf-8").addHeader(
-				"Accept", "application/json; charset=utf-8").build();
-		HttpResponse response = httpClient.execute(request);
-
-		HttpEntity responseEntity = response.getEntity();
-		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-			logger.error(String.format("TOKEN EXCEPTION: %s\n", response.getStatusLine().toString()));
-			// responseEntity.writeTo(System.err);
-			throw new RuntimeException();
-		}
-
-		String responseString = EntityUtils.toString(responseEntity, "UTF-8");
-
-		JSONParser parser = new JSONParser();
-
+		logger.info("Start getAccessToken");
+		String responseString = null;
 		try {
+			HttpClient httpClient = HttpClients.createDefault();
+
+			URIBuilder uriBuilder = new URIBuilder(mpi_tokenurl);
+
+			List<NameValuePair> form = new ArrayList<>();
+			form.add(new BasicNameValuePair("client_id", mpi_client_id));
+			form.add(new BasicNameValuePair("grant_type", mpi_grant_type));
+			form.add(new BasicNameValuePair("client_secret", mpi_client_secret));
+			// form.add(new BasicNameValuePair("scope", mpi_scope));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(form, Consts.UTF_8);
+
+			// HttpEntity form;
+			HttpUriRequest request = RequestBuilder.post().setUri(uriBuilder.build()).setEntity(entity).addHeader(
+				"Content-Type", "application/x-www-form-urlencoded").addHeader("Accept-Charset", "utf-8").addHeader(
+					"Accept", "application/json; charset=utf-8").build();
+
+			logger.info("getAccessToken url : " + mpi_tokenurl);
+			logger.info("getAccessToken client_id : " + mpi_client_id);
+			logger.info("getAccessToken grant_type : " + mpi_grant_type);
+			logger.info("getAccessToken client_secret : " + mpi_client_secret);
+			logger.info("getAccessToken scope : " + mpi_scope);
+
+			HttpResponse response = httpClient.execute(request);
+
+			HttpEntity responseEntity = response.getEntity();
+			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+				logger.error("url : " + mpi_tokenurl);
+				logger.error("client_id : " + mpi_client_id);
+				logger.error("grant_type : " + mpi_grant_type);
+				logger.error("client_secret : " + mpi_client_secret);
+				logger.error("scope : " + mpi_scope);
+				logger.error(String.format("TOKEN EXCEPTION: %s\n", response.getStatusLine().toString()));
+				// responseEntity.writeTo(System.err);
+				throw new RuntimeException(response.getStatusLine().getReasonPhrase());
+			}
+
+			responseString = EntityUtils.toString(responseEntity, "UTF-8");
+
+			logger.info("getAccessToken scope : " + responseString);
+
+			JSONParser parser = new JSONParser();
+
 			Object obj = parser.parse(responseString);
 			JSONObject jsonObject = (JSONObject) obj;
+			logger.info("getAccessToken scope : " + (String) jsonObject.get("access_token"));
+
 			return (String) jsonObject.get("access_token");
 
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			logger.error("url : " + mpi_tokenurl);
+			logger.error("client_id : " + mpi_client_id);
+			logger.error("grant_type : " + mpi_grant_type);
+			logger.error("client_secret : " + mpi_client_secret);
+			logger.error("scope : " + mpi_scope);
+
+			logger.error(String.format("RESPONSE EXCEPTION: %s\n", responseString));
+			// responseEntity.writeTo(System.err);
+			throw new RuntimeException(e);
+
+			// throw e.printStackTrace();
 		}
 
-		return responseString;
+		// return responseString;
 
 	}
 

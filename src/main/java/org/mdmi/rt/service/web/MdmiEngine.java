@@ -18,6 +18,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.mdmi.core.Mdmi;
 import org.mdmi.core.engine.MdmiUow;
 import org.mdmi.core.engine.postprocessors.CDAPostProcessor;
@@ -58,6 +59,20 @@ public class MdmiEngine {
 	@Autowired
 	ServletContext context;
 
+	/*
+	 * DATASET_ID: prod-zanenet-njinck
+	 * FHIR_ID: prod-test-mdix-datastore
+	 * GRANT_TYPE: client_credentials
+	 * MPI_CLIENT_ID: master_patient_index_api
+	 * MPI_CLIENT_SECRET: d2585585-fa0c-4d03-9caa-1a76be18a6f9
+	 * MPI_SCOPE: '''openid email'''
+	 * MPI_TOKENURL: https://iam.mynjinck.com/auth/realms/njinck/protocol/openid-connect/token
+	 * MPI_USETOKEN: "false"
+	 * MPIURL: http://master-patient-index:8080/api/v1/patients/
+	 * PROJECT_ID: zanenet-njinck
+	 * REGION: us-central1
+	 */
+
 	// /us-east4/datasets/dev-zanenet-njinck/fhirStores/dev-mdix-datastore2
 
 	static Boolean loaded = Boolean.FALSE;
@@ -80,7 +95,7 @@ public class MdmiEngine {
 	@Value("#{systemProperties['your_fhir_id'] ?: 'dev-mdix-datastore-2'}")
 	private String your_fhir_id;
 
-	@Value("#{systemProperties['mpiurl'] ?: 'https://master-patient-index-test-ocp.nicheaimlabs.com/api/v1/patients/'}")
+	@Value("#{systemProperties['mpiurl'] ?: 'http://master-patient-index:8080/api/v1/patients/'}")
 	private String mpiurl;
 
 	@Value("#{systemProperties['mpi_client_id'] ?: 'master_patient_index_api'}")
@@ -89,7 +104,7 @@ public class MdmiEngine {
 	@Value("#{systemProperties['grant_type'] ?: 'client_credentials'}")
 	private String mpi_grant_type;
 
-	@Value("#{systemProperties['mpi_client_secret'] ?: 'c1742c9e-d9cc-4450-bea6-f1be317d5dae'}")
+	@Value("#{systemProperties['mpi_client_secret'] ?: 'd2585585-fa0c-4d03-9caa-1a76be18a6f9'}")
 	private String mpi_client_secret;
 
 	@Value("#{systemProperties['mpi_scope'] ?: 'openid email'}")
@@ -98,7 +113,7 @@ public class MdmiEngine {
 	@Value("#{systemProperties['mpi_usetoken'] ?: 'true'}")
 	private Boolean mpi_usetoken;
 
-	@Value("#{systemProperties['mpi_tokenurl'] ?: 'https://iam.mynjinck.com/auth/realms/ocp/protocol/openid-connect/token'}")
+	@Value("#{systemProperties['mpi_tokenurl'] ?: 'https://iam.mynjinck.com/auth/realms/njinck-prod/protocol/openid-connect/token'}")
 	String mpi_tokenurl;
 
 	/*
@@ -247,7 +262,8 @@ public class MdmiEngine {
 	public String transformAndPost(@Context HttpServletRequest req, @RequestParam("source") String source,
 			@RequestParam("target") String target, @RequestPart("message") MultipartFile uploadedInputStream)
 			throws Exception {
-
+		StopWatch watch = new StopWatch();
+		watch.start();
 		logger.debug("DEBUG Start transformation ");
 		loadMaps();
 		MdmiUow.setSerializeSemanticModel(false);
@@ -280,7 +296,7 @@ public class MdmiEngine {
 
 		String createResult = "";
 		try {
-			FhirResourceCreate.postBundle(credentials, fhirStoreName, result);
+			createResult = FhirResourceCreate.postBundle(credentials, fhirStoreName, result);
 
 		} catch (RuntimeException re) {
 			googleLogError(your_dataset_id, new String(uploadedInputStream.getBytes()));
@@ -288,6 +304,8 @@ public class MdmiEngine {
 			googleLogError(your_dataset_id, re.getMessage());
 			throw re;
 		}
+		watch.split();
+		logger.info("Total transformAndPost " + watch.toSplitString());
 		return createResult;
 	}
 
